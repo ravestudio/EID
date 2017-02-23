@@ -11,5 +11,6 @@ namespace EIDService.Common.Entities
         public string Name { get; set; }
 
         public virtual ICollection<Security> Securities { get; set; }
+        public virtual ICollection<Financial> Financials { get; set; }
     }
 }

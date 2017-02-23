@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDService.Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,18 +14,22 @@ namespace EIDService.Common.DataAccess
             : base("DefaultConnection")
         {
             //this.Database.Delete();
-            //Configuration.ProxyCreationEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
             //Configuration.LazyLoadingEnabled = true;
 
             this.Configuration.AutoDetectChangesEnabled = true;
 
-            Database.SetInitializer(new TTInitializer());
+            Database.SetInitializer(new Initializer());
         }
 
+        public DbSet<Emitent> Emitent { get; set; }
+        public DbSet<Security> Securities { get; set; }
 
-
-        public DbSet<Emitent> Issues { get; set; }
-
-        public DbSet<IssueStatus> Statuses { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new Configurations.EmitentConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.SecurityConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.FinancialConfiguration());
+        }
     }
 }

@@ -51,9 +51,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\SecurityConfiguration.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
+    <Compile Include="DataAccess\GenericRepository.cs" />
+    <Compile Include="DataAccess\IGenericRepository.cs" />
+    <Compile Include="DataAccess\Initializer.cs" />
+    <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Financial.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
