@@ -14,6 +14,7 @@ namespace EIDService.Common.DataAccess
 
         private GenericRepository<Emitent> emitentRepository;
         private GenericRepository<Security> securityRepository;
+        private GenericRepository<Financial> financialRepository;
 
         public UnitOfWork(DbContext context)
         {
@@ -33,6 +34,14 @@ namespace EIDService.Common.DataAccess
             get
             {
                 return this.securityRepository ?? new GenericRepository<Security>(_context);
+            }
+        }
+
+        public GenericRepository<Financial> FinancialRepository
+        {
+            get
+            {
+                return this.financialRepository ?? new GenericRepository<Financial>(_context);
             }
         }
 

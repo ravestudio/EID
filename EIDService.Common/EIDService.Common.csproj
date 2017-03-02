@@ -62,6 +62,7 @@
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\PeriodType.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
