@@ -109,7 +109,9 @@
   <ItemGroup>
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Financial.cs" />
     <Compile Include="Repository\EmitentRepository.cs" />
+    <Compile Include="Repository\FinancialRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

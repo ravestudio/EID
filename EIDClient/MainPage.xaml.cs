@@ -28,7 +28,12 @@ namespace EIDClient
 
             EIDClient.Core.Repository.EmitentRepository repo = new Core.Repository.EmitentRepository(new Core.WebApiClient());
 
-            var emitents = repo.GetAll().Result;
+
+            this.DataContext = repo.GetAll().Result;
+
+            EIDClient.Core.Repository.FinancialRepository repo2 = new Core.Repository.FinancialRepository(new Core.WebApiClient());
+            var financials = repo2.GetAll().Result;
+
         }
     }
 }

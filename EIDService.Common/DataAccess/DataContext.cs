@@ -19,7 +19,7 @@ namespace EIDService.Common.DataAccess
 
             this.Configuration.AutoDetectChangesEnabled = true;
 
-            Database.SetInitializer(new Initializer());
+            //Database.SetInitializer(new Initializer());
         }
 
         public DbSet<Emitent> Emitent { get; set; }

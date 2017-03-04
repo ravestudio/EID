@@ -12,7 +12,7 @@ namespace EIDClient.Core.Repository
 
         protected EIDClient.Core.WebApiClient _apiClient = null;
 
-        protected string ServerURL = "http://localhost:61943/";
+        protected string ServerURL = "http://localhost:99/";
 
         public Repository(EIDClient.Core.WebApiClient apiClient)
         {
