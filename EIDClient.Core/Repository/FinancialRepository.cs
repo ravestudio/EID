@@ -15,13 +15,13 @@ namespace EIDClient.Core.Repository
 
         }
 
-        public override Task<IEnumerable<Financial>> GetAll()
+        public Task<IEnumerable<Financial>> GetByEmitentId(int EmitentId)
         {
             TaskCompletionSource<IEnumerable<Entities.Financial>> TCS = new TaskCompletionSource<IEnumerable<Entities.Financial>>();
 
             IList<Entities.Financial> res_list = new List<Entities.Financial>();
 
-            string url = string.Format("{0}{1}", this.ServerURL, "api/financial/");
+            string url = string.Format("{0}{1}?EmitentId={2}", this.ServerURL, "api/financial/", EmitentId);
 
             this._apiClient.GetData(url).ContinueWith(t =>
             {

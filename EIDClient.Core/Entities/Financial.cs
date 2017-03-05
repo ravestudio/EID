@@ -96,10 +96,6 @@ namespace EIDClient.Core.Entities
             this.CurrentLiabilities = (decimal)jsonObj["CurrentLiabilities"].GetNumber();
             this.LongTermLiabilities = (decimal)jsonObj["LongTermLiabilities"].GetNumber();
             this.LiabilitiesAndEquity = (decimal)jsonObj["LiabilitiesAndEquity"].GetNumber();
-
-
-
-            base.ReadData(jsonObj);
         }
     }
 }

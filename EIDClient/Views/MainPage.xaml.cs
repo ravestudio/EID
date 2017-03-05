@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace EIDClient
+namespace EIDClient.Views
 {
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
@@ -26,13 +26,8 @@ namespace EIDClient
         {
             this.InitializeComponent();
 
-            EIDClient.Core.Repository.EmitentRepository repo = new Core.Repository.EmitentRepository(new Core.WebApiClient());
-
-
-            this.DataContext = repo.GetAll().Result;
-
             EIDClient.Core.Repository.FinancialRepository repo2 = new Core.Repository.FinancialRepository(new Core.WebApiClient());
-            var financials = repo2.GetAll().Result;
+            var financials = repo2.GetByEmitentId(3).Result;
 
         }
     }

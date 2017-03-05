@@ -110,9 +110,15 @@
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Managers\ChildFinder.cs" />
+    <Compile Include="ViewModel\EmitentListViewModel.cs" />
+    <Compile Include="ViewModel\IMenu.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Repository\EmitentRepository.cs" />
     <Compile Include="Repository\FinancialRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="ViewModel\Menu.cs" />
+    <Compile Include="ViewModel\NavigationService.cs" />
     <Compile Include="WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EIDClient.Core.rd.xml" />
