@@ -107,12 +107,22 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\EmitentModel.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
+    <Compile Include="Messages\EmitentListLoadedMessage.cs" />
+    <Compile Include="Messages\FinancialListLoadedMessage.cs" />
+    <Compile Include="Messages\LoadEmitentListMessage.cs" />
+    <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
+    <Compile Include="ViewModel\FinancialEditViewModel.cs" />
+    <Compile Include="ViewModel\FinancialItem.cs" />
+    <Compile Include="ViewModel\IMainCommandBar.cs" />
     <Compile Include="ViewModel\IMenu.cs" />
+    <Compile Include="Messages\LoadFinancialListMessage.cs" />
+    <Compile Include="ViewModel\MainCommandBar.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Repository\EmitentRepository.cs" />
     <Compile Include="Repository\FinancialRepository.cs" />

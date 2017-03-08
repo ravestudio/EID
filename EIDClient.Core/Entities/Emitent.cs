@@ -12,6 +12,7 @@ namespace EIDClient.Core.Entities
 
         public override void ReadData(Windows.Data.Json.JsonObject jsonObj)
         {
+            this.Id = (int)jsonObj["Id"].GetNumber();
             this.Name = jsonObj["Name"].GetString();
 
             base.ReadData(jsonObj);

@@ -95,8 +95,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\FinancialLineItem.xaml.cs">
+      <DependentUpon>FinancialLineItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmitentDetailsPage.xaml.cs">
+      <DependentUpon>EmitentDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EmitentListPage.xaml.cs">
       <DependentUpon>EmitentListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FinancialEditPage.xaml.cs">
+      <DependentUpon>FinancialEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -125,7 +134,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Controls\FinancialLineItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmitentDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EmitentListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FinancialEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

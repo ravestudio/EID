@@ -25,7 +25,6 @@ namespace EIDClient.Core.Entities
 
         public virtual void ReadData(Windows.Data.Json.JsonObject jsonObj)
         {
-
         }
 
         public int ReadValue(Windows.Data.Json.JsonObject jsonObj, string field)

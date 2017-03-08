@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.ViewModel;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,16 +22,44 @@ namespace EIDClient.Views
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class EmitentListPage : Page
+    public sealed partial class FinancialEditPage : Page
     {
-        public EmitentListPage()
+        public FinancialEditPage()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ((EmitentListViewModel)this.DataContext).LoadEmitents();
+            FinancialEditViewModel vm = (FinancialEditViewModel)DataContext;
+
+            Financial financial = null;
+
+            if (e.Parameter != null)
+            {
+                financial = (Financial)e.Parameter;        
+            }
+
+            if (financial == null)
+            {
+                financial = new Financial();
+            }
+
+            vm.Set(financial);
+
+            foreach (FinancialItem item in vm.FinancialItems)
+            {
+                addItem(item);
+            }
+        }
+
+        void addItem(FinancialItem item)
+        {
+            Controls.FinancialLineItem line_item = new Controls.FinancialLineItem();
+            line_item.AddItem(item);
+
+            this.FinancialItems.Children.Add(line_item);
+
         }
     }
 }

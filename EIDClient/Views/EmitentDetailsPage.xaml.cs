@@ -21,16 +21,16 @@ namespace EIDClient.Views
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class EmitentListPage : Page
+    public sealed partial class EmitentDetailsPage : Page
     {
-        public EmitentListPage()
+        public EmitentDetailsPage()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ((EmitentListViewModel)this.DataContext).LoadEmitents();
+            ((EmitentDetailsViewModel)this.DataContext).LoadData((int)e.Parameter);
         }
     }
 }

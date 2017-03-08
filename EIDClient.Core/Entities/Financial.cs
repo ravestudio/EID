@@ -82,7 +82,7 @@ namespace EIDClient.Core.Entities
             this.Period = (int)jsonObj["Period"].GetNumber();
 
             this.Revenue = (decimal)jsonObj["Revenue"].GetNumber();
-            this.OperatingExpenses = (decimal)jsonObj["Revenue"].GetNumber();
+            this.OperatingExpenses = (decimal)jsonObj["OperatingExpenses"].GetNumber();
             this.Expenses = (decimal)jsonObj["Expenses"].GetNumber();
             this.GrossProfit = (decimal)jsonObj["GrossProfit"].GetNumber();
             this.OperatingIncome = (decimal)jsonObj["OperatingIncome"].GetNumber();

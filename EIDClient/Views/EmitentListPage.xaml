@@ -6,11 +6,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding EmitentListViewModel, Source={StaticResource Locator}}">
+    DataContext="{Binding EmitentListViewModel, Source={StaticResource Locator}}"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <ListView ItemsSource="{Binding EmitentList}">
+        <ListView
+            ItemsSource="{Binding EmitentList}"
+            SelectionMode="Single"
+            IsItemClickEnabled="True">
+
+            <i:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="ItemClick">
+                    <core:InvokeCommandAction Command="{Binding SelectEmitentCmd}"/>
+                </core:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -19,4 +31,5 @@
         </ListView>
         
     </Grid>
+
 </Page>

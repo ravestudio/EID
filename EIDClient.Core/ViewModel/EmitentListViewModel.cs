@@ -1,4 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.Messages;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,20 +15,39 @@ namespace EIDClient.Core.ViewModel
 {
     public class EmitentListViewModel : ViewModelBase
     {
+        public RelayCommand<object> SelectEmitentCmd { get; set; }
+
         public ObservableCollection<Core.Entities.Emitent> EmitentList { get; set; }
 
-        public EmitentListViewModel()
+        private INavigationService _navigationService = null;
+
+        public EmitentListViewModel(INavigationService navigationService)
         {
+            this._navigationService = navigationService;
             this.EmitentList = new ObservableCollection<Entities.Emitent>();
 
-            EIDClient.Core.Repository.EmitentRepository repo = new Core.Repository.EmitentRepository(new Core.WebApiClient());
-            repo.GetAll().ContinueWith(t =>
+            Messenger.Default.Register<EmitentListLoadedMessage>(this, (msg) =>
             {
-                foreach(var emitent in t.Result)
+                this.EmitentList.Clear();
+                foreach (Entities.Emitent emitent in msg.EmitentList)
                 {
                     this.EmitentList.Add(emitent);
                 }
             });
+
+            SelectEmitentCmd = new RelayCommand<object>((parameter) =>
+            {
+                Windows.UI.Xaml.Controls.ItemClickEventArgs e = (Windows.UI.Xaml.Controls.ItemClickEventArgs)parameter;
+                Emitent SelectedEmitent = (Emitent)e.ClickedItem;
+
+                this._navigationService.NavigateTo("EmitentDetails", SelectedEmitent.Id);
+            });
+        }
+
+        public void LoadEmitents()
+        {
+            Messenger.Default.Send<LoadEmitentListMessage>(new LoadEmitentListMessage());
+
         }
     }
 }

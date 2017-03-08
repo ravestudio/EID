@@ -23,10 +23,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Background="Transparent" Command="{Binding ClickMenuCmd}"></Button>
-            <TextBlock Text="Home" Margin="20,20,0,0"/>
-        </StackPanel>
+        <RelativePanel Grid.Row="0">
+            <Button
+                x:Name="homebtn"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE700;"
+                Background="Transparent"
+                Command="{Binding ClickMenuCmd}"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"></Button>
+            <TextBlock Text="Home" Margin="0,0,0,0" VerticalAlignment="Center"
+                       RelativePanel.RightOf="homebtn"
+                       RelativePanel.AlignTopWithPanel="True"
+                       RelativePanel.AlignBottomWithPanel="True"/>
+            <CommandBar x:Name="mainCommandBar"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True">
+                <AppBarButton Icon="Save"/>
+            </CommandBar>
+        </RelativePanel>
 
         <SplitView
             x:Name="panel_splitter"
@@ -42,7 +58,8 @@
                     IsItemClickEnabled="True"
                     SelectionMode="Single"
                     ItemsSource="{Binding MenuItems}"
-                    ItemTemplate="{StaticResource MenuItemTemplate}">
+                    ItemTemplate="{StaticResource MenuItemTemplate}"
+                    Background="Indigo">
 
                     <i:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="SelectionChanged">
@@ -61,4 +78,5 @@
             </SplitView.Content>
         </SplitView>
     </Grid>
+
 </Page>

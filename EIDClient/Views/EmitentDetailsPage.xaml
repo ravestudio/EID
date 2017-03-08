@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="EIDClient.Views.EmitentDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EIDClient.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding EmitentDetailsViewModel, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot Title="Pivot">
+            <PivotItem Header="Financials">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <ListView
+                        ItemsSource="{Binding FinancialList}"
+                        x:Name="financial_list"
+                        SelectionMode="Single"
+                        Grid.Row="0">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Year}"/>
+                                    <TextBlock Text="{Binding Period}"/>
+                                    <TextBlock Text="{Binding Revenue}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="PivotItem 1">
+                <Grid/>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+
+    <!--<Page.BottomAppBar>
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Add" Command ="{Binding AddFinancialCmd}"/>
+            <AppBarButton Icon="Edit" Command="{Binding EditFinancialCmd}" CommandParameter="{Binding ElementName=financial_list, Path=SelectedItem}"/>
+        </CommandBar>
+    </Page.BottomAppBar>-->
+</Page>
