@@ -22,10 +22,13 @@ namespace EIDClient.Core.ViewModel
         public ObservableCollection<Core.Entities.Financial> FinancialList { get; set; }
 
         public RelayCommand AddFinancialCmd { get; set; }
-        public RelayCommand<object> EditFinancialCmd { get; set; }
+        public RelayCommand EditFinancialCmd { get; set; }
+        public RelayCommand<object> SelectFinancialCmd { get; set; }
 
         private INavigationService _navigationService = null;
         private IMainCommandBar _commandBar = null;
+
+        private Financial _selectedFinancial = null;
 
         public EmitentDetailsViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
@@ -42,17 +45,20 @@ namespace EIDClient.Core.ViewModel
                 }
             });
 
+            this.SelectFinancialCmd = new RelayCommand<object>((parameter) =>
+            {
+                Windows.UI.Xaml.Controls.ItemClickEventArgs e = (Windows.UI.Xaml.Controls.ItemClickEventArgs)parameter;
+                this._selectedFinancial = (Financial)e.ClickedItem;
+            });
+
             this.AddFinancialCmd = new RelayCommand(() =>
             {
                 this._navigationService.NavigateTo("FinancialEdit");
             });
 
-            this.EditFinancialCmd = new RelayCommand<object>((param) =>
+            this.EditFinancialCmd = new RelayCommand(() =>
             {
-                Financial financial = (Financial)param;
-
-                this._navigationService.NavigateTo("FinancialEdit", financial);
-
+                this._navigationService.NavigateTo("FinancialEdit", this._selectedFinancial);
             });
         }
 
@@ -67,18 +73,11 @@ namespace EIDClient.Core.ViewModel
                 Command = this.AddFinancialCmd
             });
 
-            Binding bind = new Binding();
-            bind.Source = ChildFinder.FindChild<ListView>(Window.Current.Content, "financial_list");
-            bind.Path = new Windows.UI.Xaml.PropertyPath("SelectedItem");
-
-            AppBarButton btn = new AppBarButton()
+            _commandBar.AddCommandButton(new AppBarButton()
             {
                 Icon = new SymbolIcon(Symbol.Edit),
                 Command = this.EditFinancialCmd
-            };
-
-            btn.SetBinding(AppBarButton.CommandParameterProperty, bind);
-            _commandBar.AddCommandButton(btn);
+            });
 
         }
     }

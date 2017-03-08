@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding EmitentDetailsViewModel, Source={StaticResource Locator}}">
+    DataContext="{Binding EmitentDetailsViewModel, Source={StaticResource Locator}}"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Title="Pivot">
@@ -18,9 +20,15 @@
                     </Grid.RowDefinitions>
                     <ListView
                         ItemsSource="{Binding FinancialList}"
-                        x:Name="financial_list"
                         SelectionMode="Single"
+                        IsItemClickEnabled="True"
                         Grid.Row="0">
+
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:InvokeCommandAction Command="{Binding SelectFinancialCmd}"/>
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
