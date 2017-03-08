@@ -40,7 +40,7 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True">
-                <AppBarButton Icon="Save"/>
+
             </CommandBar>
         </RelativePanel>
 

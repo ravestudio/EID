@@ -50,11 +50,4 @@
             </PivotItem>
         </Pivot>
     </Grid>
-
-    <!--<Page.BottomAppBar>
-        <CommandBar Grid.Row="1">
-            <AppBarButton Icon="Add" Command ="{Binding AddFinancialCmd}"/>
-            <AppBarButton Icon="Edit" Command="{Binding EditFinancialCmd}" CommandParameter="{Binding ElementName=financial_list, Path=SelectedItem}"/>
-        </CommandBar>
-    </Page.BottomAppBar>-->
 </Page>
