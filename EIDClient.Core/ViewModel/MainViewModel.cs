@@ -34,6 +34,11 @@ namespace EIDClient.Core.ViewModel
                 this._navigationServie.NavigateTo("EmitentList");
             });
 
+            _menuActions.Add("securities", () =>
+            {
+                this._navigationServie.NavigateTo("SecurityList");
+            });
+
             this.ClickMenuCmd = new RelayCommand(() =>
             {
                 this._menu.Open();

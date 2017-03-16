@@ -108,13 +108,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\EmitentModel.cs" />
+    <Compile Include="DataModel\SecurityModel.cs" />
+    <Compile Include="DDE\MyDDEServer.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\Security.cs" />
+    <Compile Include="ISS\Candle.cs" />
+    <Compile Include="ISS\ExponentialMovingAverage.cs" />
+    <Compile Include="ISS\SimpleMovingAverage.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Messages\EmitentListLoadedMessage.cs" />
     <Compile Include="Messages\FinancialListLoadedMessage.cs" />
     <Compile Include="Messages\LoadEmitentListMessage.cs" />
+    <Compile Include="Messages\LoadSecurityListMessage.cs" />
+    <Compile Include="Messages\SaveFinancialMessage.cs" />
+    <Compile Include="ISS\MicexISSClient.cs" />
+    <Compile Include="Messages\SecurityListLoadedMessage.cs" />
+    <Compile Include="Repository\SecurityRepository.cs" />
     <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
     <Compile Include="ViewModel\FinancialEditViewModel.cs" />
@@ -129,6 +140,7 @@
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="ViewModel\Menu.cs" />
     <Compile Include="ViewModel\NavigationService.cs" />
+    <Compile Include="ViewModel\SecurityListViewModel.cs" />
     <Compile Include="WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EIDClient.Core.rd.xml" />

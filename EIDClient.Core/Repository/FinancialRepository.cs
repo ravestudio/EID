@@ -15,6 +15,28 @@ namespace EIDClient.Core.Repository
 
         }
 
+        public override void Create(Financial model)
+        {
+            string url = string.Format("{0}{1}", this.ServerURL, "api/financial/");
+
+            this._apiClient.PutData(url, model.ConverToKeyValue()).ContinueWith(t =>
+            {
+                string data = t.Result;
+
+            });
+        }
+
+        public override void Update(Financial model)
+        {
+            string url = string.Format("{0}{1}", this.ServerURL, "api/financial/");
+
+            this._apiClient.PostData(url, model.ConverToKeyValue()).ContinueWith(t =>
+            {
+                string data = t.Result;
+
+            });
+        }
+
         public Task<IEnumerable<Financial>> GetByEmitentId(int EmitentId)
         {
             TaskCompletionSource<IEnumerable<Entities.Financial>> TCS = new TaskCompletionSource<IEnumerable<Entities.Financial>>();

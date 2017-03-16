@@ -15,7 +15,8 @@
                    RelativePanel.AlignBottomWithPanel="True"
                    RelativePanel.AlignTopWithPanel="True"/>
         <TextBox x:Name="tb_value"
-                 Text="{x:Bind Item.Value}"
+                 Width="150"
+                 Text="{x:Bind Item.Value, Mode=TwoWay}"
                  RelativePanel.AlignBottomWithPanel="True"
                  RelativePanel.AlignTopWithPanel="True"
                  RelativePanel.AlignRightWithPanel="True"/>

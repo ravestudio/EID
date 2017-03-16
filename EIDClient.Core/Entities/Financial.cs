@@ -76,8 +76,11 @@ namespace EIDClient.Core.Entities
         /// </summary>
         public decimal LiabilitiesAndEquity { get; set; }
 
+        public int EmitentId { get; set; }
+
         public override void ReadData(Windows.Data.Json.JsonObject jsonObj)
         {
+            this.Id = (int)jsonObj["Id"].GetNumber();
             this.Year = (int)jsonObj["Year"].GetNumber();
             this.Period = (int)jsonObj["Period"].GetNumber();
 
@@ -96,6 +99,34 @@ namespace EIDClient.Core.Entities
             this.CurrentLiabilities = (decimal)jsonObj["CurrentLiabilities"].GetNumber();
             this.LongTermLiabilities = (decimal)jsonObj["LongTermLiabilities"].GetNumber();
             this.LiabilitiesAndEquity = (decimal)jsonObj["LiabilitiesAndEquity"].GetNumber();
+        }
+
+        public List<KeyValuePair<string, string>> ConverToKeyValue()
+        {
+            List<KeyValuePair<string, string>> keyValueData = new List<KeyValuePair<string, string>>();
+
+            keyValueData.Add(new KeyValuePair<string, string>("Id", Id.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Year", Year.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Period", Period.ToString()));
+
+            keyValueData.Add(new KeyValuePair<string, string>("Revenue", Revenue.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("OperatingExpenses", OperatingExpenses.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Expenses", Expenses.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("OperatingIncome", OperatingIncome.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("NetIncome", NetIncome.ToString()));
+
+            keyValueData.Add(new KeyValuePair<string, string>("CurrentAssets", CurrentAssets.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("FixedAssets", FixedAssets.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Equity", Equity.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("CurrentLiabilities", CurrentLiabilities.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("LongTermLiabilities", LongTermLiabilities.ToString()));
+
+            if (EmitentId != 0)
+            {
+                keyValueData.Add(new KeyValuePair<string, string>("Emitent.Id", EmitentId.ToString()));
+            }
+            return keyValueData;
+
         }
     }
 }

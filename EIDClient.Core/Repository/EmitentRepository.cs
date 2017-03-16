@@ -12,6 +12,7 @@ namespace EIDClient.Core.Repository
         public EmitentRepository(EIDClient.Core.WebApiClient apiClient)
             : base(apiClient)
         {
+            this.apiPath = "api/emitent/";
 
         }
 

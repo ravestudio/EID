@@ -13,6 +13,10 @@ namespace EIDClient.Core.Repository
         protected EIDClient.Core.WebApiClient _apiClient = null;
 
         protected string ServerURL = "http://localhost:99/";
+        //protected string ServerURL = "http://localhost:61943/";
+        //protected string ServerURL = "http://ravestudio-001-site1.htempurl.com/";
+
+        protected string apiPath { get; set; }
 
         public Repository(EIDClient.Core.WebApiClient apiClient)
         {
@@ -26,9 +30,38 @@ namespace EIDClient.Core.Repository
 
         public virtual Task<IEnumerable<G>> GetAll()
         {
-            return null;
+            TaskCompletionSource<IEnumerable<G>> TCS = new TaskCompletionSource<IEnumerable<G>>();
+
+            IList<G> entityList = new List<G>();
+
+            string url = string.Format("{0}{1}", this.ServerURL, this.apiPath);
+
+            this._apiClient.GetData(url).ContinueWith(t =>
+            {
+                string data = t.Result;
+
+                var emitentArray = Windows.Data.Json.JsonValue.Parse(data).GetArray();
+
+                for (int i = 0; i < emitentArray.Count; i++)
+                {
+                    var value = emitentArray[i];
+                    G entity = this.GetObject(value);
+                    entityList.Add(entity);
+                }
+
+
+                TCS.SetResult(entityList);
+            });
+
+            return TCS.Task;
         }
+
         public virtual void Create(G model)
+        {
+
+        }
+
+        public virtual void Update(G model)
         {
 
         }

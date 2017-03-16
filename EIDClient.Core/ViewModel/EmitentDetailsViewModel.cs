@@ -1,4 +1,5 @@
 ﻿using EIDClient.Core.Entities;
+using EIDClient.Core.ISS;
 using EIDClient.Core.Managers;
 using EIDClient.Core.Messages;
 using GalaSoft.MvvmLight;
@@ -11,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -29,6 +32,8 @@ namespace EIDClient.Core.ViewModel
         private IMainCommandBar _commandBar = null;
 
         private Financial _selectedFinancial = null;
+
+        private int _emitentId = 0;
 
         public EmitentDetailsViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
@@ -53,7 +58,7 @@ namespace EIDClient.Core.ViewModel
 
             this.AddFinancialCmd = new RelayCommand(() =>
             {
-                this._navigationService.NavigateTo("FinancialEdit");
+                this._navigationService.NavigateTo("FinancialEdit", new Financial() { EmitentId = _emitentId });
             });
 
             this.EditFinancialCmd = new RelayCommand(() =>
@@ -64,6 +69,8 @@ namespace EIDClient.Core.ViewModel
 
         public void LoadData(int EmitentId)
         {
+            this._emitentId = EmitentId;
+
             Messenger.Default.Send<LoadFinancialListMessage>(new LoadFinancialListMessage() { EmitentId = EmitentId });
 
             _commandBar.Clear();
@@ -78,6 +85,13 @@ namespace EIDClient.Core.ViewModel
                 Icon = new SymbolIcon(Symbol.Edit),
                 Command = this.EditFinancialCmd
             });
+
+            MicexISSClient client = new MicexISSClient(new WebApiClient());
+            IList<Candle> candlelist = client.GetCandles("mfon", new DateTime(2017, 3, 10), 60).Result;
+
+            SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
+
+            ExponentialMovingAverage ema = new ExponentialMovingAverage(candlelist, 9);
 
         }
     }

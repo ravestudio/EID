@@ -24,15 +24,18 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<EIDClient.Core.WebApiClient>();
             SimpleIoc.Default.Register<EmitentRepository>();
             SimpleIoc.Default.Register<FinancialRepository>();
+            SimpleIoc.Default.Register<SecurityRepository>();
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EmitentListViewModel>();
+            SimpleIoc.Default.Register<SecurityListViewModel>();
             SimpleIoc.Default.Register<EmitentDetailsViewModel>();
             SimpleIoc.Default.Register<FinancialEditViewModel>();
 
             SimpleIoc.Default.Register<EmitentModel>(true);
+            SimpleIoc.Default.Register<SecurityModel>(true);
         }
 
         public MainViewModel MainViewModel
@@ -48,6 +51,14 @@ namespace EIDClient.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<EmitentListViewModel>();
+            }
+        }
+
+        public SecurityListViewModel SecurityListViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SecurityListViewModel>();
             }
         }
 
@@ -73,6 +84,7 @@ namespace EIDClient.ViewModel
             var navigationService = new EIDClient.Core.ViewModel.NavigationService();
 
             navigationService.Configure("EmitentList", typeof(Views.EmitentListPage));
+            navigationService.Configure("SecurityList", typeof(Views.SecurityListPage));
             navigationService.Configure("EmitentDetails", typeof(Views.EmitentDetailsPage));
             navigationService.Configure("FinancialEdit", typeof(Views.FinancialEditPage));
             navigationService.Configure("Main", typeof(Views.MainPage));

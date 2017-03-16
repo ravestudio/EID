@@ -24,5 +24,28 @@ namespace EIDService.Controllers
 
             return financials;
         }
+
+        // POST api/Financial
+        public void Post([FromBody]Financial financial)
+        {
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                unit.FinancialRepository.Update(financial);
+
+                unit.Commit();
+            }
+        }
+
+        // POST api/Financial
+        public void Put([FromBody]Financial financial)
+        {
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                financial.Emitent = unit.EmitentRepository.Get().Single(e => e.Id == financial.Emitent.Id);
+                unit.FinancialRepository.Create(financial);
+
+                unit.Commit();
+            }
+        }
     }
 }

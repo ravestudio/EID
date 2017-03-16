@@ -40,6 +40,19 @@ namespace EIDClient.Core.DataModel
                     FinancialList = financialList
                 });
             });
+
+            Messenger.Default.Register<SaveFinancialMessage>(this, (msg) =>
+            {
+                if (msg.Financial.Id != 0)
+                {
+                    this._financialRepository.Update(msg.Financial);
+                }
+
+                if (msg.Financial.Id == 0)
+                {
+                    this._financialRepository.Create(msg.Financial);
+                }
+            });
         }
     }
 }

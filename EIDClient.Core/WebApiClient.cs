@@ -48,5 +48,27 @@ namespace EIDClient.Core
 
             return TCS.Task;
         }
+
+        public Task<string> PutData(string url, List<KeyValuePair<string, string>> data)
+        {
+            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+
+            var uri = new Uri(url);
+            System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
+            System.Net.Http.HttpContent content = new System.Net.Http.FormUrlEncodedContent(data);
+
+            string text = string.Empty;
+
+
+            Task<System.Net.Http.HttpResponseMessage> response = httpClient.PutAsync(uri, content);
+
+            response.ContinueWith(r =>
+            {
+                string msg = r.Result.Content.ReadAsStringAsync().Result;
+                TCS.SetResult(msg);
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+            return TCS.Task;
+        }
     }
 }

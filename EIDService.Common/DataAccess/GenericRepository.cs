@@ -71,7 +71,8 @@ namespace EIDService.Common.DataAccess
 
         public void Update(TEntity entity)
         {
-            //this.dbSet.u
+            this.dbSet.Attach(entity);
+            this._context.Entry(entity).State = EntityState.Modified;
         }
     }
 }

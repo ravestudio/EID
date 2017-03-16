@@ -9,6 +9,6 @@ namespace EIDClient.Core.ViewModel
     public class FinancialItem
     {
         public string Name { get; set; }
-        public decimal Value { get; set; }
+        public string Value { get; set; }
     }
 }
