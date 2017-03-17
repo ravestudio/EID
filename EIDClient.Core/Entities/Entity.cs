@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace EIDClient.Core.Entities
         void ReadData(Windows.Data.Json.JsonObject jsonObj);
     }
 
-    public abstract class Entity<TId> : IEntity
+    public abstract class Entity<TId> : ViewModelBase, IEntity
     {
         public virtual TId Id
         {

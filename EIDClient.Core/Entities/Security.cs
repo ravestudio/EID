@@ -21,5 +21,35 @@ namespace EIDClient.Core.Entities
             this.Name = jsonObj["Name"].GetString();
             this.IssueSize = (int)jsonObj["IssueSize"].GetNumber();
         }
+
+        private ISS.SecurityInfo _securityInfo = null;
+        private ISS.MarketData _marketData = null;
+
+        public ISS.SecurityInfo SecurityInfo
+        {
+            get { return _securityInfo; }
+            set { _securityInfo = value; RaisePropertyChanged("CurrentPrice"); }
+        }
+
+        public ISS.MarketData MarketData
+        {
+            get { return _marketData; }
+            set { _marketData = value; RaisePropertyChanged("CurrentPrice"); }
+        }
+
+        public decimal CurrentPrice
+        {
+            get
+            {
+                decimal res = 0m;
+
+                if (MarketData != null && SecurityInfo != null)
+                {
+                    res = MarketData.LCURRENTPRICE != 0 ? MarketData.LCURRENTPRICE : SecurityInfo.PREVLEGALCLOSEPRICE;
+                }
+
+                return res;
+            }
+        }
     }
 }

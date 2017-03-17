@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.Messages
 {
-    public class LoadSecurityListMessage
+    public class IISGetSecurityInfo
     {
-        
+        public IList<Security> SecurityList { get; set; }
     }
 }

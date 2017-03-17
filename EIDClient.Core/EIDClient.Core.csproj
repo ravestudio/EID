@@ -116,10 +116,14 @@
     <Compile Include="Entities\Security.cs" />
     <Compile Include="ISS\Candle.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />
+    <Compile Include="ISS\IISResponse.cs" />
+    <Compile Include="ISS\MarketData.cs" />
+    <Compile Include="ISS\SecurityInfo.cs" />
     <Compile Include="ISS\SimpleMovingAverage.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Messages\EmitentListLoadedMessage.cs" />
     <Compile Include="Messages\FinancialListLoadedMessage.cs" />
+    <Compile Include="Messages\IISGetSecurityInfo.cs" />
     <Compile Include="Messages\LoadEmitentListMessage.cs" />
     <Compile Include="Messages\LoadSecurityListMessage.cs" />
     <Compile Include="Messages\SaveFinancialMessage.cs" />
