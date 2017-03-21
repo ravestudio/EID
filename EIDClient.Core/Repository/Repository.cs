@@ -23,9 +23,21 @@ namespace EIDClient.Core.Repository
             this._apiClient = apiClient;
         }
 
-        public virtual async Task<G> GetById(Key id)
+        public virtual Task<G> GetById(Key id)
         {
-            return null;
+            TaskCompletionSource<G> TCS = new TaskCompletionSource<G>();
+
+            string url = string.Format("{0}{1}{2}", this.ServerURL, this.apiPath, id);
+
+            this._apiClient.GetData(url).ContinueWith(t =>
+            {
+                string data = t.Result;
+                var value = Windows.Data.Json.JsonValue.Parse(data).GetObject();
+                G entity = this.GetObject(value);
+                TCS.SetResult(entity);
+            });
+
+            return TCS.Task;
         }
 
         public virtual Task<IEnumerable<G>> GetAll()

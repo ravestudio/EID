@@ -6,31 +6,40 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.ISS
 {
-    public class ExponentialMovingAverage
+    public class ExponentialMovingAverage : List<decimal>
     {
+        public ExponentialMovingAverage(IList<decimal> values, int period)
+        {
+            Calculate(values.ToArray(), period);
+        }
+
         public ExponentialMovingAverage(IList<Candle> candles, int period)
         {
-            IList<decimal> result = new List<decimal>();
+            Calculate(candles.Select(c => c.close).ToArray(), period);
+        }
+        
 
-            int diff = candles.Count-period;
+        void Calculate(decimal[] data, int period)
+        {
+            this.Clear();
 
-            decimal[] newdata = candles.Take(period).Select(c => c.close).ToArray();
+            int diff = data.Length - period;
+
+            decimal[] newdata = data.Take(period).ToArray();
 
             decimal factor = CalculateFactor(period);
 
             decimal sma = Average(newdata);
 
-            result.Add(Math.Round(sma, 2));
+            this.Add(Math.Round(sma, 2));
 
             for (int i = 0; i < diff; i++)
             {
-                decimal prev = result[result.Count-1];
-                decimal price = candles[period + i].close;
-                decimal next = factor*(price-prev)+prev;
-                result.Add(Math.Round(next, 2));
-
+                decimal prev = this[this.Count - 1];
+                decimal price = data[period + i];
+                decimal next = factor * (price - prev) + prev;
+                this.Add(Math.Round(next, 2));
             }
-
         }
 
         decimal Sum(decimal[] data)

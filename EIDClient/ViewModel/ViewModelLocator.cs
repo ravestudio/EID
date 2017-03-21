@@ -12,6 +12,8 @@ using EIDClient.Core.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using EIDClient.Core.DataModel;
+using EIDClient.Core.Managers;
+using EIDClient.Managers;
 
 namespace EIDClient.ViewModel
 {
@@ -27,12 +29,14 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<FinancialRepository>();
             SimpleIoc.Default.Register<SecurityRepository>();
             SimpleIoc.Default.Register<IMenu, Menu>();
+            SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EmitentListViewModel>();
             SimpleIoc.Default.Register<SecurityListViewModel>();
             SimpleIoc.Default.Register<EmitentDetailsViewModel>();
+            SimpleIoc.Default.Register<SecurityDetailsViewModel>();
             SimpleIoc.Default.Register<FinancialEditViewModel>();
 
             SimpleIoc.Default.Register<EmitentModel>(true);
@@ -71,6 +75,14 @@ namespace EIDClient.ViewModel
             }
         }
 
+        public SecurityDetailsViewModel SecurityDetailsViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SecurityDetailsViewModel>();
+            }
+        }
+
         public FinancialEditViewModel FinancialEditViewModel
         {
             get
@@ -87,6 +99,7 @@ namespace EIDClient.ViewModel
             navigationService.Configure("EmitentList", typeof(Views.EmitentListPage));
             navigationService.Configure("SecurityList", typeof(Views.SecurityListPage));
             navigationService.Configure("EmitentDetails", typeof(Views.EmitentDetailsPage));
+            navigationService.Configure("SecurityDetails", typeof(Views.SecurityDetailsPage));
             navigationService.Configure("FinancialEdit", typeof(Views.FinancialEditPage));
             navigationService.Configure("Main", typeof(Views.MainPage));
 

@@ -28,13 +28,21 @@ namespace EIDClient.Core.Entities
         public ISS.SecurityInfo SecurityInfo
         {
             get { return _securityInfo; }
-            set { _securityInfo = value; RaisePropertyChanged("CurrentPrice"); }
+            set {
+                _securityInfo = value;
+                RaisePropertyChanged("CurrentPrice");
+                RaisePropertyChanged("PriceChangePrcnt");
+            }
         }
 
         public ISS.MarketData MarketData
         {
             get { return _marketData; }
-            set { _marketData = value; RaisePropertyChanged("CurrentPrice"); }
+            set {
+                _marketData = value;
+                RaisePropertyChanged("CurrentPrice");
+                RaisePropertyChanged("PriceChangePrcnt");
+            }
         }
 
         public decimal CurrentPrice
@@ -46,6 +54,21 @@ namespace EIDClient.Core.Entities
                 if (MarketData != null && SecurityInfo != null)
                 {
                     res = MarketData.LCURRENTPRICE != 0 ? MarketData.LCURRENTPRICE : SecurityInfo.PREVLEGALCLOSEPRICE;
+                }
+
+                return res;
+            }
+        }
+
+        public decimal PriceChangePrcnt
+        {
+            get
+            {
+                decimal res = 0m;
+
+                if (MarketData != null && MarketData.OPENPERIODPRICE > 0)
+                {
+                    res = Math.Round((CurrentPrice - MarketData.OPENPERIODPRICE) / (MarketData.OPENPERIODPRICE / 100), 2);
                 }
 
                 return res;

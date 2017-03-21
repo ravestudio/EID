@@ -86,13 +86,6 @@ namespace EIDClient.Core.ViewModel
                 Command = this.EditFinancialCmd
             });
 
-            MicexISSClient client = new MicexISSClient(new WebApiClient());
-            IList<Candle> candlelist = client.GetCandles("mfon", new DateTime(2017, 3, 10), 60).Result;
-
-            SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
-
-            ExponentialMovingAverage ema = new ExponentialMovingAverage(candlelist, 9);
-
         }
     }
 }

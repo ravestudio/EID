@@ -12,6 +12,18 @@ namespace EIDService.Controllers
 {
     public class SecurityController : ApiController
     {
+
+        public Security Get(int Id)
+        {
+            Security res = null;
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                res = unit.SecurityRepository.Query<Security>(s => s.Id == Id).SingleOrDefault();
+            }
+
+            return res;
+        }
+
         // GET api/security
         public IEnumerable<Security> Get()
         {

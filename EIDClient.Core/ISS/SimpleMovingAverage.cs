@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.ISS
 {
-    public class SimpleMovingAverage
+    public class SimpleMovingAverage : List<decimal>
     {
         public SimpleMovingAverage(IList<Candle> candles, int period)
         {
-            IList<decimal> result = new List<decimal>();
+            this.Clear();
 
-            IList<Candle> temp = candles.OrderByDescending(c => c.begin).ToList();
+            IList<Candle> temp = candles.OrderBy(c => c.begin).ToList();
 
             IEnumerable<int> range = Enumerable.Range(0, candles.Count - period);
 
-            result = range.Select(n => temp.Skip(n).Take(period).Select(c => c.close).Average()).ToList();
+            var result = range.Select(n => temp.Skip(n).Take(period).Select(c => c.close).Average());
+
+            this.AddRange(result);
         }
     }
 }

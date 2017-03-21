@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDClient.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,19 +14,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Документацию по шаблону элемента "Пустая страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// Шаблон элемента пустой страницы задокументирован по адресу http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace EIDClient.Views
 {
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class SecurityDetailsPage : Page
     {
-        public MainPage()
+        public SecurityDetailsPage()
         {
             this.InitializeComponent();
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ((SecurityDetailsViewModel)this.DataContext).LoadData((int)e.Parameter);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using EIDClient.Core.Messages;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.Messages;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using System;
@@ -14,6 +16,7 @@ namespace EIDClient.Core.ViewModel
 {
     public class SecurityListViewModel : ViewModelBase
     {
+        public RelayCommand<object> SelectSecurityCmd { get; set; }
         public ObservableCollection<Core.Entities.Security> SecurityList { get; set; }
         private INavigationService _navigationService = null;
 
@@ -39,6 +42,14 @@ namespace EIDClient.Core.ViewModel
                 }
 
                 timer.Start();
+            });
+
+            SelectSecurityCmd = new RelayCommand<object>((parameter) =>
+            {
+                Windows.UI.Xaml.Controls.ItemClickEventArgs e = (Windows.UI.Xaml.Controls.ItemClickEventArgs)parameter;
+                Security selected = (Security)e.ClickedItem;
+
+                this._navigationService.NavigateTo("SecurityDetails", selected.Id);
             });
 
 

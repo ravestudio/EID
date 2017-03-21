@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding SecurityListViewModel, Source={StaticResource Locator}}">
+    DataContext="{Binding SecurityListViewModel, Source={StaticResource Locator}}"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -15,11 +17,11 @@
             SelectionMode="Single"
             IsItemClickEnabled="True">
 
-            <!--<i:Interaction.Behaviors>
+            <i:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="ItemClick">
-                    <core:InvokeCommandAction Command="{Binding SelectEmitentCmd}"/>
+                    <core:InvokeCommandAction Command="{Binding SelectSecurityCmd}"/>
                 </core:EventTriggerBehavior>
-            </i:Interaction.Behaviors>-->
+            </i:Interaction.Behaviors>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -27,7 +29,8 @@
                         <TextBlock Text="{Binding Code}" Width="100"/>
                         <TextBlock Text="{Binding Name}" Width="200"/>
 
-                        <TextBlock Text="{Binding CurrentPrice, Mode=OneWay}"/>
+                        <TextBlock Text="{Binding CurrentPrice, Mode=OneWay}" Width="50"/>
+                        <TextBlock Text="{Binding PriceChangePrcnt, Mode=OneWay}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

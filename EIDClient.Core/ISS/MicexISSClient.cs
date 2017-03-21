@@ -17,15 +17,15 @@ namespace EIDClient.Core.ISS
 
         }
 
-        public Task<IISResponse> GetSecurityInfo(string security)
+        public Task<ISSResponse> GetSecurityInfo(string security)
         {
             string url = string.Format("http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{0}.xml", security);
 
-            TaskCompletionSource<IISResponse> TCS = new TaskCompletionSource<IISResponse>();
+            TaskCompletionSource<ISSResponse> TCS = new TaskCompletionSource<ISSResponse>();
 
             _apiClient.GetData(url).ContinueWith(t =>
             {
-                IISResponse response = new IISResponse();
+                ISSResponse response = new ISSResponse();
                 response.SecurityInfo = new List<SecurityInfo>();
                 response.MarketData = new List<MarketData>();
 
@@ -53,11 +53,13 @@ namespace EIDClient.Core.ISS
                 {
 
                     string currentPrice = GetAttribute(el, "LCURRENTPRICE");
+                    string openPrice = GetAttribute(el, "OPENPERIODPRICE");
 
                     MarketData market = new MarketData()
                     {
                         Code = GetAttribute(el, "secid"),
-                        LCURRENTPRICE = string.IsNullOrEmpty(currentPrice)? 0m : decimal.Parse(currentPrice, CultureInfo.InvariantCulture)
+                        LCURRENTPRICE = string.IsNullOrEmpty(currentPrice)? 0m : decimal.Parse(currentPrice, CultureInfo.InvariantCulture),
+                        OPENPERIODPRICE = string.IsNullOrEmpty(openPrice)? 0m : decimal.Parse(openPrice, CultureInfo.InvariantCulture),
                     };
 
                     response.MarketData.Add(market);
