@@ -39,6 +39,11 @@ namespace EIDClient.Core.ViewModel
                 this._navigationServie.NavigateTo("SecurityList");
             });
 
+            _menuActions.Add("robot", () =>
+            {
+                this._navigationServie.NavigateTo("Robot");
+            });
+
             this.ClickMenuCmd = new RelayCommand(() =>
             {
                 this._menu.Open();

@@ -28,6 +28,7 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<EmitentRepository>();
             SimpleIoc.Default.Register<FinancialRepository>();
             SimpleIoc.Default.Register<SecurityRepository>();
+            SimpleIoc.Default.Register<TradeSessionRepository>();
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
@@ -38,9 +39,11 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<EmitentDetailsViewModel>();
             SimpleIoc.Default.Register<SecurityDetailsViewModel>();
             SimpleIoc.Default.Register<FinancialEditViewModel>();
+            SimpleIoc.Default.Register<RobotControlViewModel>();
 
             SimpleIoc.Default.Register<EmitentModel>(true);
             SimpleIoc.Default.Register<SecurityModel>(true);
+            SimpleIoc.Default.Register<TradeModel>(true);
         }
 
         public MainViewModel MainViewModel
@@ -91,6 +94,14 @@ namespace EIDClient.ViewModel
             }
         }
 
+        public RobotControlViewModel RobotControlViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RobotControlViewModel>();
+            }
+        }
+
         private static INavigationService GetNavigationService()
         {
 
@@ -101,6 +112,7 @@ namespace EIDClient.ViewModel
             navigationService.Configure("EmitentDetails", typeof(Views.EmitentDetailsPage));
             navigationService.Configure("SecurityDetails", typeof(Views.SecurityDetailsPage));
             navigationService.Configure("FinancialEdit", typeof(Views.FinancialEditPage));
+            navigationService.Configure("Robot", typeof(Views.RobotControlPage));
             navigationService.Configure("Main", typeof(Views.MainPage));
 
             return navigationService;

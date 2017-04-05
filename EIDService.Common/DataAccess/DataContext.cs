@@ -31,6 +31,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.EmitentConfiguration());
             modelBuilder.Configurations.Add(new Configurations.SecurityConfiguration());
             modelBuilder.Configurations.Add(new Configurations.FinancialConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.TradeSessionConfiguration());
         }
     }
 }
