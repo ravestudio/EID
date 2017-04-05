@@ -116,6 +116,7 @@
     <Compile Include="Entities\Financial.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\TradeSession.cs" />
+    <Compile Include="Integration\Terminal.cs" />
     <Compile Include="ISS\Candle.cs" />
     <Compile Include="ISS\CandlesConverter.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />

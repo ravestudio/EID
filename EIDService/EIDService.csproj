@@ -193,6 +193,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CandleController.cs" />
     <Compile Include="Controllers\EmitentController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -235,6 +236,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Properties\PublishProfiles\smartasp.net-FTP.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

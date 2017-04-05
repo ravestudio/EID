@@ -16,6 +16,7 @@ namespace EIDService.Common.DataAccess
         private GenericRepository<Security> securityRepository;
         private GenericRepository<Financial> financialRepository;
         private GenericRepository<TradeSession> tradeSessionRepository;
+        private GenericRepository<Candle> candleRepository;
 
         public UnitOfWork(DbContext context)
         {
@@ -54,6 +55,13 @@ namespace EIDService.Common.DataAccess
             }
         }
 
+        public GenericRepository<Candle> CandleRepository
+        {
+            get
+            {
+                return this.candleRepository ?? new GenericRepository<Candle>(_context);
+            }
+        }
 
         private bool disposed = false;
 

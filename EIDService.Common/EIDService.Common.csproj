@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\SecurityConfiguration.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="DataAccess\IGenericRepository.cs" />
     <Compile Include="DataAccess\Initializer.cs" />
     <Compile Include="DataAccess\UnitOfWork.cs" />
+    <Compile Include="Entities\Candle.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
@@ -74,6 +76,10 @@
     <Compile Include="Migrations\201703310937096_addTradeSession.Designer.cs">
       <DependentUpon>201703310937096_addTradeSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704050940170_AddCandles.cs" />
+    <Compile Include="Migrations\201704050940170_AddCandles.Designer.cs">
+      <DependentUpon>201704050940170_AddCandles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -87,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703310937096_addTradeSession.resx">
       <DependentUpon>201703310937096_addTradeSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704050940170_AddCandles.resx">
+      <DependentUpon>201704050940170_AddCandles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

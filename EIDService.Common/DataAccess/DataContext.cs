@@ -25,6 +25,7 @@ namespace EIDService.Common.DataAccess
         public DbSet<Emitent> Emitent { get; set; }
         public DbSet<Security> Securities { get; set; }
         public DbSet<Financial> Financials { get; set; }
+        public DbSet<Candle> Candles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,6 +33,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.SecurityConfiguration());
             modelBuilder.Configurations.Add(new Configurations.FinancialConfiguration());
             modelBuilder.Configurations.Add(new Configurations.TradeSessionConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.CandleConfiguration());
         }
     }
 }
