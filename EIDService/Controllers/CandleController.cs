@@ -1,5 +1,8 @@
-﻿using EIDService.Common.DataAccess;
+﻿using EIDClient.Common.ISS;
+using EIDClient.Library;
+using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
+using EIDService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,14 +16,29 @@ namespace EIDService.Controllers
     public class CandleController : ApiController
     {
         // GET api/candle
-        public IEnumerable<Candle> Get()
+        public IEnumerable<EIDClient.Common.ISS.Candle> Get(CandleRequestModel request)
         {
-            IEnumerable<Candle> candles = null;
+            IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
 
-            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            IEnumerable<EIDClient.Common.ISS.Candle> candles = null;
+
+            actions.Add((pr) => { return pr == null || !pr.from.HasValue; }, () =>
             {
-                candles = unit.CandleRepository.All<Candle>(null).ToList();
-            }
+                using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+                {
+                    var tempData = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).ToList();
+                    candles = tempData.Select(c => new EIDClient.Common.ISS.Candle(c));
+                }
+            });
+
+            actions.Add((pr) => { return pr != null && !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
+            {
+                MicexISSClient client = new MicexISSClient(new WebApiClient());
+
+                candles = client.GetCandles(request.security, request.from.Value, request.interval.Value).Result;
+            });
+
+            actions.Single(f => f.Key.Invoke(request)).Value.Invoke();
 
             return candles;
         }

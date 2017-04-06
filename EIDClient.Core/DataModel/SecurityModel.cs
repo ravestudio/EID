@@ -14,12 +14,11 @@ namespace EIDClient.Core.DataModel
     public class SecurityModel
     {
         private SecurityRepository _securityRepository = null;
-        private MicexISSClient _issClient = null; 
 
-        public SecurityModel(SecurityRepository securityRepository, MicexISSClient issClient)
+
+        public SecurityModel(SecurityRepository securityRepository)
         {
             this._securityRepository = securityRepository;
-            this._issClient = issClient;
 
             Messenger.Default.Register<LoadSecurityMessage>(this, async (msg) =>
             {

@@ -111,16 +111,15 @@
     <Compile Include="DataModel\TradeModel.cs" />
     <Compile Include="DataModel\SecurityModel.cs" />
     <Compile Include="DDE\MyDDEServer.cs" />
+    <Compile Include="Entities\Candle.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\TradeSession.cs" />
     <Compile Include="Integration\Terminal.cs" />
-    <Compile Include="ISS\Candle.cs" />
     <Compile Include="ISS\CandlesConverter.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />
-    <Compile Include="ISS\ISSResponse.cs" />
     <Compile Include="ISS\MACD.cs" />
     <Compile Include="ISS\MarketData.cs" />
     <Compile Include="ISS\SecurityInfo.cs" />
@@ -138,9 +137,9 @@
     <Compile Include="Messages\LoadSecurityListMessage.cs" />
     <Compile Include="Messages\LoadSecurityMessage.cs" />
     <Compile Include="Messages\SaveFinancialMessage.cs" />
-    <Compile Include="ISS\MicexISSClient.cs" />
     <Compile Include="Messages\SecurityListLoadedMessage.cs" />
     <Compile Include="Messages\SecurityLoadedMessage.cs" />
+    <Compile Include="Repository\CandleRepository.cs" />
     <Compile Include="Repository\SecurityRepository.cs" />
     <Compile Include="Repository\TradeSessionRepository.cs" />
     <Compile Include="Robot\Robot.cs" />
@@ -166,7 +165,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EIDClient.Core.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EID.Library\EID.Library.csproj">
+      <Project>{9f1f8ab3-8c7e-4470-a8b1-14099f1908d6}</Project>
+      <Name>EID.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

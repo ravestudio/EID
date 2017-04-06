@@ -158,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -203,6 +202,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CandleRequestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +262,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EID.Library\EID.Library.csproj">
+      <Project>{9f1f8ab3-8c7e-4470-a8b1-14099f1908d6}</Project>
+      <Name>EID.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EIDService.Common\EIDService.Common.csproj">
       <Project>{c894b10b-b368-4658-87b4-0db935954a98}</Project>
       <Name>EIDService.Common</Name>

@@ -1,0 +1,45 @@
+﻿using EIDClient.Core.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EIDClient.Core.Repository
+{
+    public class CandleRepository : Repository<Candle, int>
+    {
+        public CandleRepository(EIDClient.Core.WebApiClient apiClient)
+            : base(apiClient)
+        {
+            this.apiPath = "api/candle/";
+        }
+
+        public Task<IEnumerable<Candle>> GetHistory(string sec, DateTime from, int interval)
+        {
+            TaskCompletionSource<IEnumerable<Entities.Candle>> TCS = new TaskCompletionSource<IEnumerable<Entities.Candle>>();
+
+            string url = string.Format("{0}{1}?security={2}&from={3}&interval={4}", this.ServerURL, "api/candle/", sec, from.ToString(System.Globalization.CultureInfo.InvariantCulture), interval);
+
+            this._apiClient.GetData(url).ContinueWith(t =>
+            {
+                IList<Entities.Candle> List = new List<Entities.Candle>();
+
+                string data = t.Result;
+
+                var array = Windows.Data.Json.JsonValue.Parse(data).GetArray();
+
+                for (int i = 0; i < array.Count; i++)
+                {
+                    var value = array[i];
+                    Entities.Candle candle = this.GetObject(value);
+                    List.Add(candle);
+                }
+
+                TCS.SetResult(List);
+            });
+
+            return TCS.Task;
+        }
+    }
+}

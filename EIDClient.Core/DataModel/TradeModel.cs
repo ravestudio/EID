@@ -14,15 +14,15 @@ namespace EIDClient.Core.DataModel
     public class TradeModel
     {
         private TradeSessionRepository _tradeSessionRepository = null;
-        private MicexISSClient _client = null;
+        private CandleRepository _candleRepository = null;
 
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<int, IList<Candle>>> _candles = null;
 
-        public TradeModel(TradeSessionRepository TradeSessionRepository, MicexISSClient client)
+        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository)
         {
             _tradeSessionRepository = TradeSessionRepository;
-            _client = client;
+            _candleRepository = CandleRepository;
 
             _candles = new Dictionary<string, IDictionary<int, IList<Candle>>>();
 
@@ -77,7 +77,7 @@ namespace EIDClient.Core.DataModel
                     last = _candles[sec][timeframe].Last().begin;
                 }
 
-                _client.GetCandles(sec, GetStartDate(timeframe, _sessions, last), 1).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last), 1).ContinueWith(t =>
                 {
                     CandlesConverter converter = new CandlesConverter();
 
@@ -96,9 +96,9 @@ namespace EIDClient.Core.DataModel
                     last = _candles[sec][timeframe].Last().begin;
                 }
 
-                _client.GetCandles(sec, GetStartDate(timeframe, _sessions, last), timeframe).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last), timeframe).ContinueWith(t =>
                 {
-                    _candles[sec][timeframe] = t.Result;
+                    _candles[sec][timeframe] = t.Result.ToList();
 
                     TCS.SetResult("ok");
                 });

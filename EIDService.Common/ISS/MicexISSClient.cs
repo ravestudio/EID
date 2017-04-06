@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDClient.Library;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace EIDClient.Core.ISS
+namespace EIDClient.Common.ISS
 {
     public class MicexISSClient
     {

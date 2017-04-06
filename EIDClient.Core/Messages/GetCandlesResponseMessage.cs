@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.ISS;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.ISS;
 using System;
 using System.Collections.Generic;
 using System.Linq;

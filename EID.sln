@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDService", "EIDService\EIDService.csproj", "{581F7315-33EC-4873-B3CB-85D5B73BC490}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDClient", "EIDClient\EIDClient.csproj", "{BDE2A917-FA18-44E7-B561-3D03712F8ACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDClient.Core", "EIDClient.Core\EIDClient.Core.csproj", "{F28E0A17-38B6-4031-B9AB-6B73040D39E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EID.Library", "EID.Library\EID.Library.csproj", "{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,22 @@ Global
 		{F28E0A17-38B6-4031-B9AB-6B73040D39E3}.Release|x64.Build.0 = Release|x64
 		{F28E0A17-38B6-4031-B9AB-6B73040D39E3}.Release|x86.ActiveCfg = Release|x86
 		{F28E0A17-38B6-4031-B9AB-6B73040D39E3}.Release|x86.Build.0 = Release|x86
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|x64.Build.0 = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|ARM.Build.0 = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x64.ActiveCfg = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x64.Build.0 = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
