@@ -16,13 +16,13 @@ namespace EIDService.Controllers
     public class CandleController : ApiController
     {
         // GET api/candle
-        public IEnumerable<EIDService.Common.ISS.Candle> Get(CandleRequestModel request)
+        public IEnumerable<EIDService.Common.ISS.Candle> Get([FromUri] CandleRequestModel request)
         {
             IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
 
             IEnumerable<EIDService.Common.ISS.Candle> candles = null;
 
-            actions.Add((pr) => { return pr == null || !pr.from.HasValue; }, () =>
+            actions.Add((pr) => { return !pr.from.HasValue; }, () =>
             {
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
@@ -31,7 +31,7 @@ namespace EIDService.Controllers
                 }
             });
 
-            actions.Add((pr) => { return pr != null && !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
+            actions.Add((pr) => { return !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
             {
                 MicexISSClient client = new MicexISSClient(new WebApiClient());
 
