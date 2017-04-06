@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EIDService.Common.ISS
 {
-    public class ISSResponse
+    public class SecurityData
     {
-        public IList<SecurityInfo> SecurityInfo { get; set; }
-        public IList<MarketData> MarketData { get; set; }
+        public SecurityInfo SecurityInfo { get; set; }
+        public MarketData MarketData { get; set; }
     }
 }

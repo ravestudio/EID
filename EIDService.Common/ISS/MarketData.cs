@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EIDClient.Common.ISS
+namespace EIDService.Common.ISS
 {
     public class MarketData
     {

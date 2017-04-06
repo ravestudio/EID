@@ -14,11 +14,12 @@ namespace EIDClient.Core.DataModel
     public class SecurityModel
     {
         private SecurityRepository _securityRepository = null;
+        private SecurityDataRepository _securityDataRepository = null;
 
-
-        public SecurityModel(SecurityRepository securityRepository)
+        public SecurityModel(SecurityRepository securityRepository, SecurityDataRepository securityDataRepository)
         {
             this._securityRepository = securityRepository;
+            this._securityDataRepository = securityDataRepository;
 
             Messenger.Default.Register<LoadSecurityMessage>(this, async (msg) =>
             {
@@ -45,10 +46,10 @@ namespace EIDClient.Core.DataModel
             {
                 foreach (Security security in msg.SecurityList)
                 {
-                    ISSResponse resp = await _issClient.GetSecurityInfo(security.Code);
+                    SecurityData data = await _securityDataRepository.GetById(security.Code);
 
-                    security.SecurityInfo = resp.SecurityInfo.Single(i => i.Code == security.Code);
-                    security.MarketData = resp.MarketData.Single(m => m.Code == security.Code);
+                    security.SecurityInfo = data.SecurityInfo;
+                    security.MarketData = data.MarketData;
                 }
             });
         }

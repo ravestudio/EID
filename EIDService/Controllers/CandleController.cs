@@ -1,7 +1,7 @@
-﻿using EIDClient.Common.ISS;
-using EIDClient.Library;
+﻿using EIDClient.Library;
 using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
+using EIDService.Common.ISS;
 using EIDService.Models;
 using System;
 using System.Collections.Generic;
@@ -16,18 +16,18 @@ namespace EIDService.Controllers
     public class CandleController : ApiController
     {
         // GET api/candle
-        public IEnumerable<EIDClient.Common.ISS.Candle> Get(CandleRequestModel request)
+        public IEnumerable<EIDService.Common.ISS.Candle> Get(CandleRequestModel request)
         {
             IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
 
-            IEnumerable<EIDClient.Common.ISS.Candle> candles = null;
+            IEnumerable<EIDService.Common.ISS.Candle> candles = null;
 
             actions.Add((pr) => { return pr == null || !pr.from.HasValue; }, () =>
             {
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
                     var tempData = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).ToList();
-                    candles = tempData.Select(c => new EIDClient.Common.ISS.Candle(c));
+                    candles = tempData.Select(c => new EIDService.Common.ISS.Candle(c));
                 }
             });
 

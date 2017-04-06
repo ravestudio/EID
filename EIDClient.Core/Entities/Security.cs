@@ -22,10 +22,10 @@ namespace EIDClient.Core.Entities
             this.IssueSize = (int)jsonObj["IssueSize"].GetNumber();
         }
 
-        private ISS.SecurityInfo _securityInfo = null;
-        private ISS.MarketData _marketData = null;
+        private SecurityInfo _securityInfo = null;
+        private MarketData _marketData = null;
 
-        public ISS.SecurityInfo SecurityInfo
+        public SecurityInfo SecurityInfo
         {
             get { return _securityInfo; }
             set {
@@ -35,7 +35,7 @@ namespace EIDClient.Core.Entities
             }
         }
 
-        public ISS.MarketData MarketData
+        public MarketData MarketData
         {
             get { return _marketData; }
             set {

@@ -73,6 +73,7 @@
     <Compile Include="ISS\ISSResponse.cs" />
     <Compile Include="ISS\MarketData.cs" />
     <Compile Include="ISS\MicexISSClient.cs" />
+    <Compile Include="ISS\SecurityData.cs" />
     <Compile Include="ISS\SecurityInfo.cs" />
     <Compile Include="Migrations\201702261607513_InitialCreate.cs" />
     <Compile Include="Migrations\201702261607513_InitialCreate.Designer.cs">

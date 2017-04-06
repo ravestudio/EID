@@ -2,6 +2,7 @@
 using EIDClient.Core.ISS;
 using EIDClient.Core.Managers;
 using EIDClient.Core.Messages;
+using EIDClient.Core.Repository;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using System;
@@ -16,18 +17,21 @@ namespace EIDClient.Core.ViewModel
     public class SecurityDetailsViewModel
     {
         private INavigationService _navigationService = null;
+        private CandleRepository _candleRepository = null;
+
         private Security _security = null;
 
-        public SecurityDetailsViewModel(INavigationService navigationService, IChart chart)
+        public SecurityDetailsViewModel(INavigationService navigationService, CandleRepository candleRepository,  IChart chart)
         {
             this._navigationService = navigationService;
+            this._candleRepository = candleRepository;
 
             Messenger.Default.Register<SecurityLoadedMessage>(this, (msg) =>
             {
                 this._security = msg.Security;
 
-                MicexISSClient client = new MicexISSClient(new WebApiClient());
-                IList<Candle> candlelist = client.GetCandles(_security.Code, new DateTime(2017, 3, 10), 60).Result;
+                
+                IList<Candle> candlelist = _candleRepository.GetHistory(_security.Code, new DateTime(2017, 3, 10), 60).Result.ToList();
 
                 chart.ShowCandles(candlelist);
 

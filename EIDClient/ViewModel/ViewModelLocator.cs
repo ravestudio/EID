@@ -24,11 +24,14 @@ namespace EIDClient.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<EIDClient.Core.WebApiClient>();
-            SimpleIoc.Default.Register<Core.ISS.MicexISSClient>();
+
             SimpleIoc.Default.Register<EmitentRepository>();
             SimpleIoc.Default.Register<FinancialRepository>();
             SimpleIoc.Default.Register<SecurityRepository>();
             SimpleIoc.Default.Register<TradeSessionRepository>();
+            SimpleIoc.Default.Register<CandleRepository>();
+            SimpleIoc.Default.Register<SecurityDataRepository>();
+
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
