@@ -128,6 +128,9 @@
     <Compile Include="ISS\TREND.cs" />
     <Compile Include="Managers\IChart.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
+    <Compile Include="Managers\ITradeMode.cs" />
+    <Compile Include="Managers\TestMode.cs" />
+    <Compile Include="Managers\WorkMode.cs" />
     <Compile Include="Messages\EmitentListLoadedMessage.cs" />
     <Compile Include="Messages\FinancialListLoadedMessage.cs" />
     <Compile Include="Messages\GetCandlesMessage.cs" />

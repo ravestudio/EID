@@ -22,12 +22,31 @@ namespace EIDService.Controllers
 
             IEnumerable<EIDService.Common.ISS.Candle> candles = null;
 
+            Settings settings = null;
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                settings = unit.SettingsRepository.All<Settings>(null).Single();
+            }
+
             actions.Add((pr) => { return !pr.from.HasValue; }, () =>
             {
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
                     var tempData = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).ToList();
                     candles = tempData.Select(c => new EIDService.Common.ISS.Candle(c));
+
+                    if (settings.Mode == "Test")
+                    {
+                        candles = candles.Where(c => c.begin < settings.TestDateTime);
+                        settings.TestDateTime = settings.TestDateTime.AddMinutes(1);
+
+                        unit.SettingsRepository.Update(settings);
+                        unit.Commit();
+
+                        CandlesConverter converter = new CandlesConverter();
+                        candles = converter.Convert(candles.ToList(), 1, 5);
+                    }
                 }
             });
 

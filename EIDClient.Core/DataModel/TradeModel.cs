@@ -1,5 +1,6 @@
 ﻿using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
+using EIDClient.Core.Managers;
 using EIDClient.Core.Messages;
 using EIDClient.Core.Repository;
 using GalaSoft.MvvmLight.Messaging;
@@ -15,14 +16,16 @@ namespace EIDClient.Core.DataModel
     {
         private TradeSessionRepository _tradeSessionRepository = null;
         private CandleRepository _candleRepository = null;
+        private ITradeMode _mode = null;
 
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<int, IList<Candle>>> _candles = null;
 
-        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository)
+        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository, ITradeMode mode)
         {
             _tradeSessionRepository = TradeSessionRepository;
             _candleRepository = CandleRepository;
+            _mode = mode;
 
             _candles = new Dictionary<string, IDictionary<int, IList<Candle>>>();
 
@@ -32,6 +35,8 @@ namespace EIDClient.Core.DataModel
                 _sessions = temp_sessions.ToList();
 
                 Do(msg.securities, msg.frames);
+
+                mode.Start();
             });
 
             Messenger.Default.Register<GetCandlesMessage>(this, (msg) =>
@@ -45,20 +50,15 @@ namespace EIDClient.Core.DataModel
 
         private void Do(IList<string> securities, IList<int> frames)
         {
-            Task.Run(() =>
+            _mode.SetAction("updater", () =>
             {
-                while (true)
+                foreach (string sec in securities)
                 {
-                    foreach (string sec in securities)
+                    _candles[sec] = new Dictionary<int, IList<Candle>>();
+                    foreach (int frame in frames)
                     {
-                        _candles[sec] = new Dictionary<int, IList<Candle>>();
-                        foreach (int frame in frames)
-                        {
-                            string res = updateCandles(sec, frame).Result;
-                        }
+                        string res = updateCandles(sec, frame).Result;
                     }
-
-                    Task.Delay(5000).Wait();
                 }
             });
         }

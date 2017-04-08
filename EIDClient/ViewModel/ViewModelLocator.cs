@@ -36,6 +36,8 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
+            SimpleIoc.Default.Register<ITradeMode, WorkMode>();
+
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EmitentListViewModel>();
             SimpleIoc.Default.Register<SecurityListViewModel>();

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Admin</h2>
+
+<div>
+    <fieldset>
+        <legend>Security</legend><input id="secInput" type="text" />
+        <legend>From</legend><input id="dateFrom" type="date"/>
+        <legend>Action</legend><input type="button" value="Prepare data" onclick="prepareData();"/>
+    </fieldset>
+</div>
+
+<script>
+
+    function prepareData()
+    {
+        var security = $("#secInput").val();
+        var datefrom = $("#dateFrom").val();
+
+        $.ajax({
+            url: "@Url.Action("PrepareData")",
+            data: { sec: security, from: datefrom },
+            success: function (data) {
+                    alert(data);
+                }
+            }
+        );
+    }
+
+</script>
