@@ -109,17 +109,40 @@ namespace EIDClient.Core.DataModel
             return TCS.Task;
         }
 
-        private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime? lastDate)
+        private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime? lastDate, DateTime currentDate)
         {
-            int count = lastDate.HasValue ? 10 : 40;
+            //количество фреймов
+            int count = lastDate.HasValue ? 10 : 30;
 
+            //текущая сессия
+            DateTime curentSession = sessions.Single(s => currentDate >= s.AddHours(10) && currentDate < s.AddHours(19));
+
+            int curIndex = sessions.IndexOf(curentSession);
+
+            curentSession = curentSession.AddHours(10);
+
+            int currPart = (currentDate.Hour * 60 + currentDate.Minute) - (curentSession.Hour * 60 + curentSession.Minute);
+
+            //длина сессии
             int sessionlength = 9 * 60;
+            //длина смещения
             int sessiondiv = timeframe * count;
 
+            //полных сессий
             int fullSession = sessiondiv / sessionlength;
+            //часть сессии
             int partSession = sessiondiv % sessionlength;
 
-            DateTime res = sessions[sessions.Count - fullSession - 1].Date.AddHours(10).AddMinutes(partSession);
+            DateTime res;
+
+            if (currPart < partSession)
+            {
+                res = sessions[curIndex - fullSession - 1].AddHours(19).AddMinutes(currPart - partSession);
+            }
+            else
+            {
+                res = sessions[curIndex - fullSession].AddHours(10).AddMinutes(currPart - partSession);
+            }
 
             return res;
         }
