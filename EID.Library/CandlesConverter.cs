@@ -67,7 +67,7 @@ namespace EIDClient.Library
                 candle = this.creator.Invoke();
 
                 candle.Code = temp.First().Code;
-                candle.begin = temp.First().begin;
+                candle.begin = start;
                 candle.open = temp.First().open;
                 candle.close = temp.Last().close;
                 candle.high = temp.Max(c => c.high);

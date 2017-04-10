@@ -19,7 +19,7 @@ namespace EIDClient.Core.Managers
 
         public DateTime GetDate()
         {
-            this.datetime = this.datetime.AddMinutes(1);
+            //this.datetime = this.datetime.AddMinutes(1);
 
             return this.datetime;
         }

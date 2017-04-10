@@ -79,7 +79,7 @@ namespace EIDClient.Core.DataModel
                     last = _candles[sec][timeframe].Last().begin;
                 }
 
-                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last), 1).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last, _mode.GetDate()), 1).ContinueWith(t =>
                 {
                     CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
 
@@ -98,7 +98,7 @@ namespace EIDClient.Core.DataModel
                     last = _candles[sec][timeframe].Last().begin;
                 }
 
-                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last), timeframe).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last, _mode.GetDate()), timeframe).ContinueWith(t =>
                 {
                     _candles[sec][timeframe] = t.Result.ToList();
 
@@ -117,13 +117,13 @@ namespace EIDClient.Core.DataModel
             int count = lastDate.HasValue ? 10 : 30;
 
             //текущая сессия
-            DateTime curentSession = sessions.Single(s => currentDate >= s.AddHours(10) && currentDate < s.AddHours(19));
+            TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));
 
             int curIndex = sessions.IndexOf(curentSession);
 
-            curentSession = curentSession.AddHours(10);
+            DateTime curentSessionDt = curentSession.Date.AddHours(10);
 
-            int currPart = (currentDate.Hour * 60 + currentDate.Minute) - (curentSession.Hour * 60 + curentSession.Minute);
+            int currPart = (currentDate.Hour * 60 + currentDate.Minute) - (curentSessionDt.Hour * 60 + curentSessionDt.Minute);
 
             //длина сессии
             int sessionlength = 9 * 60;
@@ -139,11 +139,11 @@ namespace EIDClient.Core.DataModel
 
             if (currPart < partSession)
             {
-                res = sessions[curIndex - fullSession - 1].AddHours(19).AddMinutes(currPart - partSession);
+                res = sessions[curIndex - fullSession - 1].Date.AddHours(19).AddMinutes(currPart - partSession);
             }
             else
             {
-                res = sessions[curIndex - fullSession].AddHours(10).AddMinutes(currPart - partSession);
+                res = sessions[curIndex - fullSession].Date.AddHours(10).AddMinutes(currPart - partSession);
             }
 
             return res;
