@@ -11,9 +11,9 @@ namespace EIDClient.Core.Managers
         private DateTime datetime;
         private IDictionary<string, Action> actions = null;
 
-        public TestMode(DateTime date)
+        public TestMode(DateTime dateTime)
         {
-            this.datetime = date;
+            this.datetime = dateTime;
             this.actions = new Dictionary<string, Action>();
         }
 
@@ -31,10 +31,7 @@ namespace EIDClient.Core.Managers
 
         public void Start()
         {
-            while(true)
-            {
-
-            }
+            actions["init"].Invoke();
         }
     }
 }

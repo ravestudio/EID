@@ -90,6 +90,7 @@ namespace EIDService.Common.ISS
                 {
                     Candle candle = new Candle()
                     {
+                        Code = security,
                         begin = DateTime.Parse(GetAttribute(el, "begin"), CultureInfo.InvariantCulture),
                         open = decimal.Parse(GetAttribute(el, "open"), CultureInfo.InvariantCulture),
                         close = decimal.Parse(GetAttribute(el, "close"), CultureInfo.InvariantCulture),

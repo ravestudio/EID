@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.Repository
 {
-    public class TradeSessionRepository : Repository<TradeSession, int>
+    public class SettingsRepository : Repository<Settings, int>
     {
-        public TradeSessionRepository(WebApiClient apiClient)
+        public SettingsRepository(WebApiClient apiClient)
             : base(apiClient)
         {
-            this.apiPath = "api/tradeSession/";
+            this.apiPath = "api/settings/";
         }
     }
 }

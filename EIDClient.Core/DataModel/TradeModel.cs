@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EID.Library;
+using EIDClient.Library;
 
 namespace EIDClient.Core.DataModel
 {
@@ -19,7 +21,7 @@ namespace EIDClient.Core.DataModel
         private ITradeMode _mode = null;
 
         private IList<TradeSession> _sessions = null;
-        private IDictionary<string, IDictionary<int, IList<Candle>>> _candles = null;
+        private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles = null;
 
         public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository, ITradeMode mode)
         {
@@ -27,14 +29,24 @@ namespace EIDClient.Core.DataModel
             _candleRepository = CandleRepository;
             _mode = mode;
 
-            _candles = new Dictionary<string, IDictionary<int, IList<Candle>>>();
+            _candles = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
 
             Messenger.Default.Register<InitTradeModelMessage>(this, async (msg) =>
             {
                 var temp_sessions = await _tradeSessionRepository.GetAll();
                 _sessions = temp_sessions.ToList();
 
-                Do(msg.securities, msg.frames);
+                _mode.SetAction("init", () =>
+                {
+                    foreach (string sec in msg.securities)
+                    {
+                        _candles[sec] = new Dictionary<int, IList<ICandle>>();
+                        foreach (int frame in msg.frames)
+                        {
+                            string res = InitCandles(sec, frame).Result;
+                        }
+                    }
+                });
 
                 mode.Start();
             });
@@ -48,22 +60,12 @@ namespace EIDClient.Core.DataModel
             });
         }
 
-        private void Do(IList<string> securities, IList<int> frames)
-        {
-            _mode.SetAction("updater", () =>
-            {
-                foreach (string sec in securities)
-                {
-                    _candles[sec] = new Dictionary<int, IList<Candle>>();
-                    foreach (int frame in frames)
-                    {
-                        string res = updateCandles(sec, frame).Result;
-                    }
-                }
-            });
-        }
+        //private Task<string> updateCandles(string sec, int timeframe)
+        //{
 
-        private Task<string> updateCandles(string sec, int timeframe)
+        //}
+
+        private Task<string> InitCandles(string sec, int timeframe)
         {
             TaskCompletionSource<string> TCS = new TaskCompletionSource<string>(); 
 
@@ -79,9 +81,9 @@ namespace EIDClient.Core.DataModel
 
                 _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last), 1).ContinueWith(t =>
                 {
-                    CandlesConverter converter = new CandlesConverter();
+                    CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
 
-                    var work_data = converter.Convert(t.Result, 1, timeframe);
+                    var work_data = converter.Convert(t.Result.ToList(), 1, timeframe);
                     _candles[sec][timeframe] = work_data;
 
                     TCS.SetResult("ok");

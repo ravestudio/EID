@@ -1,4 +1,5 @@
 ﻿using EIDClient.Core.Entities;
+using EIDClient.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EIDClient.Core.Repository
 {
     public class SecurityDataRepository : Repository<SecurityData, string>
     {
-        public SecurityDataRepository(EIDClient.Core.WebApiClient apiClient)
+        public SecurityDataRepository(WebApiClient apiClient)
             : base(apiClient)
         {
             this.apiPath = "api/SecurityData/";

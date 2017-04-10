@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace EIDClient.Core.ISS
             Calculate(values.ToArray(), period);
         }
 
-        public ExponentialMovingAverage(IList<Candle> candles, int period)
+        public ExponentialMovingAverage(IList<ICandle> candles, int period)
         {
             Calculate(candles.Select(c => c.close).ToArray(), period);
         }

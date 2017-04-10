@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EIDClient.Core.Entities;
+using EIDClient.Library;
 
 namespace EIDClient.Core.Repository
 {
     public class FinancialRepository : Repository<Entities.Financial, int>
     {
-        public FinancialRepository(EIDClient.Core.WebApiClient apiClient)
+        public FinancialRepository(WebApiClient apiClient)
             : base(apiClient)
         {
 

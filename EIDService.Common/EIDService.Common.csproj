@@ -71,7 +71,6 @@
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\TradeSession.cs" />
     <Compile Include="ISS\Candle.cs" />
-    <Compile Include="ISS\CandlesConverter.cs" />
     <Compile Include="ISS\ISSResponse.cs" />
     <Compile Include="ISS\MarketData.cs" />
     <Compile Include="ISS\MicexISSClient.cs" />

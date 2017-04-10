@@ -185,6 +185,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EID.Library\EID.Library.csproj">
+      <Project>{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}</Project>
+      <Name>EID.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EIDClient.Core\EIDClient.Core.csproj">
       <Project>{f28e0a17-38b6-4031-b9ab-6b73040d39e3}</Project>
       <Name>EIDClient.Core</Name>

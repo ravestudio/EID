@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EIDClient.Core.Entities;
+using EIDClient.Library;
 
 namespace EIDClient.Core.Repository
 {
     public class EmitentRepository : Repository<Entities.Emitent, int>
     {
-        public EmitentRepository(EIDClient.Core.WebApiClient apiClient)
+        public EmitentRepository(WebApiClient apiClient)
             : base(apiClient)
         {
             this.apiPath = "api/emitent/";

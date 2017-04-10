@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace EIDClient.Core.ISS
 {
     public class SimpleMovingAverage : List<decimal>
     {
-        public SimpleMovingAverage(IList<Candle> candles, int period)
+        public SimpleMovingAverage(IList<ICandle> candles, int period)
         {
             this.Clear();
 
-            IList<Candle> temp = candles.OrderBy(c => c.begin).ToList();
+            IList<ICandle> temp = candles.OrderBy(c => c.begin).ToList();
 
             IEnumerable<int> range = Enumerable.Range(0, candles.Count - period);
 

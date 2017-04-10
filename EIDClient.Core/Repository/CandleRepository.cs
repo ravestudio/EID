@@ -1,4 +1,6 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
+using EIDClient.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +11,21 @@ namespace EIDClient.Core.Repository
 {
     public class CandleRepository : Repository<Candle, int>
     {
-        public CandleRepository(EIDClient.Core.WebApiClient apiClient)
+        public CandleRepository(WebApiClient apiClient)
             : base(apiClient)
         {
             this.apiPath = "api/candle/";
         }
 
-        public Task<IEnumerable<Candle>> GetHistory(string sec, DateTime from, int interval)
+        public Task<IEnumerable<ICandle>> GetHistory(string sec, DateTime from, int interval)
         {
-            TaskCompletionSource<IEnumerable<Entities.Candle>> TCS = new TaskCompletionSource<IEnumerable<Entities.Candle>>();
+            TaskCompletionSource<IEnumerable<ICandle>> TCS = new TaskCompletionSource<IEnumerable<ICandle>>();
 
             string url = string.Format("{0}{1}?security={2}&from={3}&interval={4}", this.ServerURL, "api/candle/", sec, from.ToString(System.Globalization.CultureInfo.InvariantCulture), interval);
 
             this._apiClient.GetData(url).ContinueWith(t =>
             {
-                IList<Entities.Candle> List = new List<Entities.Candle>();
+                IList<ICandle> List = new List<ICandle>();
 
                 string data = t.Result;
 
@@ -32,7 +34,7 @@ namespace EIDClient.Core.Repository
                 for (int i = 0; i < array.Count; i++)
                 {
                     var value = array[i];
-                    Entities.Candle candle = this.GetObject(value);
+                    ICandle candle = this.GetObject(value);
                     List.Add(candle);
                 }
 

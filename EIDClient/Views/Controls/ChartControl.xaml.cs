@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using EIDClient.Core.Managers;
 using System;
@@ -34,7 +35,7 @@ namespace EIDClient.Views.Controls
             this.InitializeComponent();
         }
 
-        public void ShowCandles(IList<Candle> candleList)
+        public void ShowCandles(IList<ICandle> candleList)
         {
             count = candleList.Count;
 

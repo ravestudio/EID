@@ -14,6 +14,8 @@ using GalaSoft.MvvmLight.Views;
 using EIDClient.Core.DataModel;
 using EIDClient.Core.Managers;
 using EIDClient.Managers;
+using EIDClient.Library;
+using EIDClient.Core.Entities;
 
 namespace EIDClient.ViewModel
 {
@@ -23,7 +25,7 @@ namespace EIDClient.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<EIDClient.Core.WebApiClient>();
+            SimpleIoc.Default.Register<WebApiClient>();
 
             SimpleIoc.Default.Register<EmitentRepository>();
             SimpleIoc.Default.Register<FinancialRepository>();
@@ -31,12 +33,14 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<TradeSessionRepository>();
             SimpleIoc.Default.Register<CandleRepository>();
             SimpleIoc.Default.Register<SecurityDataRepository>();
+            SimpleIoc.Default.Register<SettingsRepository>();
 
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
-            SimpleIoc.Default.Register<ITradeMode, WorkMode>();
+            //SimpleIoc.Default.Register<ITradeMode, WorkMode>();
+            SimpleIoc.Default.Register<ITradeMode>(GetTradeMode);
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EmitentListViewModel>();
@@ -105,6 +109,24 @@ namespace EIDClient.ViewModel
             {
                 return ServiceLocator.Current.GetInstance<RobotControlViewModel>();
             }
+        }
+
+        private static ITradeMode GetTradeMode()
+        {
+            ITradeMode result = null;
+
+            SettingsRepository repo = ServiceLocator.Current.GetInstance<SettingsRepository>();
+
+            var list = repo.GetAll().Result;
+
+            Settings settings = list.First();
+
+            if (settings.Mode == "Test")
+            {
+                result = new TestMode(settings.TestDateTime);
+            }
+
+            return result;
         }
 
         private static INavigationService GetNavigationService()

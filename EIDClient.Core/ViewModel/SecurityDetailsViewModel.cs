@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using EIDClient.Core.Managers;
 using EIDClient.Core.Messages;
@@ -31,7 +32,7 @@ namespace EIDClient.Core.ViewModel
                 this._security = msg.Security;
 
                 
-                IList<Candle> candlelist = _candleRepository.GetHistory(_security.Code, new DateTime(2017, 3, 10), 60).Result.ToList();
+                IList<ICandle> candlelist = _candleRepository.GetHistory(_security.Code, new DateTime(2017, 3, 10), 60).Result.ToList();
 
                 chart.ShowCandles(candlelist);
 

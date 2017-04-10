@@ -1,4 +1,5 @@
-﻿using EIDClient.Library;
+﻿using EID.Library;
+using EIDClient.Library;
 using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
 using EIDService.Common.ISS;
@@ -16,11 +17,11 @@ namespace EIDService.Controllers
     public class CandleController : ApiController
     {
         // GET api/candle
-        public IEnumerable<EIDService.Common.ISS.Candle> Get([FromUri] CandleRequestModel request)
+        public IEnumerable<ICandle> Get([FromUri] CandleRequestModel request)
         {
             IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
 
-            IEnumerable<EIDService.Common.ISS.Candle> candles = null;
+            IEnumerable<ICandle> candles = null;
 
             Settings settings = null;
 
@@ -44,7 +45,7 @@ namespace EIDService.Controllers
                         unit.SettingsRepository.Update(settings);
                         unit.Commit();
 
-                        CandlesConverter converter = new CandlesConverter();
+                        CandlesConverter converter = new CandlesConverter(() => { return new EIDService.Common.ISS.Candle(); });
                         candles = converter.Convert(candles.ToList(), 1, 5);
                     }
                 }

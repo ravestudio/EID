@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI;
 using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
+using EID.Library;
 
 namespace EIDClient.Managers
 {
@@ -21,7 +22,7 @@ namespace EIDClient.Managers
             return ChildFinder.FindChild<ChartControl>(Window.Current.Content, "chart_control");
         }
 
-        public void ShowCandles(IList<Candle> candleList)
+        public void ShowCandles(IList<ICandle> candleList)
         {
             this.GetControl().ShowCandles(candleList);
         }

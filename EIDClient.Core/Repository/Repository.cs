@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDClient.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace EIDClient.Core.Repository
             where G : Entities.Entity<Key>, new()
     {
 
-        protected EIDClient.Core.WebApiClient _apiClient = null;
+        protected WebApiClient _apiClient = null;
 
         protected string ServerURL = "http://localhost:99/";
         //protected string ServerURL = "http://localhost:61943/";
@@ -18,7 +19,7 @@ namespace EIDClient.Core.Repository
 
         protected string apiPath { get; set; }
 
-        public Repository(EIDClient.Core.WebApiClient apiClient)
+        public Repository(WebApiClient apiClient)
         {
             this._apiClient = apiClient;
         }

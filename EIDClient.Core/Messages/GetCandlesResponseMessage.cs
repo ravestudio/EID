@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace EIDClient.Core.Messages
 {
     public class GetCandlesResponseMessage
     {
-        public IDictionary<string, IDictionary<int, IList<Candle>>> Сandles { get; set; }
+        public IDictionary<string, IDictionary<int, IList<ICandle>>> Сandles { get; set; }
     }
 }

@@ -13,13 +13,13 @@ namespace EIDService.Controllers
     public class SettingsController : ApiController
     {
         // GET api/settings
-        public Settings Get()
+        public IEnumerable<Settings> Get()
         {
-            Settings result = null;
+            IEnumerable<Settings> result = null;
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
-                result = unit.SettingsRepository.All<EIDService.Common.Entities.Settings>(null).First();
+                result = unit.SettingsRepository.All<EIDService.Common.Entities.Settings>(null).ToList();
             }
 
             return result;

@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EIDClient.Core.ISS
 {
     public class MACD : List<MACDItem>
     {
-        public MACD(IList<Candle> candles, int shortPeriod, int longPeriod, int signalPeriod)
+        public MACD(IList<ICandle> candles, int shortPeriod, int longPeriod, int signalPeriod)
         {
             this.Clear();
 

@@ -1,16 +1,24 @@
-﻿using System;
+﻿using EID.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EIDService.Common.ISS
+namespace EIDClient.Library
 {
     public class CandlesConverter
     {
-        public IList<Candle> Convert(IList<Candle> candles, int sourceTimeframe, int TargetTimeframe)
+        private Func<ICandle> creator = null;
+
+        public CandlesConverter(Func<ICandle> creator)
         {
-            List<Candle> result = new List<Candle>();
+            this.creator = creator;
+        }
+
+        public IList<ICandle> Convert(IList<ICandle> candles, int sourceTimeframe, int TargetTimeframe)
+        {
+            List<ICandle> result = new List<ICandle>();
 
             int interval = TargetTimeframe / sourceTimeframe;
 
@@ -22,9 +30,9 @@ namespace EIDService.Common.ISS
 
                 int range = tempdata.Count / interval + 1;
 
-                IList <Candle> res = Enumerable.Range(0, range).Select(n => CreateCandle(tempdata, n, interval, TargetTimeframe)).ToList();
+                IList <ICandle> res = Enumerable.Range(0, range).Select(n => CreateCandle(tempdata, n, interval, TargetTimeframe)).ToList();
 
-                foreach (Candle candle in res)
+                foreach (ICandle candle in res)
                 {
                     if (candle != null)
                     {
@@ -36,9 +44,9 @@ namespace EIDService.Common.ISS
             return result;
         }
 
-        private Candle CreateCandle(IList<Candle> candles, int n, int interval, int frame)
+        private ICandle CreateCandle(IList<ICandle> candles, int n, int interval, int frame)
         {
-            Candle candle = null;
+            ICandle candle = null;
             //var temp = candles.Skip(n*interval).Take(interval);
             DateTime dt = candles.First().begin;
 
@@ -56,14 +64,13 @@ namespace EIDService.Common.ISS
 
             if (temp.Count() > 0)
             {
-                candle = new Candle()
-                {
-                    Code = temp.First().Code,
-                    begin = temp.First().begin,
-                    open = temp.First().open,
-                    close = temp.Last().close,
-                    high = temp.Max(c => c.high)
-                };
+                candle = this.creator.Invoke();
+
+                candle.Code = temp.First().Code;
+                candle.begin = temp.First().begin;
+                candle.open = temp.First().open;
+                candle.close = temp.Last().close;
+                candle.high = temp.Max(c => c.high);
             }
 
             return candle;

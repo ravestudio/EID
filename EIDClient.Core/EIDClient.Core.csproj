@@ -119,9 +119,9 @@
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\SecurityData.cs" />
     <Compile Include="Entities\SecurityInfo.cs" />
+    <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\TradeSession.cs" />
     <Compile Include="Integration\Terminal.cs" />
-    <Compile Include="ISS\CandlesConverter.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />
     <Compile Include="ISS\MACD.cs" />
     <Compile Include="ISS\SimpleMovingAverage.cs" />
@@ -146,6 +146,7 @@
     <Compile Include="Repository\CandleRepository.cs" />
     <Compile Include="Repository\SecurityDataRepository.cs" />
     <Compile Include="Repository\SecurityRepository.cs" />
+    <Compile Include="Repository\SettingsRepository.cs" />
     <Compile Include="Repository\TradeSessionRepository.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />
@@ -166,7 +167,6 @@
     <Compile Include="ViewModel\RobotControlViewModel.cs" />
     <Compile Include="ViewModel\SecurityDetailsViewModel.cs" />
     <Compile Include="ViewModel\SecurityListViewModel.cs" />
-    <Compile Include="WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EIDClient.Core.rd.xml" />
   </ItemGroup>

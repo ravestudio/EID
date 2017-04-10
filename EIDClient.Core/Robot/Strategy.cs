@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Robot
             return res;
         }
 
-        public string GetDecision(IDictionary<int, IList<Candle>> data, string name, string currentPos)
+        public string GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos)
         {
             string dec = null;
 
