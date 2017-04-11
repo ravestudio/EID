@@ -56,8 +56,16 @@ namespace EIDClient.Library
                 dt = dt.AddMinutes(frame - inc);
             }
 
-            DateTime start = dt.AddMinutes(n * frame);
-            DateTime stop = dt.AddMinutes(n * frame + frame);
+            int summ = 60 * (dt.Hour - 10) + dt.Minute + n * frame;
+
+            int adddays = summ / (60 * 9);
+            int addminutes = summ % (60 * 9);
+
+            DateTime start = dt.AddDays(adddays).AddMinutes(addminutes);
+            DateTime stop = dt.AddDays(adddays).AddMinutes(addminutes + frame);
+
+            //DateTime start = dt.AddMinutes(n * frame);
+            //DateTime stop = dt.AddMinutes(n * frame + frame);
 
             var temp = candles.Where(c => (c.begin >= start) && (c.begin < stop));
 
