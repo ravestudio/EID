@@ -48,6 +48,20 @@ namespace EIDClient.Core.DataModel
                     }
                 });
 
+                _mode.SetAction("update", () =>
+                {
+                    _candleRepository.GetAll().ContinueWith(t =>
+                    {
+                        IEnumerable<Candle> candles = t.Result;
+
+                        foreach (string sec in msg.securities)
+                        {
+                            var tempData = candles.Where(c => c.Code == sec);
+                            UpdateCadles(sec, tempData, msg.frames);
+                        }
+                    });
+                });
+
                 mode.Start();
             });
 
@@ -60,10 +74,28 @@ namespace EIDClient.Core.DataModel
             });
         }
 
-        //private Task<string> updateCandles(string sec, int timeframe)
-        //{
+        private void UpdateCadles(string code, IEnumerable<Candle> candles, IList<int> frames)
+        {
+            IDictionary<int, Action> actions = new Dictionary<int, Action>();
 
-        //}
+            actions.Add(5, () => {
+                DateTime dt = candles.First().begin;
+
+                ICandle candle = _candles[code][5].First(c => c.begin >= dt);
+                int index = _candles[code][5].IndexOf(candle);
+
+                foreach(ICandle item in candles)
+                {
+                    _candles[code][5][index] = item;
+                    index++;
+                }
+            });
+
+            foreach(int f in frames)
+            {
+                actions[f].Invoke();
+            }
+        }
 
         private Task<string> InitCandles(string sec, int timeframe)
         {
@@ -114,7 +146,7 @@ namespace EIDClient.Core.DataModel
         private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime? lastDate, DateTime currentDate)
         {
             //количество фреймов
-            int count = lastDate.HasValue ? 10 : 30;
+            int count = lastDate.HasValue ? 10 : 20;
 
             //текущая сессия
             TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));

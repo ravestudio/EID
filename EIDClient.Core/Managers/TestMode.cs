@@ -32,6 +32,7 @@ namespace EIDClient.Core.Managers
         public void Start()
         {
             actions["init"].Invoke();
+            actions["update"].Invoke();
         }
     }
 }
