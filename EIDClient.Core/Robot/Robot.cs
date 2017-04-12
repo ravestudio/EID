@@ -38,14 +38,14 @@ namespace Robot
                 });
 
 
-            positions["mfon"] = "free";
+            positions["MFON"] = "free";
 
         }
 
         public void Run()
         {
 
-            IList<string> securities = new List<string>(new string[]{ "mfon" });
+            IList<string> securities = new List<string>(new string[]{ "MFON" });
 
             Messenger.Default.Send<InitTradeModelMessage>(new InitTradeModelMessage()
             {

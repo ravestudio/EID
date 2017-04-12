@@ -91,6 +91,11 @@ namespace EIDClient.Core.DataModel
                 }
             });
 
+            actions.Add(60, () =>
+            {
+
+            });
+
             foreach(int f in frames)
             {
                 actions[f].Invoke();
