@@ -22,7 +22,7 @@ namespace EIDService.Controllers
         public JsonResult PrepareData(string sec, DateTime from)
         {
             MicexISSClient client = new MicexISSClient(new WebApiClient());
-            var candles = client.GetCandles(sec, from, 1).Result;
+            var candles = client.GetCandles(sec, from, null, 1).Result;
 
 
             //using (DataContext context = new DataContext())

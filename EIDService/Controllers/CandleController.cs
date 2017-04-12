@@ -53,9 +53,15 @@ namespace EIDService.Controllers
 
             actions.Add((pr) => { return !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
             {
+                DateTime? till = null;
+                if (settings.Mode == "Test")
+                {
+                    till = settings.TestDateTime;
+                }
+
                 MicexISSClient client = new MicexISSClient(new WebApiClient());
 
-                candles = client.GetCandles(request.security, request.from.Value, request.interval.Value).Result;
+                candles = client.GetCandles(request.security, request.from.Value, till, request.interval.Value).Result;
             });
 
             actions.Single(f => f.Key.Invoke(request)).Value.Invoke();

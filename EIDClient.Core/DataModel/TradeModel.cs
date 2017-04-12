@@ -50,16 +50,14 @@ namespace EIDClient.Core.DataModel
 
                 _mode.SetAction("update", () =>
                 {
-                    _candleRepository.GetAll().ContinueWith(t =>
-                    {
-                        IEnumerable<Candle> candles = t.Result;
+                    IEnumerable<Candle> candles = _candleRepository.GetAll().Result;
 
-                        foreach (string sec in msg.securities)
-                        {
-                            var tempData = candles.Where(c => c.Code == sec);
-                            UpdateCadles(sec, tempData, msg.frames);
-                        }
-                    });
+                    foreach (string sec in msg.securities)
+                    {
+                        var tempData = candles.Where(c => c.Code == sec);
+                        UpdateCadles(sec, tempData, msg.frames);
+                    }
+
                 });
 
                 mode.Start();
@@ -93,6 +91,21 @@ namespace EIDClient.Core.DataModel
 
             actions.Add(60, () =>
             {
+                CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
+
+                var work_data = converter.Convert(_candles[code][5], 5, 60);
+
+                DateTime dt = work_data.First().begin;
+
+                ICandle candle = _candles[code][60].First(c => c.begin >= dt);
+                int index = _candles[code][60].IndexOf(candle);
+
+                foreach (ICandle item in work_data)
+                {
+                    _candles[code][60][index] = item;
+                    index++;
+                }
+
 
             });
 
@@ -110,13 +123,7 @@ namespace EIDClient.Core.DataModel
 
             actions.Add((frame) => { return frame == 5; }, () =>
             {
-                DateTime? last = null;
-                if (_candles[sec].ContainsKey(timeframe))
-                {
-                    last = _candles[sec][timeframe].Last().begin;
-                }
-
-                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last, _mode.GetDate()), 1).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, _mode.GetDate()), 1).ContinueWith(t =>
                 {
                     CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
 
@@ -129,13 +136,7 @@ namespace EIDClient.Core.DataModel
 
             actions.Add((frame) => { return frame == 60; }, () =>
             {
-                DateTime? last = null;
-                if (_candles[sec].ContainsKey(timeframe))
-                {
-                    last = _candles[sec][timeframe].Last().begin;
-                }
-
-                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, last, _mode.GetDate()), timeframe).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, _mode.GetDate()), timeframe).ContinueWith(t =>
                 {
                     _candles[sec][timeframe] = t.Result.ToList();
 
@@ -148,10 +149,10 @@ namespace EIDClient.Core.DataModel
             return TCS.Task;
         }
 
-        private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime? lastDate, DateTime currentDate)
+        private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime currentDate)
         {
             //количество фреймов
-            int count = lastDate.HasValue ? 10 : 20;
+            int count = 20;
 
             //текущая сессия
             TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));

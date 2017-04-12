@@ -75,11 +75,11 @@ namespace EIDService.Common.ISS
         public Task<IList<Candle>> GetCandles(string security, DateTime from, DateTime? till, int interval)
         {
 
-            string url = string.Format("http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{0}/candles.xml?from={1:yyyy-MM-dd HH:mm}&interval={2}&start={3}", security, from, interval, 0);
+            string url = string.Format("http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{0}/candles.xml?from={1:yyyy-MM-dd HH:mm}&interval={2}", security, from, interval);
 
             if (till.HasValue)
             {
-                url = 
+                url = string.Format("{0}&till={1:yyyy-MM-dd HH:mm}", url, till.Value);
             }
 
             TaskCompletionSource<IList<Candle>> TCS = new TaskCompletionSource<IList<Candle>>();
