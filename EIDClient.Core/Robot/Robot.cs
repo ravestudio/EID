@@ -38,14 +38,14 @@ namespace Robot
                 });
 
 
-            positions["MFON"] = "free";
+            positions["GMKN"] = "free";
 
         }
 
         public void Run()
         {
 
-            IList<string> securities = new List<string>(new string[]{ "MFON" });
+            IList<string> securities = new List<string>(new string[]{ "GMKN" });
 
             Messenger.Default.Send<InitTradeModelMessage>(new InitTradeModelMessage()
             {
@@ -85,24 +85,6 @@ namespace Robot
                     }
                 }
             }, token);
-
-            //Task upd = Task.Run(() =>
-            //    {
-            //        while (true)
-            //        {
-            //            Task.Delay(5000).Wait();
-
-            //            foreach (int d in prepared.Keys)
-            //            {
-            //                prepared[d] = client.GetCandles("mfon", DateTime.Now.AddMinutes(d * 40 * (-1)), d).Result;
-            //            }
-
-            //            if (token.IsCancellationRequested)
-            //            {
-            //                token.ThrowIfCancellationRequested();
-            //            }
-            //        }
-            //    }, token);
 
         }
 

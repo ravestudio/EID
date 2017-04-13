@@ -60,19 +60,28 @@ namespace EIDClient.Core.DataModel
 
                 });
 
+                _mode.SetAction("sendToRobo", () =>
+                {
+                    Messenger.Default.Send<GetCandlesResponseMessage>(new GetCandlesResponseMessage()
+                    {
+                        Сandles = _candles
+                    });
+                });
+
+
                 mode.Start();
             });
 
-            Messenger.Default.Register<GetCandlesMessage>(this, (msg) =>
-            {
-                Messenger.Default.Send<GetCandlesResponseMessage>(new GetCandlesResponseMessage()
-                {
-                    Сandles = _candles
-                });
-            });
+            //Messenger.Default.Register<GetCandlesMessage>(this, (msg) =>
+            //{
+            //    Messenger.Default.Send<GetCandlesResponseMessage>(new GetCandlesResponseMessage()
+            //    {
+            //        Сandles = _candles
+            //    });
+            //});
         }
 
-        private void updateStoredData(IEnumerable<Candle> candles, string code, int frame)
+        private void updateStoredData(IEnumerable<ICandle> candles, string code, int frame)
         {
             DateTime dt = candles.First().begin;
 
@@ -81,7 +90,7 @@ namespace EIDClient.Core.DataModel
 
             foreach (ICandle item in candles)
             {
-                _candles[code][5][index] = item;
+                _candles[code][frame][index] = item;
                 index++;
             }
         }
@@ -100,7 +109,7 @@ namespace EIDClient.Core.DataModel
                 CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
                 var work_data = converter.Convert(_candles[code][5], 5, 60);
 
-                updateStoredData(candles, code, 60);
+                updateStoredData(work_data, code, 60);
             });
 
             foreach(int f in frames)
