@@ -13,7 +13,7 @@ namespace EIDService.Common.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704131006531_addOrder"; }
+            get { return "201704131715080_addOrder"; }
         }
         
         string IMigrationMetadata.Source

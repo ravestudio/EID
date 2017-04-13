@@ -14,6 +14,7 @@ namespace EIDService.Common.Entities
             protected set => base.Key = value;
         }
 
+        public decimal Number { get; set; }
         public string Code { get; set; }
         public string Time { get; set; }
         public string Operation { get; set; }

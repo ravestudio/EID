@@ -11,7 +11,8 @@ namespace EIDService.Common.Migrations
                 "dbo.OrderSet",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        Number = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Code = c.String(nullable: false, maxLength: 10, unicode: false),
                         Time = c.String(nullable: false, maxLength: 10, unicode: false),
                         Operation = c.String(nullable: false, maxLength: 50, unicode: false),

@@ -98,9 +98,9 @@
     <Compile Include="Migrations\201704081338333_addTestDateTime.Designer.cs">
       <DependentUpon>201704081338333_addTestDateTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704131006531_addOrder.cs" />
-    <Compile Include="Migrations\201704131006531_addOrder.Designer.cs">
-      <DependentUpon>201704131006531_addOrder.cs</DependentUpon>
+    <Compile Include="Migrations\201704131715080_addOrder.cs" />
+    <Compile Include="Migrations\201704131715080_addOrder.Designer.cs">
+      <DependentUpon>201704131715080_addOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,8 +125,8 @@
     <EmbeddedResource Include="Migrations\201704081338333_addTestDateTime.resx">
       <DependentUpon>201704081338333_addTestDateTime.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704131006531_addOrder.resx">
-      <DependentUpon>201704131006531_addOrder.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704131715080_addOrder.resx">
+      <DependentUpon>201704131715080_addOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
