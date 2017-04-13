@@ -72,41 +72,35 @@ namespace EIDClient.Core.DataModel
             });
         }
 
+        private void updateStoredData(IEnumerable<Candle> candles, string code, int frame)
+        {
+            DateTime dt = candles.First().begin;
+
+            ICandle candle = _candles[code][frame].First(c => c.begin >= dt);
+            int index = _candles[code][frame].IndexOf(candle);
+
+            foreach (ICandle item in candles)
+            {
+                _candles[code][5][index] = item;
+                index++;
+            }
+        }
+
         private void UpdateCadles(string code, IEnumerable<Candle> candles, IList<int> frames)
         {
             IDictionary<int, Action> actions = new Dictionary<int, Action>();
 
             actions.Add(5, () => {
-                DateTime dt = candles.First().begin;
 
-                ICandle candle = _candles[code][5].First(c => c.begin >= dt);
-                int index = _candles[code][5].IndexOf(candle);
-
-                foreach(ICandle item in candles)
-                {
-                    _candles[code][5][index] = item;
-                    index++;
-                }
+                updateStoredData(candles, code, 5);
             });
 
             actions.Add(60, () =>
             {
                 CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
-
                 var work_data = converter.Convert(_candles[code][5], 5, 60);
 
-                DateTime dt = work_data.First().begin;
-
-                ICandle candle = _candles[code][60].First(c => c.begin >= dt);
-                int index = _candles[code][60].IndexOf(candle);
-
-                foreach (ICandle item in work_data)
-                {
-                    _candles[code][60][index] = item;
-                    index++;
-                }
-
-
+                updateStoredData(candles, code, 60);
             });
 
             foreach(int f in frames)
