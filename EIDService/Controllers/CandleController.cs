@@ -37,7 +37,7 @@ namespace EIDService.Controllers
                     var tempData = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).ToList();
                     candles = tempData.Select(c => new EIDService.Common.ISS.Candle(c));
 
-                    if (settings.Mode == "Test")
+                    if (settings.ModeType == ModeType.Test)
                     {
                         candles = candles.Where(c => c.begin < settings.TestDateTime);
                         settings.TestDateTime = settings.TestDateTime.AddMinutes(1);
@@ -54,7 +54,7 @@ namespace EIDService.Controllers
             actions.Add((pr) => { return !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
             {
                 DateTime? till = null;
-                if (settings.Mode == "Test")
+                if (settings.ModeType == ModeType.Test)
                 {
                     till = settings.TestDateTime;
                 }

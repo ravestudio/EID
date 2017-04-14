@@ -35,6 +35,17 @@ namespace Robot
             actions.Add("open long", (sec) =>
                 {
                     positions[sec] = "long";
+
+                    Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
+                    {
+                        Account = "NL0011100043",
+                        Code = sec,
+                        Count = 10,
+                        Price = 0,
+                        Operation = "Купля",
+                        Class = "QJSIM",
+                        Comment = "11272"
+                    });
                 });
 
 

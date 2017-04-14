@@ -19,6 +19,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Id).HasColumnName("Id").IsRequired();
 
                 Ignore(p => p.Key);
+                Ignore(p => p.StateType);
 
                 Property(p => p.Number).HasColumnName("Number").IsRequired();
                 Property(p => p.Code).HasColumnName("Code").HasMaxLength(10).HasColumnType("varchar").IsRequired();

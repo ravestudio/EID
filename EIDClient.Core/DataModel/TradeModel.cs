@@ -18,15 +18,19 @@ namespace EIDClient.Core.DataModel
     {
         private TradeSessionRepository _tradeSessionRepository = null;
         private CandleRepository _candleRepository = null;
+        private OrderRepository _orderRepository = null;
+
         private ITradeMode _mode = null;
 
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles = null;
 
-        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository, ITradeMode mode)
+        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository, OrderRepository OrderRepository, ITradeMode mode)
         {
             _tradeSessionRepository = TradeSessionRepository;
             _candleRepository = CandleRepository;
+            _orderRepository = OrderRepository;
+
             _mode = mode;
 
             _candles = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
@@ -70,6 +74,22 @@ namespace EIDClient.Core.DataModel
 
 
                 mode.Start();
+            });
+
+            Messenger.Default.Register<CreateOrderMessage>(this, async msg =>
+            {
+                Order order = new Order()
+                {
+                    Code = msg.Code,
+                    Operation = msg.Operation,
+                    Account = msg.Account,
+                    Price = msg.Price,
+                    Count = msg.Count,
+                    Class = msg.Class,
+                    Comment = msg.Comment
+                };
+
+               string result = await _orderRepository.Create(order);
             });
 
             //Messenger.Default.Register<GetCandlesMessage>(this, (msg) =>

@@ -16,15 +16,20 @@ namespace EIDClient.Core.Repository
 
         }
 
-        public override void Create(Financial model)
+        public override Task<string> Create(Financial model)
         {
+            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+
             string url = string.Format("{0}{1}", this.ServerURL, "api/financial/");
 
             this._apiClient.PutData(url, model.ConverToKeyValue()).ContinueWith(t =>
             {
                 string data = t.Result;
 
+                TCS.SetResult(data);
             });
+
+            return TCS.Task;
         }
 
         public override void Update(Financial model)

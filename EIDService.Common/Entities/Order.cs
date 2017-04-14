@@ -8,6 +8,16 @@ namespace EIDService.Common.Entities
 {
     public class Order : Entity<int>
     {
+        IDictionary<string, OrderStateType> state_dic = null;
+        public Order()
+        {
+            state_dic = new Dictionary<string, OrderStateType>();
+
+            state_dic.Add("Активна", OrderStateType.IsActive);
+            state_dic.Add("Исполнена", OrderStateType.Executed);
+            state_dic.Add("Снята", OrderStateType.Canceled);
+        }
+
         public override string Key
         {
             get { return null; }
@@ -25,5 +35,18 @@ namespace EIDService.Common.Entities
         public string State { get; set; }
         public string Class { get; set; }
         public string Comment { get; set; }
+
+        public OrderStateType StateType
+        {
+            get
+            {
+                return state_dic[this.State];
+            }
+
+            set
+            {
+                this.State = state_dic.Single(p => p.Value == value).Key;
+            }
+        }
     }
 }

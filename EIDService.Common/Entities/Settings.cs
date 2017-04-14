@@ -10,5 +10,18 @@ namespace EIDService.Common.Entities
     {
         public string Mode { get; set; }
         public DateTime TestDateTime { get; set; }
+
+        public ModeType ModeType
+        {
+            get
+            {
+                return Mode == "Test" ? ModeType.Test : ModeType.Work;
+            }
+
+            set
+            {
+                this.Mode = value == ModeType.Test ? "Test" : "Work";
+            }
+        }
     }
 }

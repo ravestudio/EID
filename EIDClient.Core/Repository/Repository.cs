@@ -69,8 +69,9 @@ namespace EIDClient.Core.Repository
             return TCS.Task;
         }
 
-        public virtual void Create(G model)
+        public virtual Task<string> Create(G model)
         {
+            return null;
 
         }
 

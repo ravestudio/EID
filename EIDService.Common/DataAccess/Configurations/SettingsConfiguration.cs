@@ -18,6 +18,8 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Id).HasColumnName("Id").IsRequired();
                 Property(p => p.Key).HasColumnName("Key");
 
+                Ignore(p => p.ModeType);
+
                 Property(p => p.Mode).IsRequired();
                 Property(p => p.TestDateTime).IsRequired();
 

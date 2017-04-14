@@ -67,7 +67,9 @@
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\ModeType.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderStateType.cs" />
     <Compile Include="Entities\PeriodType.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\Settings.cs" />
