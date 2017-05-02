@@ -25,14 +25,14 @@ namespace EIDClient.Core.Entities
             List<KeyValuePair<string, string>> keyValueData = new List<KeyValuePair<string, string>>();
 
             keyValueData.Add(new KeyValuePair<string, string>("Id", Id.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("Number", Number.ToString()));
+            //keyValueData.Add(new KeyValuePair<string, string>("Number", Number.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Code", Code));
             keyValueData.Add(new KeyValuePair<string, string>("Operation", Operation));
             keyValueData.Add(new KeyValuePair<string, string>("Account", Account));
             keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Count", Count.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Volume", Volume.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("State", State));
+            //keyValueData.Add(new KeyValuePair<string, string>("State", State));
             keyValueData.Add(new KeyValuePair<string, string>("Class", Class));
             keyValueData.Add(new KeyValuePair<string, string>("Comment", Comment));
 

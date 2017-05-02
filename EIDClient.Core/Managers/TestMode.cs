@@ -33,7 +33,7 @@ namespace EIDClient.Core.Managers
         {
             actions["init"].Invoke();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 actions["update"].Invoke();
 

@@ -110,7 +110,14 @@ namespace EIDClient.Core.DataModel
 
             foreach (ICandle item in candles)
             {
-                _candles[code][frame][index] = item;
+                if (_candles[code][frame].Count > index)
+                {
+                    _candles[code][frame][index] = item;
+                }
+                else
+                {
+                    _candles[code][frame].Add(item);
+                }
                 index++;
             }
         }

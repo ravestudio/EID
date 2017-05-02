@@ -34,6 +34,7 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<CandleRepository>();
             SimpleIoc.Default.Register<SecurityDataRepository>();
             SimpleIoc.Default.Register<SettingsRepository>();
+            SimpleIoc.Default.Register<OrderRepository>();
 
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();

@@ -30,6 +30,7 @@ namespace EIDService.Controllers
 
                 order.Number = rnd.Next(100, 5000);
                 order.StateType = OrderStateType.IsActive;
+                order.Time = settings.TestDateTime.ToString("HH:mm");
 
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
