@@ -71,6 +71,7 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderStateType.cs" />
     <Compile Include="Entities\PeriodType.cs" />
+    <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\TradeSession.cs" />
