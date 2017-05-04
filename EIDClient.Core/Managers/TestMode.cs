@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDClient.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,14 @@ namespace EIDClient.Core.Managers
     {
         private DateTime datetime;
         private IDictionary<string, Action> actions = null;
+        private WebApiClient _apiClient = null;
 
-        public TestMode(DateTime dateTime)
+        private string ServerURL = "http://localhost:99/";
+
+        public TestMode(DateTime dateTime, WebApiClient client)
         {
             this.datetime = dateTime;
+            this._apiClient = client;
             this.actions = new Dictionary<string, Action>();
         }
 
@@ -38,6 +43,8 @@ namespace EIDClient.Core.Managers
                 actions["update"].Invoke();
 
                 actions["sendToRobo"].Invoke();
+
+                string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
             }
         }
     }

@@ -36,6 +36,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.CandleConfiguration());
             modelBuilder.Configurations.Add(new Configurations.SettingsConfiguration());
             modelBuilder.Configurations.Add(new Configurations.OrderConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.PositionConfiguration());
         }
     }
 }

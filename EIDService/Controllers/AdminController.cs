@@ -59,5 +59,60 @@ namespace EIDService.Controllers
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult ProcessData()
+        {
+            Common.Entities.Settings settings = null;
+
+            IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
+
+            actions.Add((o) => { return o.Price == 0 && o.Operation == "Купля"; },
+                (unit, order) =>
+                {
+                    order.StateType = Common.Entities.OrderStateType.Executed;
+                    Common.Entities.Position pos = unit.PositionRepository.Query<Common.Entities.Position>(p => p.Code == order.Code).SingleOrDefault();
+
+                    var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == order.Code).ToList();
+                    var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
+
+                    decimal price = candles.Last(c => c.begin < settings.TestDateTime).close;
+
+                    if (pos == null)
+                    {
+                        pos = new Common.Entities.Position()
+                        {
+                            Firm = "NC0011100000",
+                            SecurityName = order.Code,
+                            Code = order.Code,
+                            Account = order.Account,
+                            Client = order.Comment,
+                            Type = "Т0"
+                        };
+                        unit.PositionRepository.Create(pos);
+                    }
+
+                    pos.CurrentBalance += order.Count;
+                    pos.PurchasePrice = price;
+                });
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
+
+                var orders_all = unit.OrderRepository.All<Common.Entities.Order>().ToList();
+
+                var activeOrders = orders_all.Where(o => o.StateType == Common.Entities.OrderStateType.IsActive).ToList();
+
+                foreach (Common.Entities.Order order in activeOrders)
+                {
+                    actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
+                }
+
+                unit.Commit();
+            }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
     }
 }

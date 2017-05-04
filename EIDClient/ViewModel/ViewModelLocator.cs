@@ -35,6 +35,7 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<SecurityDataRepository>();
             SimpleIoc.Default.Register<SettingsRepository>();
             SimpleIoc.Default.Register<OrderRepository>();
+            SimpleIoc.Default.Register<PositionRepository>();
 
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();
@@ -117,6 +118,7 @@ namespace EIDClient.ViewModel
             ITradeMode result = null;
 
             SettingsRepository repo = ServiceLocator.Current.GetInstance<SettingsRepository>();
+            WebApiClient apiClient = ServiceLocator.Current.GetInstance<WebApiClient>();
 
             var list = repo.GetAll().Result;
 
@@ -124,7 +126,7 @@ namespace EIDClient.ViewModel
 
             if (settings.Mode == "Test")
             {
-                result = new TestMode(settings.TestDateTime);
+                result = new TestMode(settings.TestDateTime, apiClient);
             }
 
             return result;

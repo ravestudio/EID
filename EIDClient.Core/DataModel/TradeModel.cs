@@ -19,17 +19,24 @@ namespace EIDClient.Core.DataModel
         private TradeSessionRepository _tradeSessionRepository = null;
         private CandleRepository _candleRepository = null;
         private OrderRepository _orderRepository = null;
+        private PositionRepository _positionRepository = null;
 
         private ITradeMode _mode = null;
 
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles = null;
+        private IDictionary<string, string> _positions = null;
 
-        public TradeModel(TradeSessionRepository TradeSessionRepository, CandleRepository CandleRepository, OrderRepository OrderRepository, ITradeMode mode)
+        public TradeModel(TradeSessionRepository TradeSessionRepository,
+            CandleRepository CandleRepository,
+            OrderRepository OrderRepository,
+            PositionRepository PositionRepository,
+            ITradeMode mode)
         {
             _tradeSessionRepository = TradeSessionRepository;
             _candleRepository = CandleRepository;
             _orderRepository = OrderRepository;
+            _positionRepository = PositionRepository;
 
             _mode = mode;
 
@@ -56,11 +63,15 @@ namespace EIDClient.Core.DataModel
                 {
                     IEnumerable<Candle> candles = _candleRepository.GetAll().Result;
 
+                    IEnumerable<Position> Positions = _positionRepository.GetAll().Result;
+
                     foreach (string sec in msg.securities)
                     {
                         var tempData = candles.Where(c => c.Code == sec);
                         UpdateCadles(sec, tempData, msg.frames);
                     }
+
+                    this._positions = GetPositions(Positions, msg.securities);
 
                 });
 
@@ -68,7 +79,8 @@ namespace EIDClient.Core.DataModel
                 {
                     Messenger.Default.Send<GetCandlesResponseMessage>(new GetCandlesResponseMessage()
                     {
-                        Сandles = _candles
+                        Сandles = _candles,
+                        Positions = _positions
                     });
                 });
 
@@ -76,7 +88,7 @@ namespace EIDClient.Core.DataModel
                 mode.Start();
             });
 
-            Messenger.Default.Register<CreateOrderMessage>(this, async msg =>
+            Messenger.Default.Register<CreateOrderMessage>(this, msg =>
             {
                 Order order = new Order()
                 {
@@ -89,7 +101,7 @@ namespace EIDClient.Core.DataModel
                     Comment = msg.Comment
                 };
 
-               string result = await _orderRepository.Create(order);
+               string result = _orderRepository.Create(order).Result;
             });
 
             //Messenger.Default.Register<GetCandlesMessage>(this, (msg) =>
@@ -99,6 +111,31 @@ namespace EIDClient.Core.DataModel
             //        Сandles = _candles
             //    });
             //});
+        }
+
+        private IDictionary<string, string> GetPositions(IEnumerable<Position> positions, IList<string> securities)
+        {
+            IDictionary<string, string> res = new Dictionary<string, string>();
+
+            IDictionary<Func<Position, bool>, string> actions = new Dictionary<Func<Position, bool>, string>();
+
+            actions.Add((p) => { return p.CurrentBalance == 0 && p.BlockedForPurchase == 0; }, "free");
+            actions.Add((p) => { return p.CurrentBalance > 0; }, "long");
+            actions.Add((p) => { return p.CurrentBalance < 0; }, "short");
+
+            foreach (string sec in securities)
+            {
+                res.Add(sec, "free");
+
+                Position pos = positions.SingleOrDefault(p => p.Code == sec);
+
+                if (pos != null)
+                {
+                    res[sec] = actions.Single(a => a.Key(pos)).Value;
+                }
+            }
+
+            return res;
         }
 
         private void updateStoredData(IEnumerable<ICandle> candles, string code, int frame)

@@ -19,6 +19,7 @@ namespace EIDService.Common.DataAccess
         private GenericRepository<Candle> candleRepository;
         private GenericRepository<Settings> settingsRepository;
         private GenericRepository<Order> orderRepository;
+        private GenericRepository<Position> positionRepository;
 
         public UnitOfWork(DbContext context)
         {
@@ -81,6 +82,13 @@ namespace EIDService.Common.DataAccess
             }
         }
 
+        public GenericRepository<Position> PositionRepository
+        {
+            get
+            {
+                return this.positionRepository ?? new GenericRepository<Position>(_context);
+            }
+        }
 
         private bool disposed = false;
 

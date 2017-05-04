@@ -117,6 +117,7 @@
     <Compile Include="Entities\Financial.cs" />
     <Compile Include="Entities\MarketData.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\SecurityData.cs" />
     <Compile Include="Entities\SecurityInfo.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Messages\SecurityLoadedMessage.cs" />
     <Compile Include="Repository\CandleRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
+    <Compile Include="Repository\PositionRepository.cs" />
     <Compile Include="Repository\SecurityDataRepository.cs" />
     <Compile Include="Repository\SecurityRepository.cs" />
     <Compile Include="Repository\SettingsRepository.cs" />

@@ -20,7 +20,6 @@ namespace Robot
         private System.Threading.CancellationTokenSource _stop = null;
 
         private IDictionary<string, Action<string>> actions = null;
-        private IDictionary<string, string> positions = null;
 
 
         public Robot(Strategy strategy)
@@ -30,12 +29,9 @@ namespace Robot
             _frames = new Dictionary<int, IList<decimal>>();
 
             actions = new Dictionary<string, Action<string>>();
-            positions = new Dictionary<string, string>();
 
             actions.Add("open long", (sec) =>
                 {
-                    positions[sec] = "long";
-
                     Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                     {
                         Account = "NL0011100043",
@@ -47,9 +43,6 @@ namespace Robot
                         Comment = "11272"
                     });
                 });
-
-
-            positions["GMKN"] = "free";
 
         }
 
@@ -68,7 +61,7 @@ namespace Robot
             {
                 foreach(string sec in msg.Сandles.Keys)
                 {
-                    string d = _strategy.GetDecision(msg.Сandles[sec], sec, positions[sec]);
+                    string d = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec]);
 
                     if (!string.IsNullOrEmpty(d))
                     {
