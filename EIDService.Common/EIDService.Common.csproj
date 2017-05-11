@@ -60,6 +60,7 @@
     <Compile Include="DataAccess\Configurations\SettingsConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\StopOrderConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\TradeSessionConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\TransactionConfiguration.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="DataAccess\GenericRepository.cs" />
     <Compile Include="DataAccess\IGenericRepository.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\StopOrder.cs" />
     <Compile Include="Entities\TradeSession.cs" />
+    <Compile Include="Entities\Transaction.cs" />
     <Compile Include="ISS\Candle.cs" />
     <Compile Include="ISS\ISSResponse.cs" />
     <Compile Include="ISS\MarketData.cs" />
@@ -112,6 +114,14 @@
     <Compile Include="Migrations\201705040933381_addPosition.Designer.cs">
       <DependentUpon>201705040933381_addPosition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705100335086_addStopOrder.cs" />
+    <Compile Include="Migrations\201705100335086_addStopOrder.Designer.cs">
+      <DependentUpon>201705100335086_addStopOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705111032262_addTransaction.cs" />
+    <Compile Include="Migrations\201705111032262_addTransaction.Designer.cs">
+      <DependentUpon>201705111032262_addTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -140,6 +150,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705040933381_addPosition.resx">
       <DependentUpon>201705040933381_addPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705100335086_addStopOrder.resx">
+      <DependentUpon>201705100335086_addStopOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705111032262_addTransaction.resx">
+      <DependentUpon>201705111032262_addTransaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

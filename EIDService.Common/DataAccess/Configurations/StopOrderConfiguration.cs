@@ -21,6 +21,9 @@ namespace EIDService.Common.DataAccess.Configurations
                 //Ignore(p => p.StateType);
 
                 Property(p => p.Number).HasColumnName("Number").IsRequired();
+                Property(p => p.BaseOrder).HasColumnName("BaseOrder").IsOptional();
+                Property(p => p.OrderNumber).HasColumnName("OrderNumber").IsOptional();
+
                 Property(p => p.Code).HasColumnName("Code").HasMaxLength(10).HasColumnType("varchar").IsRequired();
                 Property(p => p.Time).HasColumnName("Time").HasMaxLength(10).HasColumnType("varchar").IsRequired();
                 Property(p => p.Operation).HasColumnName("Operation").HasMaxLength(50).HasColumnType("varchar").IsRequired();

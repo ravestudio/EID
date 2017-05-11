@@ -22,7 +22,7 @@ namespace EIDClient.Core.Repository
 
             string url = string.Format("{0}{1}", this.ServerURL, this.apiPath);
 
-            this._apiClient.PutData(url, model.ConverToKeyValue()).ContinueWith(t =>
+            this._apiClient.PostData(url, model.ConverToKeyValue()).ContinueWith(t =>
             {
                 string data = t.Result;
 

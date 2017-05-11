@@ -13,7 +13,7 @@ namespace EIDService.Controllers
     public class OrderController : ApiController
     {
         // POST api/order
-        public void Put([FromBody]Order order)
+        public void Post([FromBody]Order order)
         {
             IDictionary<ModeType, Action> actions = new Dictionary<ModeType, Action>();
 
@@ -32,9 +32,18 @@ namespace EIDService.Controllers
                 order.StateType = OrderStateType.IsActive;
                 order.Time = settings.TestDateTime.ToString("HH:mm");
 
+                Transaction trn = new Transaction()
+                {
+                    OrderNumber = order.Number,
+                    Name = "Ввод заявки",
+                    Status = 3,
+                    Processed = false
+                };
+
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
                     unit.OrderRepository.Create(order);
+                    unit.TransactionRepository.Create(trn);
                     unit.Commit();
                 }
             });
