@@ -25,6 +25,8 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.OrderNumber).HasColumnName("OrderNumber").IsOptional();
                 Property(p => p.Processed).HasColumnName("Processed").IsRequired();
 
+                Property(p => p.MaxProfit).HasColumnName("MaxProfit").IsRequired();
+
             }).ToTable("TransactionSet");
         }
     }

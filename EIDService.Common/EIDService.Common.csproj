@@ -136,6 +136,10 @@
     <Compile Include="Migrations\201705120850120_addField.Designer.cs">
       <DependentUpon>201705120850120_addField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705121105168_alterTable.cs" />
+    <Compile Include="Migrations\201705121105168_alterTable.Designer.cs">
+      <DependentUpon>201705121105168_alterTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705120850120_addField.resx">
       <DependentUpon>201705120850120_addField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121105168_alterTable.resx">
+      <DependentUpon>201705121105168_alterTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

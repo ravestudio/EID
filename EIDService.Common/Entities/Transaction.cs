@@ -20,5 +20,7 @@ namespace EIDService.Common.Entities
         public decimal OrderNumber { get; set; }
 
         public bool Processed { get; set; }
+
+        public decimal MaxProfit { get; set; } 
     }
 }
