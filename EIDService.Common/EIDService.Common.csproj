@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderConfiguration.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="DataAccess\Initializer.cs" />
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="Entities\Candle.cs" />
+    <Compile Include="Entities\Deal.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
@@ -122,6 +124,18 @@
     <Compile Include="Migrations\201705111032262_addTransaction.Designer.cs">
       <DependentUpon>201705111032262_addTransaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705120430267_addDeal.cs" />
+    <Compile Include="Migrations\201705120430267_addDeal.Designer.cs">
+      <DependentUpon>201705120430267_addDeal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705120612236_alterStopOrder.cs" />
+    <Compile Include="Migrations\201705120612236_alterStopOrder.Designer.cs">
+      <DependentUpon>201705120612236_alterStopOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705120850120_addField.cs" />
+    <Compile Include="Migrations\201705120850120_addField.Designer.cs">
+      <DependentUpon>201705120850120_addField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -156,6 +170,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705111032262_addTransaction.resx">
       <DependentUpon>201705111032262_addTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705120430267_addDeal.resx">
+      <DependentUpon>201705120430267_addDeal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705120612236_alterStopOrder.resx">
+      <DependentUpon>201705120612236_alterStopOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705120850120_addField.resx">
+      <DependentUpon>201705120850120_addField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

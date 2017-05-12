@@ -34,6 +34,7 @@ namespace EIDService.Common.Entities
         public decimal Volume { get; set; }
         public string State { get; set; }
         public string Class { get; set; }
+        public string Client { get; set; }
         public string Comment { get; set; }
 
         public OrderStateType StateType

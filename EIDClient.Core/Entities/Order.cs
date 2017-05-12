@@ -18,6 +18,7 @@ namespace EIDClient.Core.Entities
         public decimal Volume { get; set; }
         public string State { get; set; }
         public string Class { get; set; }
+        public string Client { get; set; }
         public string Comment { get; set; }
 
         public List<KeyValuePair<string, string>> ConverToKeyValue()
@@ -34,6 +35,7 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("Volume", Volume.ToString()));
             //keyValueData.Add(new KeyValuePair<string, string>("State", State));
             keyValueData.Add(new KeyValuePair<string, string>("Class", Class));
+            keyValueData.Add(new KeyValuePair<string, string>("Client", Client));
             keyValueData.Add(new KeyValuePair<string, string>("Comment", Comment));
 
             return keyValueData;

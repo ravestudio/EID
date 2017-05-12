@@ -39,6 +39,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.PositionConfiguration());
             modelBuilder.Configurations.Add(new Configurations.StopOrderConfiguration());
             modelBuilder.Configurations.Add(new Configurations.TransactionConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.DealConfiguration());
         }
     }
 }

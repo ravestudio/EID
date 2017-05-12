@@ -92,6 +92,25 @@ namespace EIDService.Controllers
                         unit.PositionRepository.Create(pos);
                     }
 
+                    Random rnd = new Random();
+
+                    Common.Entities.Deal deal = new Common.Entities.Deal()
+                    {
+                        Number = rnd.Next(7000, 900000),
+                        OrderNumber = order.Number,
+                        Code = order.Code,
+                        Time = settings.TestDateTime.ToString("HH:mm"),
+                        Date = settings.TestDateTime.ToString("dd:MM:yyyy"),
+                        Operation = order.Operation,
+                        Account = order.Account,
+                        Price = price,
+                        Count = order.Count,
+                        Volume = order.Price * order.Count,
+                        Class = order.Class
+                    };
+
+                    unit.DealRepository.Create(deal);
+
                     pos.CurrentBalance += order.Count;
                     pos.PurchasePrice = price;
                 });
@@ -107,6 +126,68 @@ namespace EIDService.Controllers
                 foreach (Common.Entities.Order order in activeOrders)
                 {
                     actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
+                }
+
+                unit.Commit();
+            }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CreateStopOrders()
+        {
+            decimal profit = 0.5m;
+            decimal limit = 0.3m;
+
+            Common.Entities.Settings settings = null;
+
+            IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>>();
+
+            actions.Add((o) => { return o != null && o.StateType == Common.Entities.OrderStateType.Executed && o.Operation == "Купля"; },
+                (unit, order, trn) =>
+                {
+                    var deals = unit.DealRepository.Query<Common.Entities.Deal>(d => d.OrderNumber == order.Number).ToList();
+
+                    decimal price = deals.Select(d => d.Price).Max();
+
+                    Random rnd = new Random();
+
+                    Common.Entities.StopOrder stop = new Common.Entities.StopOrder()
+                    {
+                        Number = rnd.Next(7000, 900000),
+                        Code = order.Code,
+                        Time = settings.TestDateTime.ToString("HH:mm:00"),
+                        Operation = "Продажа",
+                        Account = order.Account,
+                        OrderType = "Тэйк - профит и стоп - лимит",
+                        Count = order.Count,
+                        StopPrice = price + profit * price / 100m,
+                        StopLimitPrice = price - limit * price / 100m,
+                        Price = price - (limit + 0.1m) * price / 100m,
+
+                        Client = order.Client,
+                        Class = order.Class,
+                        State = "Активна"
+                    };
+
+                    unit.StopOrderRepository.Create(stop);
+
+                    trn.Processed = true;
+
+                });
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
+
+                var transactions = unit.TransactionRepository.Query<Common.Entities.Transaction>(t => !t.Processed && t.Status == 3 && t.Name == "Ввод заявки", null).ToList();
+
+                foreach(Common.Entities.Transaction transaction in transactions)
+                {
+                    var order = unit.OrderRepository.Query<Common.Entities.Order>(o => o.Number == transaction.OrderNumber).SingleOrDefault();
+
+                    actions.Single(a => a.Key(order)).Value.Invoke(unit, order, transaction);
                 }
 
                 unit.Commit();

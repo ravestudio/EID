@@ -45,6 +45,8 @@ namespace EIDClient.Core.Managers
                 actions["sendToRobo"].Invoke();
 
                 string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
+
+                string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
             }
         }
     }

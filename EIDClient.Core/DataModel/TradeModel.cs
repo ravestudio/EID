@@ -98,6 +98,7 @@ namespace EIDClient.Core.DataModel
                     Price = msg.Price,
                     Count = msg.Count,
                     Class = msg.Class,
+                    Client = msg.Client,
                     Comment = msg.Comment
                 };
 

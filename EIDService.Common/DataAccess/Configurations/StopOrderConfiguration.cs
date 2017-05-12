@@ -38,7 +38,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.State).HasColumnName("State").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.Class).HasColumnName("Class").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.Client).HasColumnName("Client").HasMaxLength(50).HasColumnType("varchar").IsRequired();
-                Property(p => p.Result).HasColumnName("Result").HasMaxLength(100).HasColumnType("varchar").IsRequired();
+                Property(p => p.Result).HasColumnName("Result").HasMaxLength(100).HasColumnType("varchar").IsOptional();
 
             }).ToTable("StopOrderSet");
         }

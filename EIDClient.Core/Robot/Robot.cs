@@ -40,6 +40,7 @@ namespace Robot
                         Price = 0,
                         Operation = "Купля",
                         Class = "QJSIM",
+                        Client = "11272",
                         Comment = "11272"
                     });
                 });

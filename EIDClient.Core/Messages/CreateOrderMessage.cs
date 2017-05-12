@@ -14,6 +14,7 @@ namespace EIDClient.Core.Messages
         public decimal Price { get; set; }
         public int Count { get; set; }
         public string Class { get; set; }
+        public string Client { get; set; }
         public string Comment { get; set; }
     }
 }
