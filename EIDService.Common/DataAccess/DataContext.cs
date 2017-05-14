@@ -26,6 +26,12 @@ namespace EIDService.Common.DataAccess
         public DbSet<Security> Securities { get; set; }
         public DbSet<Financial> Financials { get; set; }
         public DbSet<Candle> Candles { get; set; }
+        public DbSet<Deal> Deals { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<StopOrder> StopOrders { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

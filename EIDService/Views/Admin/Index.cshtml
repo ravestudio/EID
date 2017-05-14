@@ -13,16 +13,36 @@
     </fieldset>
 </div>
 
+<div>
+    <fieldset>
+        <legend>TestTime</legend><input id="testTime" type="datetime" />
+        <legend>Action</legend><input type="button" value="Reset data" onclick="resetData();" />
+    </fieldset>
+</div>
+
 <script>
 
-    function prepareData()
-    {
+    function prepareData() {
         var security = $("#secInput").val();
         var datefrom = $("#dateFrom").val();
 
         $.ajax({
             url: "@Url.Action("PrepareData")",
             data: { sec: security, from: datefrom },
+            success: function (data) {
+                    alert(data);
+                }
+            }
+        );
+    }
+
+    function resetData()
+    {
+        var _testTime = $("#testTime").val();
+
+        $.ajax({
+            url: "@Url.Action("Reset")",
+            data: { testTime: _testTime },
             success: function (data) {
                     alert(data);
                 }

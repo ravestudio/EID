@@ -19,6 +19,25 @@ namespace EIDService.Controllers
         }
 
         [HttpGet]
+        public JsonResult Reset(DateTime testTime)
+        {
+            using (DataContext context = new DataContext())
+            {
+                context.Database.ExecuteSqlCommand("delete from DealSet");
+                context.Database.ExecuteSqlCommand("delete from OrderSet");
+                context.Database.ExecuteSqlCommand("delete from PositionSet");
+                context.Database.ExecuteSqlCommand("delete from StopOrderSet");
+                context.Database.ExecuteSqlCommand("delete from TransactionSet");
+
+                context.Settings.First().TestDateTime = testTime;
+
+                context.SaveChanges();
+            }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult PrepareData(string sec, DateTime from)
         {
             MicexISSClient client = new MicexISSClient(new WebApiClient());
@@ -67,6 +86,40 @@ namespace EIDService.Controllers
 
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
             IDictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>> stop_actions = new Dictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>>();
+
+            actions.Add((o) => { return o.Price == 0 && o.Operation == "Продажа"; },
+                (unit, order) =>
+                {
+                    order.StateType = Common.Entities.OrderStateType.Executed;
+                    Common.Entities.Position pos = unit.PositionRepository.Query<Common.Entities.Position>(p => p.Code == order.Code).SingleOrDefault();
+
+                    var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == order.Code).ToList();
+                    var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
+
+                    decimal price = candles.Last(c => c.begin < settings.TestDateTime).close;
+
+                    Random rnd = new Random();
+
+                    Common.Entities.Deal deal = new Common.Entities.Deal()
+                    {
+                        Number = rnd.Next(7000, 900000),
+                        OrderNumber = order.Number,
+                        Code = order.Code,
+                        Time = settings.TestDateTime.ToString("HH:mm"),
+                        Date = settings.TestDateTime.ToString("dd:MM:yyyy"),
+                        Operation = order.Operation,
+                        Account = order.Account,
+                        Price = price,
+                        Count = order.Count,
+                        Volume = order.Price * order.Count,
+                        Class = order.Class
+                    };
+
+                    unit.DealRepository.Create(deal);
+
+                    pos.CurrentBalance -= order.Count;
+                    pos.PurchasePrice = price;
+                });
 
             actions.Add((o) => { return o.Price == 0 && o.Operation == "Купля"; },
                 (unit, order) =>
@@ -135,7 +188,8 @@ namespace EIDService.Controllers
                     transaction.MaxProfit = price;
                 }
 
-                if (transaction.MaxProfit - price > 5)
+                decimal lossProfit = transaction.MaxProfit - price;
+                if (lossProfit > 5m)
                 {
                     Random rnd = new Random();
 
@@ -150,6 +204,7 @@ namespace EIDService.Controllers
                         Account = order.Account,
                         Price = 0,
                         Count = order.Count,
+                        StateType = Common.Entities.OrderStateType.IsActive,
                         Class = order.Class,
                         Client = order.Client,
                         Comment = order.Client
@@ -193,8 +248,8 @@ namespace EIDService.Controllers
         [HttpGet]
         public JsonResult CreateStopOrders()
         {
-            decimal profit = 0.5m;
-            decimal limit = 0.3m;
+            decimal profit = 0.2m;
+            decimal limit = 0.15m;
 
             Common.Entities.Settings settings = null;
 
