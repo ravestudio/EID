@@ -84,159 +84,48 @@ namespace EIDService.Controllers
         {
             Common.Entities.Settings settings = null;
 
+            Models.TradeModel tradeModel = new Models.TradeModel();
+
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
             IDictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>> stop_actions = new Dictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>>();
 
             actions.Add((o) => { return o.Price == 0 && o.Operation == "Продажа"; },
                 (unit, order) =>
                 {
-                    order.StateType = Common.Entities.OrderStateType.Executed;
-                    Common.Entities.Position pos = unit.PositionRepository.Query<Common.Entities.Position>(p => p.Code == order.Code).SingleOrDefault();
-
-                    var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == order.Code).ToList();
-                    var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
-
-                    decimal price = candles.Last(c => c.begin < settings.TestDateTime).close;
-
-                    Random rnd = new Random();
-
-                    Common.Entities.Deal deal = new Common.Entities.Deal()
-                    {
-                        Number = rnd.Next(7000, 900000),
-                        OrderNumber = order.Number,
-                        Code = order.Code,
-                        Time = settings.TestDateTime.ToString("HH:mm"),
-                        Date = settings.TestDateTime.ToString("dd:MM:yyyy"),
-                        Operation = order.Operation,
-                        Account = order.Account,
-                        Price = price,
-                        Count = order.Count,
-                        Volume = order.Price * order.Count,
-                        Class = order.Class
-                    };
-
-                    unit.DealRepository.Create(deal);
-
+                    Common.Entities.Position pos = tradeModel.ApplyOrder(unit, order, settings);
                     pos.CurrentBalance -= order.Count;
-                    pos.PurchasePrice = price;
                 });
 
             actions.Add((o) => { return o.Price == 0 && o.Operation == "Купля"; },
                 (unit, order) =>
                 {
-                    order.StateType = Common.Entities.OrderStateType.Executed;
-                    Common.Entities.Position pos = unit.PositionRepository.Query<Common.Entities.Position>(p => p.Code == order.Code).SingleOrDefault();
 
-                    var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == order.Code).ToList();
-                    var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
-
-                    decimal price = candles.Last(c => c.begin < settings.TestDateTime).close;
-
-                    if (pos == null)
-                    {
-                        pos = new Common.Entities.Position()
-                        {
-                            Firm = "NC0011100000",
-                            SecurityName = order.Code,
-                            Code = order.Code,
-                            Account = order.Account,
-                            Client = order.Comment,
-                            Type = "Т0"
-                        };
-                        unit.PositionRepository.Create(pos);
-                    }
-
-                    Random rnd = new Random();
-
-                    Common.Entities.Deal deal = new Common.Entities.Deal()
-                    {
-                        Number = rnd.Next(7000, 900000),
-                        OrderNumber = order.Number,
-                        Code = order.Code,
-                        Time = settings.TestDateTime.ToString("HH:mm"),
-                        Date = settings.TestDateTime.ToString("dd:MM:yyyy"),
-                        Operation = order.Operation,
-                        Account = order.Account,
-                        Price = price,
-                        Count = order.Count,
-                        Volume = order.Price * order.Count,
-                        Class = order.Class
-                    };
-
-                    unit.DealRepository.Create(deal);
-
+                    Common.Entities.Position pos = tradeModel.ApplyOrder(unit, order, settings);
                     pos.CurrentBalance += order.Count;
-                    pos.PurchasePrice = price;
                 });
 
             stop_actions.Add((o) => { return o.Operation == "Продажа"; }, (unit, order) =>
             {
-                var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == order.Code).ToList();
-                var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
-
-                decimal price = candles.Last(c => c.begin < settings.TestDateTime).close;
-
-                var transaction = unit.TransactionRepository.Query<Common.Entities.Transaction>(t => t.OrderNumber == order.Number).Single();
-
-                if (price >= order.StopPrice && transaction.MaxProfit == 0)
-                {
-                    transaction.MaxProfit = price;
-                }
-
-                if (price > transaction.MaxProfit && transaction.MaxProfit != 0)
-                {
-                    transaction.MaxProfit = price;
-                }
-
-                decimal lossProfit = transaction.MaxProfit - price;
-                if (lossProfit > 5m)
-                {
-                    Random rnd = new Random();
-
-                    order.State = "Исполнена";
-
-                    Common.Entities.Order new_order = new Common.Entities.Order()
-                    {
-                        Number = rnd.Next(7000, 900000),
-                        Code = order.Code,
-                        Time = settings.TestDateTime.ToString("HH:mm"),
-                        Operation = order.Operation,
-                        Account = order.Account,
-                        Price = 0,
-                        Count = order.Count,
-                        StateType = Common.Entities.OrderStateType.IsActive,
-                        Class = order.Class,
-                        Client = order.Client,
-                        Comment = order.Client
-                    };
-
-                    order.OrderNumber = new_order.Number;
-
-                    unit.OrderRepository.Create(new_order);
-                }
-
+                Models.StopOrderExecute execute = new Models.StopOrderExecute(new Models.SellStrategy());
+                execute.ApplyStop(unit, order, settings);
             });
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
                 settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
 
+                var stop_orders = unit.StopOrderRepository.Query<Common.Entities.StopOrder>(o => o.State == "Активна").ToList();
+                foreach (Common.Entities.StopOrder order in stop_orders)
+                {
+                    stop_actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
+                }
+                unit.Commit();
+
                 var orders_all = unit.OrderRepository.All<Common.Entities.Order>().ToList();
-
                 var activeOrders = orders_all.Where(o => o.StateType == Common.Entities.OrderStateType.IsActive).ToList();
-
                 foreach (Common.Entities.Order order in activeOrders)
                 {
                     actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
-                }
-
-                unit.Commit();
-
-                var stop_orders = unit.StopOrderRepository.Query<Common.Entities.StopOrder>(o => o.State == "Активна").ToList();
-
-                foreach(Common.Entities.StopOrder order in stop_orders)
-                {
-                    stop_actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
                 }
 
                 unit.Commit();

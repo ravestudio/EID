@@ -209,6 +209,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CandleRequestModel.cs" />
+    <Compile Include="Models\IExecuteStrategy.cs" />
+    <Compile Include="Models\SellStrategy.cs" />
+    <Compile Include="Models\StopOrderExecute.cs" />
+    <Compile Include="Models\TradeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
