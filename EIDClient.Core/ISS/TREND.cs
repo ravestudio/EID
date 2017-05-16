@@ -61,8 +61,9 @@ namespace EIDClient.Core.ISS
 
         private decimal GetDiff(decimal v1, decimal v2)
         {
-            decimal d = v2 / (v1 / 100) - 100;
-
+            decimal diff = v2 - v1;
+            decimal prc = Math.Abs(v1) / 100;
+            decimal d = diff / prc;
             return d;
         }
     }
