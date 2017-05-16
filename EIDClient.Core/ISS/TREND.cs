@@ -12,20 +12,58 @@ namespace EIDClient.Core.ISS
 
         private IList<decimal> _data = null;
 
+        private string type = string.Empty;
+
         public TREND(IList<decimal> data, int period)
         {
             this.result = TRENDResult.Up;
 
+            this.type = "simple";
+
             this._data = data.Skip(data.Count - period).ToList();
+        }
+
+        public TREND(IList<MACDItem> data, int period)
+        {
+            this.result = TRENDResult.Up;
+
+            this.type = "macd";
+
+            this._data = data.Skip(data.Count - period).Select(d => d.Histogram).ToList();
         }
 
         public TRENDResult GetResult()
         {
-            decimal d = _data.Last() - _data[0];
+            if (this.type == "simple")
+            {
+                decimal d = _data.Last() - _data[0];
 
-            this.result = d > 0 ? TRENDResult.Up : TRENDResult.Down;
+                this.result = d > 0 ? TRENDResult.Up : TRENDResult.Down;
+            }
+
+            if (this.type == "macd")
+            {
+                decimal d = GetDiff(_data[0], _data.Last());
+
+                if (d > 10m)
+                {
+                    this.result = TRENDResult.Up;
+                };
+
+                if (d < 10m)
+                { 
+                    this.result = TRENDResult.Down;
+                }
+            }
 
             return result;
+        }
+
+        private decimal GetDiff(decimal v1, decimal v2)
+        {
+            decimal d = v2 / (v1 / 100) - 100;
+
+            return d;
         }
     }
 

@@ -33,14 +33,22 @@ namespace Robot
 
             ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
 
-            ExponentialMovingAverage minutes_ema = new ExponentialMovingAverage(data[5], 4);
+            //ExponentialMovingAverage minutes_ema = new ExponentialMovingAverage(data[5], 4);
+
+            MACD macd = new MACD(data[5], 12, 26, 9);
 
             TREND hoursTrend = new TREND(hours_ema, 5);
-            TREND minutesTrend = new TREND(minutes_ema, 3);
+            //TREND minutesTrend = new TREND(minutes_ema, 3);
+            TREND macdTrend = new TREND(macd, 2);
 
-            if (hoursTrend.GetResult() == TRENDResult.Up && minutesTrend.GetResult() == TRENDResult.Up && currentPos == "free")
+            if (hoursTrend.GetResult() == TRENDResult.Up && macdTrend.GetResult() == TRENDResult.Up && currentPos == "free")
             {
                 dec = "open long";
+            }
+
+            if (hoursTrend.GetResult() == TRENDResult.Down && macdTrend.GetResult() == TRENDResult.Down && currentPos == "free")
+            {
+                dec = "open short";
             }
 
             return dec;

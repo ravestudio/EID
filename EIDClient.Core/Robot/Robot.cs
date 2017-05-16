@@ -45,6 +45,21 @@ namespace Robot
                     });
                 });
 
+            actions.Add("open short", (sec) =>
+            {
+                Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
+                {
+                    Account = "NL0011100043",
+                    Code = sec,
+                    Count = 10,
+                    Price = 0,
+                    Operation = "Продажа",
+                    Class = "QJSIM",
+                    Client = "11272",
+                    Comment = "11272"
+                });
+            });
+
         }
 
         public void Run()

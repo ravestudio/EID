@@ -110,6 +110,12 @@ namespace EIDService.Controllers
                 execute.ApplyStop(unit, order, settings);
             });
 
+            stop_actions.Add((o) => { return o.Operation == "Купля"; }, (unit, order) =>
+            {
+                Models.StopOrderExecute execute = new Models.StopOrderExecute(new Models.BuyStrategy());
+                execute.ApplyStop(unit, order, settings);
+            });
+
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
                 settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
@@ -147,43 +153,15 @@ namespace EIDService.Controllers
             actions.Add((o) => { return o != null && o.StateType == Common.Entities.OrderStateType.Executed && o.Operation == "Купля"; },
                 (unit, order, trn) =>
                 {
-                    var deals = unit.DealRepository.Query<Common.Entities.Deal>(d => d.OrderNumber == order.Number).ToList();
+                    Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateSellStrategy());
+                    creator.Create(unit, order, settings, trn);
+                });
 
-                    decimal price = deals.Select(d => d.Price).Max();
-
-                    Random rnd = new Random();
-
-                    Common.Entities.StopOrder stop = new Common.Entities.StopOrder()
-                    {
-                        Number = rnd.Next(7000, 900000),
-                        Code = order.Code,
-                        Time = settings.TestDateTime.ToString("HH:mm:00"),
-                        Operation = "Продажа",
-                        Account = order.Account,
-                        OrderType = "Тэйк - профит и стоп - лимит",
-                        Count = order.Count,
-                        StopPrice = price + profit * price / 100m,
-                        StopLimitPrice = price - limit * price / 100m,
-                        Price = price - (limit + 0.1m) * price / 100m,
-
-                        Client = order.Client,
-                        Class = order.Class,
-                        State = "Активна"
-                    };
-
-                    Common.Entities.Transaction stop_trn = new Common.Entities.Transaction()
-                    {
-                        OrderNumber = stop.Number,
-                        Name = "Ввод лимитной заявки",
-                        Status = 3,
-                        Processed = false
-                    };
-
-                    unit.TransactionRepository.Create(stop_trn);
-                    unit.StopOrderRepository.Create(stop);
-
-                    trn.Processed = true;
-
+            actions.Add((o) => { return o != null && o.StateType == Common.Entities.OrderStateType.Executed && o.Operation == "Продажа"; },
+                (unit, order, trn) =>
+                {
+                    Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateBuyStrategy());
+                    creator.Create(unit, order, settings, trn);
                 });
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))

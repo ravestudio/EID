@@ -220,7 +220,7 @@ namespace EIDClient.Core.DataModel
         private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime currentDate)
         {
             //количество фреймов
-            int count = 20;
+            int count = 40;
 
             //текущая сессия
             TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));

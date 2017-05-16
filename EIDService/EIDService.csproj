@@ -208,9 +208,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BuyStrategy.cs" />
     <Compile Include="Models\CandleRequestModel.cs" />
+    <Compile Include="Models\CreateBuyStrategy.cs" />
+    <Compile Include="Models\CreateSellStrategy.cs" />
+    <Compile Include="Models\ICreateStrategy.cs" />
     <Compile Include="Models\IExecuteStrategy.cs" />
     <Compile Include="Models\SellStrategy.cs" />
+    <Compile Include="Models\StopOrderCreator.cs" />
     <Compile Include="Models\StopOrderExecute.cs" />
     <Compile Include="Models\TradeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
