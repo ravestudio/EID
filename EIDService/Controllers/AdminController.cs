@@ -143,9 +143,6 @@ namespace EIDService.Controllers
         [HttpGet]
         public JsonResult CreateStopOrders()
         {
-            decimal profit = 0.2m;
-            decimal limit = 0.15m;
-
             Common.Entities.Settings settings = null;
 
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>>();

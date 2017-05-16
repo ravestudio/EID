@@ -45,12 +45,12 @@ namespace EIDClient.Core.ISS
             {
                 decimal d = GetDiff(_data[0], _data.Last());
 
-                if (d > 10m)
+                if (d > 30m)
                 {
                     this.result = TRENDResult.Up;
                 };
 
-                if (d < 10m)
+                if (d < 30m)
                 { 
                     this.result = TRENDResult.Down;
                 }
@@ -61,6 +61,8 @@ namespace EIDClient.Core.ISS
 
         private decimal GetDiff(decimal v1, decimal v2)
         {
+            if (v1 == 0m) { v1 = 0.01m; }
+
             decimal diff = v2 - v1;
             decimal prc = Math.Abs(v1) / 100;
             decimal d = diff / prc;

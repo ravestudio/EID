@@ -18,7 +18,7 @@ namespace EIDService.Models
 
         public void Create(UnitOfWork unit, Order order, Settings settings, Transaction trn)
         {
-            decimal profit = 0.2m;
+            decimal profit = 0.4m;
             decimal limit = 0.15m;
 
             var deals = unit.DealRepository.Query<Common.Entities.Deal>(d => d.OrderNumber == order.Number).ToList();
