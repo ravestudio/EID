@@ -32,5 +32,10 @@ namespace EIDService.Models
 
             return lossprofit;
         }
+
+        public bool StopLimit(StopOrder order, decimal price)
+        {
+            return price > order.StopLimitPrice;
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace EIDService.Models
         void CalcProfit(Transaction trn, StopOrder order, decimal price);
 
         decimal? GetLossProfit(Transaction trn, decimal price);
+
+        bool StopLimit(StopOrder order, decimal price);
     }
 }

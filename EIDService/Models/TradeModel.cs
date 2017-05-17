@@ -76,6 +76,18 @@ namespace EIDService.Models
 
             unit.DealRepository.Create(deal);
 
+            MoneyLimit money = unit.MoneyLimitRepository.All<MoneyLimit>().First();
+
+            if (order.Operation == "Купля")
+            {
+                money.Available -= order.Count * price;
+            }
+
+            if (order.Operation == "Продажа")
+            {
+                money.Available += order.Count * price;
+            }
+
             return deal;
         }
 

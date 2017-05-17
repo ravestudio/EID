@@ -23,6 +23,7 @@ namespace EIDService.Common.DataAccess
         private GenericRepository<StopOrder> stopOrderRepository;
         private GenericRepository<Transaction> transactionRepository;
         private GenericRepository<Deal> dealRepository;
+        private GenericRepository<MoneyLimit> moneylimitRepository;
 
         public UnitOfWork(DbContext context)
         {
@@ -114,6 +115,14 @@ namespace EIDService.Common.DataAccess
             get
             {
                 return this.dealRepository ?? new GenericRepository<Deal>(_context);
+            }
+        }
+
+        public GenericRepository<MoneyLimit> MoneyLimitRepository
+        {
+            get
+            {
+                return this.moneylimitRepository ?? new GenericRepository<MoneyLimit>(_context);
             }
         }
 

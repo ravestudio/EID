@@ -55,6 +55,7 @@
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\MoneyLimitConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PositionConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\SecurityConfiguration.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
     <Compile Include="Entities\ModeType.cs" />
+    <Compile Include="Entities\MoneyLimit.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderStateType.cs" />
     <Compile Include="Entities\PeriodType.cs" />
@@ -140,6 +142,10 @@
     <Compile Include="Migrations\201705121105168_alterTable.Designer.cs">
       <DependentUpon>201705121105168_alterTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705170931516_addMoneylimit.cs" />
+    <Compile Include="Migrations\201705170931516_addMoneylimit.Designer.cs">
+      <DependentUpon>201705170931516_addMoneylimit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705121105168_alterTable.resx">
       <DependentUpon>201705121105168_alterTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705170931516_addMoneylimit.resx">
+      <DependentUpon>201705170931516_addMoneylimit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

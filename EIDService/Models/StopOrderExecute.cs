@@ -37,6 +37,11 @@ namespace EIDService.Models
                 apply = true;
             }
 
+            if (_strategy.StopLimit(order, price))
+            {
+                apply = true;
+            }
+
             if (apply)
             {
                 Random rnd = new Random();
