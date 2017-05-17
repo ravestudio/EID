@@ -45,7 +45,7 @@ namespace EIDClient.Core.DataModel
             Messenger.Default.Register<InitTradeModelMessage>(this, async (msg) =>
             {
                 var temp_sessions = await _tradeSessionRepository.GetAll();
-                _sessions = temp_sessions.ToList();
+                _sessions = temp_sessions.OrderByDescending(t => t.Date).ToList();
 
                 _mode.SetAction("init", () =>
                 {
