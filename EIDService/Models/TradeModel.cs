@@ -76,7 +76,7 @@ namespace EIDService.Models
 
             unit.DealRepository.Create(deal);
 
-            MoneyLimit money = unit.MoneyLimitRepository.All<MoneyLimit>().First();
+            MoneyLimit money = unit.MoneyLimitRepository.Query<MoneyLimit>(m => m.Type == "T0").Single();
 
             if (order.Operation == "Купля")
             {

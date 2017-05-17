@@ -15,7 +15,7 @@ namespace EIDService.Models
 
         public string GetOperation()
         {
-            return "Покупка";
+            return "Купля";
         }
 
         public decimal GetPrice(decimal currentPrice, decimal limit)
