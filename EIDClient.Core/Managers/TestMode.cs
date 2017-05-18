@@ -36,18 +36,23 @@ namespace EIDClient.Core.Managers
 
         public void Start()
         {
-            actions["init"].Invoke();
-
-            for (int i = 0; i < 450; i++)
+            Task.Run(() =>
             {
-                actions["update"].Invoke();
+                actions["init"].Invoke();
 
-                actions["sendToRobo"].Invoke();
+                for (int i = 0; i < 450; i++)
+                {
+                    actions["showData"].Invoke();
 
-                string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
+                    actions["update"].Invoke();
 
-                string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
-            }
+                    actions["sendToRobo"].Invoke();
+
+                    string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
+
+                    string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
+                }
+            });
         }
     }
 }

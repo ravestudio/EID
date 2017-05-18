@@ -41,16 +41,29 @@ namespace Robot
             //TREND minutesTrend = new TREND(minutes_ema, 3);
             TREND macdTrend = new TREND(macd, 2);
 
-            if (hoursTrend.GetResult() == TRENDResult.Up && macdTrend.GetResult() == TRENDResult.Up && currentPos == "free")
+            //hoursTrend.GetResult();
+            //macdTrend.GetResult();
+
+            //if ((hoursTrend.GetResult() == TRENDResult.Up && macdTrend.GetResult() == TRENDResult.Up || macdTrend.GetResult() == TRENDResult.StrongUp) && currentPos == "free")
+            //{
+            //    dec = "open long";
+            //}
+
+            //if ((hoursTrend.GetResult() == TRENDResult.Down && macdTrend.GetResult() == TRENDResult.Down || macdTrend.GetResult() == TRENDResult.StrongDown) && currentPos == "free")
+            //{
+            //    dec = "open short";
+            //}
+
+
+            if (macdTrend.GetResult() == TRENDResult.StrongUp && currentPos == "free")
             {
                 dec = "open long";
             }
 
-            if (hoursTrend.GetResult() == TRENDResult.Down && macdTrend.GetResult() == TRENDResult.Down && currentPos == "free")
+            if (macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
             {
                 dec = "open short";
             }
-
             return dec;
         }
     }

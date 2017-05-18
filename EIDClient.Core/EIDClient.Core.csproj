@@ -112,6 +112,7 @@
     <Compile Include="DataModel\SecurityModel.cs" />
     <Compile Include="DDE\MyDDEServer.cs" />
     <Compile Include="Entities\Candle.cs" />
+    <Compile Include="Entities\Deal.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
@@ -146,7 +147,9 @@
     <Compile Include="Messages\SaveFinancialMessage.cs" />
     <Compile Include="Messages\SecurityListLoadedMessage.cs" />
     <Compile Include="Messages\SecurityLoadedMessage.cs" />
+    <Compile Include="Messages\ShowDataMessage.cs" />
     <Compile Include="Repository\CandleRepository.cs" />
+    <Compile Include="Repository\DealRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Repository\PositionRepository.cs" />
     <Compile Include="Repository\SecurityDataRepository.cs" />

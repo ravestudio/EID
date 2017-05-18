@@ -20,6 +20,7 @@ namespace EIDClient.Core.DataModel
         private CandleRepository _candleRepository = null;
         private OrderRepository _orderRepository = null;
         private PositionRepository _positionRepository = null;
+        private DealRepository _dealRepository = null;
 
         private ITradeMode _mode = null;
 
@@ -31,12 +32,14 @@ namespace EIDClient.Core.DataModel
             CandleRepository CandleRepository,
             OrderRepository OrderRepository,
             PositionRepository PositionRepository,
+            DealRepository DealRepository,
             ITradeMode mode)
         {
             _tradeSessionRepository = TradeSessionRepository;
             _candleRepository = CandleRepository;
             _orderRepository = OrderRepository;
             _positionRepository = PositionRepository;
+            _dealRepository = DealRepository;
 
             _mode = mode;
 
@@ -84,6 +87,16 @@ namespace EIDClient.Core.DataModel
                     });
                 });
 
+                _mode.SetAction("showData", () =>
+                {
+                    _dealRepository.GetAll().ContinueWith(t =>
+                    {
+                        Messenger.Default.Send<ShowDataMessage>(new ShowDataMessage()
+                        {
+                            Deals = t.Result
+                        });
+                    });
+                });
 
                 mode.Start();
             });

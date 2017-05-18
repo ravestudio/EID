@@ -195,6 +195,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CandleController.cs" />
+    <Compile Include="Controllers\DealController.cs" />
     <Compile Include="Controllers\EmitentController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

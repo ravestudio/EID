@@ -1,0 +1,14 @@
+﻿declare @buy decimal(18,2);
+declare @sell decimal(18,2);
+
+declare @duty decimal(18,2);
+
+set @buy = (select sum(volume) from DealSet
+where Operation = 'Купля')
+
+set @sell = (select sum(volume) from DealSet
+where Operation = 'Продажа')
+
+set @duty = (@buy + @sell) * 0.0005;
+
+select 100000 - @buy + @sell - @duty;

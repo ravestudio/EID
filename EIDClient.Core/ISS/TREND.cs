@@ -16,8 +16,6 @@ namespace EIDClient.Core.ISS
 
         public TREND(IList<decimal> data, int period)
         {
-            this.result = TRENDResult.Up;
-
             this.type = "simple";
 
             this._data = data.Skip(data.Count - period).ToList();
@@ -25,8 +23,6 @@ namespace EIDClient.Core.ISS
 
         public TREND(IList<MACDItem> data, int period)
         {
-            this.result = TRENDResult.Up;
-
             this.type = "macd";
 
             this._data = data.Skip(data.Count - period).Select(d => d.Histogram).ToList();
@@ -34,25 +30,48 @@ namespace EIDClient.Core.ISS
 
         public TRENDResult GetResult()
         {
+            this.result = TRENDResult.Flat;
+
             if (this.type == "simple")
             {
-                decimal d = _data.Last() - _data[0];
+                //decimal d = _data.Last() - _data[0];
 
-                this.result = d > 0 ? TRENDResult.Up : TRENDResult.Down;
+                decimal d = GetDiff(_data[0], _data.Last());
+
+                if (d > 0.15m)
+                {
+                    this.result = TRENDResult.Up;
+                }
+
+                if (d < -0.15m)
+                {
+                    this.result = TRENDResult.Down;
+                }
+
             }
 
             if (this.type == "macd")
             {
                 decimal d = GetDiff(_data[0], _data.Last());
 
-                if (d > 30m)
+                if (d > 30m && d <= 100)
                 {
                     this.result = TRENDResult.Up;
                 };
 
-                if (d < 30m)
+                if (d < -30m && d >= -100)
                 { 
                     this.result = TRENDResult.Down;
+                }
+
+                if (d > 100m)
+                {
+                    this.result = TRENDResult.StrongUp;
+                };
+
+                if (d < -100m)
+                {
+                    this.result = TRENDResult.StrongDown;
                 }
             }
 
@@ -72,6 +91,10 @@ namespace EIDClient.Core.ISS
 
     public enum TRENDResult
     {
-        Up, Down
+        Flat,
+        Up,
+        Down,
+        StrongUp,
+        StrongDown
     }
 }

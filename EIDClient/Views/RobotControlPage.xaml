@@ -8,7 +8,45 @@
     mc:Ignorable="d"
     DataContext="{Binding RobotControlViewModel, Source={StaticResource Locator}}">
 
+    <Page.Resources>
+
+        <Style x:Key="rowTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontSize" Value="12" />
+            <!--<Setter Property="Height" Value="20" />-->
+        </Style>
+
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <ListView
+            ItemsSource="{Binding DealList}">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="20" />
+                    <Setter Property="MinHeight" Value="10" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Number}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                        <TextBlock Text="{Binding OrderNumber}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                        <TextBlock Text="{Binding Code}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                        <TextBlock Text="{Binding Time}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                        <TextBlock Text="{Binding Operation}" Style="{StaticResource rowTextBlockStyle }" Width="200"/>
+                        <TextBlock Text="{Binding Account}" Style="{StaticResource rowTextBlockStyle }" Width="200"/>
+
+                        <TextBlock Text="{Binding Price}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                        <TextBlock Text="{Binding Count}" Style="{StaticResource rowTextBlockStyle }" Width="50"/>
+                        <TextBlock Text="{Binding Volume}" Style="{StaticResource rowTextBlockStyle }"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
 
     </Grid>
 </Page>
