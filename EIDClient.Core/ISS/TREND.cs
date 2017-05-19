@@ -49,17 +49,17 @@ namespace EIDClient.Core.ISS
                 }
 
             }
-
+            
             if (this.type == "macd")
             {
-                decimal d = GetDiff(_data[0], _data.Last());
+                decimal d = GetDiff(_data.Last(), _data[0]);
 
-                if (d > 30m && d <= 100)
+                if (d > 10m && d <= 100)
                 {
                     this.result = TRENDResult.Up;
                 };
 
-                if (d < -30m && d >= -100)
+                if (d < -10m && d >= -100)
                 { 
                     this.result = TRENDResult.Down;
                 }
