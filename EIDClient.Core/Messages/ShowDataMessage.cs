@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Entities;
+﻿using EID.Library;
+using EIDClient.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace EIDClient.Core.Messages
     public class ShowDataMessage
     {
         public IEnumerable<Deal> Deals { get; set; }
+
+        public IDictionary<string, IDictionary<int, IList<ICandle>>> Сandles { get; set; }
     }
 }

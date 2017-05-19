@@ -77,7 +77,7 @@ namespace Robot
             {
                 foreach(string sec in msg.Сandles.Keys)
                 {
-                    string d = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec]);
+                    string d = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], msg.DateTime);
 
                     if (!string.IsNullOrEmpty(d))
                     {

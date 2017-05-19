@@ -32,6 +32,7 @@ namespace EIDService.Common.DataAccess
         public DbSet<StopOrder> StopOrders { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<MoneyLimit> MoneyLimit { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

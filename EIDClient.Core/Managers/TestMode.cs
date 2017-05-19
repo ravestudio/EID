@@ -1,4 +1,6 @@
-﻿using EIDClient.Library;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.Repository;
+using EIDClient.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,14 @@ namespace EIDClient.Core.Managers
         private DateTime datetime;
         private IDictionary<string, Action> actions = null;
         private WebApiClient _apiClient = null;
+        private SettingsRepository _settingsRepo = null;
 
         private string ServerURL = "http://localhost:99/";
 
-        public TestMode(DateTime dateTime, WebApiClient client)
+        public TestMode(WebApiClient client, SettingsRepository repo)
         {
-            this.datetime = dateTime;
             this._apiClient = client;
+            this._settingsRepo = repo;
             this.actions = new Dictionary<string, Action>();
         }
 
@@ -26,7 +29,10 @@ namespace EIDClient.Core.Managers
         {
             //this.datetime = this.datetime.AddMinutes(1);
 
-            return this.datetime;
+            var list = _settingsRepo.GetAll().Result;
+            Settings settings = list.First();
+
+            return settings.TestDateTime;
         }
 
         public void SetAction(string name, Action action)

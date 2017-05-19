@@ -37,6 +37,8 @@ namespace EIDClient.Views.Controls
 
         public void ShowCandles(IList<ICandle> candleList)
         {
+            canvas.Children.Clear();
+
             count = candleList.Count;
 
             decimal max = Math.Max(candleList.Max(c => c.open), candleList.Max(c => c.close));

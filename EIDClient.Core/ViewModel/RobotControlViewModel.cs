@@ -1,4 +1,6 @@
-﻿using EIDClient.Core.Messages;
+﻿using EIDClient.Core.ISS;
+using EIDClient.Core.Managers;
+using EIDClient.Core.Messages;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -9,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +22,7 @@ namespace EIDClient.Core.ViewModel
     {
         private INavigationService _navigationService = null;
         private IMainCommandBar _commandBar = null;
+        private IChart _chart = null;
 
         public ObservableCollection<Core.Entities.Deal> DealList { get; set; }
 
@@ -28,11 +32,12 @@ namespace EIDClient.Core.ViewModel
 
         private CoreDispatcher dispatcher;
 
-        public RobotControlViewModel(INavigationService navigationService, IMainCommandBar commandBar)
+        public RobotControlViewModel(INavigationService navigationService, IMainCommandBar commandBar, IChart chart)
         {
             this._navigationService = navigationService;
             this.DealList = new ObservableCollection<Entities.Deal>();
             this._commandBar = commandBar;
+            this._chart = chart;
 
             this.StartRobot = new RelayCommand(() =>
             {
@@ -49,6 +54,19 @@ namespace EIDClient.Core.ViewModel
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     //this.DealList.Clear();
+
+                    var candlelist = msg.Сandles["GMKN"][5];
+
+                    this._chart.ShowCandles(candlelist);
+
+                    SimpleMovingAverage smaLong = new SimpleMovingAverage(candlelist, 20);
+                    this._chart.ShowMA(smaLong, Colors.LemonChiffon);
+
+                    SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
+                    this._chart.ShowMA(sma, Colors.Yellow);
+
+                    MACD macd = new MACD(candlelist, 12, 26, 9);
+                    this._chart.ShowMACD(macd, Colors.Blue);
 
                     var newdeals = msg.Deals.Where(d => !this.DealList.Select(old => old.Id).Contains(d.Id));
 

@@ -27,9 +27,14 @@ namespace Robot
             return res;
         }
 
-        public string GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos)
+        public string GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
         {
             string dec = null;
+
+            if (CurrentDt >= new DateTime(2017, 5, 15, 15,25, 0))
+            {
+
+            }
 
             ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
 
@@ -60,10 +65,11 @@ namespace Robot
                 dec = "open long";
             }
 
-            if (macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
-            {
-                dec = "open short";
-            }
+            //if (macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
+            //{
+            //    dec = "open short";
+            //}
+
             return dec;
         }
     }

@@ -82,6 +82,7 @@ namespace EIDClient.Core.DataModel
                 {
                     Messenger.Default.Send<GetCandlesResponseMessage>(new GetCandlesResponseMessage()
                     {
+                        DateTime = mode.GetDate(),
                         Сandles = _candles,
                         Positions = _positions
                     });
@@ -93,6 +94,7 @@ namespace EIDClient.Core.DataModel
                     {
                         Messenger.Default.Send<ShowDataMessage>(new ShowDataMessage()
                         {
+                            Сandles = CopyCandles(_candles),
                             Deals = t.Result
                         });
                     });
@@ -125,6 +127,35 @@ namespace EIDClient.Core.DataModel
             //        Сandles = _candles
             //    });
             //});
+        }
+
+        private IDictionary<string, IDictionary<int, IList<ICandle>>> CopyCandles(IDictionary<string, IDictionary<int, IList<ICandle>>> candles)
+        {
+            IDictionary<string, IDictionary<int, IList<ICandle>>> newdata = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
+
+            foreach(string sec in candles.Keys)
+            {
+                newdata.Add(sec, new Dictionary<int, IList<ICandle>>());
+
+                foreach(int f in candles[sec].Keys)
+                {
+                    newdata[sec].Add(f, new List<ICandle>());
+
+                    foreach(ICandle candle in candles[sec][f])
+                    {
+                        newdata[sec][f].Add(new Candle()
+                        {
+                            Code = candle.Code,
+                            begin = candle.begin,
+                            open = candle.open,
+                            close = candle.close,
+                            high = candle.high
+                        });
+                    }
+                }
+            }
+
+            return newdata;
         }
 
         private IDictionary<string, string> GetPositions(IEnumerable<Position> positions, IList<string> securities)

@@ -31,6 +31,8 @@ namespace EIDService.Controllers
 
                 context.Settings.First().TestDateTime = testTime;
 
+                context.MoneyLimit.First().Available = 100000m;
+
                 context.SaveChanges();
             }
 

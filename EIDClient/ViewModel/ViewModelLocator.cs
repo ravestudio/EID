@@ -127,7 +127,7 @@ namespace EIDClient.ViewModel
 
             if (settings.Mode == "Test")
             {
-                result = new TestMode(settings.TestDateTime, apiClient);
+                result = new TestMode(apiClient, repo);
             }
 
             return result;
