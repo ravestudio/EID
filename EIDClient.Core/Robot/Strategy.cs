@@ -60,7 +60,7 @@ namespace Robot
             //}
 
 
-            if (macdTrend.GetResult() == TRENDResult.StrongUp && currentPos == "free")
+            if (macdTrend.GetResult() == TRENDResult.Up && currentPos == "free")
             {
                 dec = "open long";
             }
