@@ -106,9 +106,6 @@ namespace EIDClient.Views.Controls
             signal.Stroke = new SolidColorBrush(Colors.Red);
             signal.StrokeThickness = 2;
 
-            Polyline histogram = new Polyline();
-            histogram.Fill = new SolidColorBrush(Colors.Red);
-
 
             int i = count - macd.Count;
             foreach (MACDItem item in macd)
@@ -116,7 +113,22 @@ namespace EIDClient.Views.Controls
                 i++;
                 poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k));
                 signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k));
-                histogram.Points.Add(new Point(i * 10, ((double)item.Histogram) * k));
+
+                Line line = new Line()
+                {
+                    StrokeThickness = 2,
+                    Stroke = new SolidColorBrush(Colors.Red)
+                };
+
+                line.X1 = 0;
+                line.Y1 = 0;
+                line.X2 = 0;
+                line.Y2 = ((double)item.Histogram) * k*2;
+
+                Canvas.SetLeft(line, i * 10);
+                Canvas.SetTop(line, 400);
+
+                canvas.Children.Add(line);
             }
 
             Canvas.SetLeft(poliline, 0);
@@ -125,12 +137,12 @@ namespace EIDClient.Views.Controls
             Canvas.SetLeft(signal, 0);
             Canvas.SetTop(signal, 350);
 
-            Canvas.SetLeft(histogram, 0);
-            Canvas.SetTop(histogram, 400);
+            //Canvas.SetLeft(histogram, 0);
+            //Canvas.SetTop(histogram, 400);
 
             canvas.Children.Add(poliline);
             canvas.Children.Add(signal);
-            canvas.Children.Add(histogram);
+            //canvas.Children.Add(histogram);
 
         }
     }
