@@ -59,8 +59,8 @@ namespace EIDClient.Core.ViewModel
 
                     this._chart.ShowCandles(candlelist);
 
-                    SimpleMovingAverage smaLong = new SimpleMovingAverage(candlelist, 20);
-                    this._chart.ShowMA(smaLong, Colors.LemonChiffon);
+                    //SimpleMovingAverage smaLong = new SimpleMovingAverage(candlelist, 20);
+                    //this._chart.ShowMA(smaLong, Colors.LemonChiffon);
 
                     SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
                     this._chart.ShowMA(sma, Colors.Yellow);

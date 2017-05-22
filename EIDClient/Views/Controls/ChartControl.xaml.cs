@@ -111,8 +111,8 @@ namespace EIDClient.Views.Controls
             foreach (MACDItem item in macd)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k));
-                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k*-1));
+                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k*-1));
 
                 Line line = new Line()
                 {
@@ -123,7 +123,7 @@ namespace EIDClient.Views.Controls
                 line.X1 = 0;
                 line.Y1 = 0;
                 line.X2 = 0;
-                line.Y2 = ((double)item.Histogram) * k*2;
+                line.Y2 = ((double)item.Histogram) * k*(-3);
 
                 Canvas.SetLeft(line, i * 10);
                 Canvas.SetTop(line, 400);

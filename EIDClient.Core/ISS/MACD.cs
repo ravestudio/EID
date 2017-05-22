@@ -22,7 +22,7 @@ namespace EIDClient.Core.ISS
             int i = 0;
             foreach(decimal p in ema_long)
             {
-                this.Add(new ISS.MACDItem() { MACD = ema_long[i] - ema_short[d + i] });
+                this.Add(new ISS.MACDItem() { MACD = ema_short[d + i] - ema_long[i] });
                 i++;
             }
 

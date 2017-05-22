@@ -52,7 +52,12 @@ namespace EIDClient.Core.ISS
             
             if (this.type == "macd")
             {
-                decimal d = GetDiff(_data.Last(), _data[0]);
+                decimal d = GetDiff(_data[0], _data.Last());
+
+                if (Math.Abs(_data.Last()) < 1m && Math.Abs(_data[0]) < 1m)
+                {
+                    d = 0m;
+                }
 
                 if (d > 10m && d <= 100)
                 {

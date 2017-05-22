@@ -42,7 +42,7 @@ namespace Robot
 
             MACD macd = new MACD(data[5], 12, 26, 9);
 
-            TREND hoursTrend = new TREND(hours_ema, 5);
+            TREND hoursTrend = new TREND(hours_ema, 3);
             //TREND minutesTrend = new TREND(minutes_ema, 3);
             TREND macdTrend = new TREND(macd, 2);
 
@@ -60,15 +60,25 @@ namespace Robot
             //}
 
 
-            if (macdTrend.GetResult() == TRENDResult.Up && currentPos == "free")
+            if (hoursTrend.GetResult() == TRENDResult.Up && (macdTrend.GetResult() == TRENDResult.Up || macdTrend.GetResult() == TRENDResult.StrongUp) && currentPos == "free")
             {
                 dec = "open long";
             }
 
-            //if (macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
-            //{
-            //    dec = "open short";
-            //}
+            if (hoursTrend.GetResult() == TRENDResult.Flat && macdTrend.GetResult() == TRENDResult.StrongUp && currentPos == "free")
+            {
+                dec = "open long";
+            }
+
+            if (hoursTrend.GetResult() == TRENDResult.Down && (macdTrend.GetResult() == TRENDResult.Down || macdTrend.GetResult() == TRENDResult.StrongDown) && currentPos == "free")
+            {
+                dec = "open short";
+            }
+
+            if (hoursTrend.GetResult() == TRENDResult.Flat && macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
+            {
+                dec = "open short";
+            }
 
             return dec;
         }
