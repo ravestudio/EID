@@ -111,8 +111,8 @@ namespace EIDClient.Views.Controls
             foreach (MACDItem item in macd)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k*-1));
-                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k*-1));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k*-3));
+                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k*-3));
 
                 Line line = new Line()
                 {

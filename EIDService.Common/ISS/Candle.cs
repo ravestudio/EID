@@ -29,6 +29,8 @@ namespace EIDService.Common.ISS
             this.open = candle.OpenPrice;
             this.close = candle.ClosePrice;
             this.high = candle.MaxPrice;
+            this.low = candle.MinPrice;
+            this.value = candle.v
         }
 
         public string Code { get; set; }
@@ -36,5 +38,7 @@ namespace EIDService.Common.ISS
         public decimal open { get; set; }
         public decimal close { get; set; }
         public decimal high { get; set; }
+        public decimal low { get; set; }
+        public decimal value { get; set; }
     }
 }

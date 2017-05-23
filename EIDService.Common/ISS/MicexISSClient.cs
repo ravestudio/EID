@@ -100,7 +100,8 @@ namespace EIDService.Common.ISS
                         begin = DateTime.Parse(GetAttribute(el, "begin"), CultureInfo.InvariantCulture),
                         open = decimal.Parse(GetAttribute(el, "open"), CultureInfo.InvariantCulture),
                         close = decimal.Parse(GetAttribute(el, "close"), CultureInfo.InvariantCulture),
-                        high = decimal.Parse(GetAttribute(el, "high"), CultureInfo.InvariantCulture)
+                        high = decimal.Parse(GetAttribute(el, "high"), CultureInfo.InvariantCulture),
+                        low
                     };
                     candlelist.Add(candle);        
                 }

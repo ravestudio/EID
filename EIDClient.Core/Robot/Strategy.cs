@@ -59,23 +59,26 @@ namespace Robot
             //    dec = "open short";
             //}
 
+            TRENDResult trend = hoursTrend.GetResult();
+            TRENDResult power = macdTrend.GetResult();
 
-            if (hoursTrend.GetResult() == TRENDResult.Up && (macdTrend.GetResult() == TRENDResult.Up || macdTrend.GetResult() == TRENDResult.StrongUp) && currentPos == "free")
+
+            if (trend == TRENDResult.Up && (power == TRENDResult.Up || power == TRENDResult.StrongUp) && currentPos == "free")
             {
                 dec = "open long";
             }
 
-            if (hoursTrend.GetResult() == TRENDResult.Flat && macdTrend.GetResult() == TRENDResult.StrongUp && currentPos == "free")
+            if (trend == TRENDResult.Flat && power == TRENDResult.StrongUp && currentPos == "free")
             {
                 dec = "open long";
             }
 
-            if (hoursTrend.GetResult() == TRENDResult.Down && (macdTrend.GetResult() == TRENDResult.Down || macdTrend.GetResult() == TRENDResult.StrongDown) && currentPos == "free")
+            if (trend == TRENDResult.Down && (power == TRENDResult.Down || power == TRENDResult.StrongDown) && currentPos == "free")
             {
                 dec = "open short";
             }
 
-            if (hoursTrend.GetResult() == TRENDResult.Flat && macdTrend.GetResult() == TRENDResult.StrongDown && currentPos == "free")
+            if (trend == TRENDResult.Flat && power == TRENDResult.StrongDown && currentPos == "free")
             {
                 dec = "open short";
             }

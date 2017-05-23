@@ -13,5 +13,7 @@ namespace EID.Library
         decimal open { get; set; }
         decimal close { get; set; }
         decimal high { get; set; }
+        decimal low { get; set; }
+        decimal value { get; set; }
     }
 }
