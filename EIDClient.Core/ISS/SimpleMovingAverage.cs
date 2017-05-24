@@ -10,15 +10,25 @@ namespace EIDClient.Core.ISS
 {
     public class SimpleMovingAverage : List<decimal>
     {
+        public SimpleMovingAverage(IList<decimal> values, int period)
+        {
+            Calculate(values.ToArray(), period);
+        }
+
         public SimpleMovingAverage(IList<ICandle> candles, int period)
+        {
+            IList<ICandle> temp = candles.OrderBy(c => c.begin).ToList();
+
+            Calculate(temp.Select(c => c.close).ToArray(), period);
+        }
+
+        void Calculate(decimal[] data, int period)
         {
             this.Clear();
 
-            IList<ICandle> temp = candles.OrderBy(c => c.begin).ToList();
+            IEnumerable<int> range = Enumerable.Range(0, data.Length - period);
 
-            IEnumerable<int> range = Enumerable.Range(0, candles.Count - period);
-
-            var result = range.Select(n => temp.Skip(n).Take(period).Select(c => c.close).Average());
+            var result = range.Select(n => data.Skip(n).Take(period).Average());
 
             this.AddRange(result);
         }

@@ -125,6 +125,7 @@
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\TradeSession.cs" />
     <Compile Include="Integration\Terminal.cs" />
+    <Compile Include="ISS\AverageTrueRange.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />
     <Compile Include="ISS\MACD.cs" />
     <Compile Include="ISS\SimpleMovingAverage.cs" />

@@ -68,8 +68,11 @@ namespace EIDService.Controllers
                     entity.CandleDate = candle.begin.ToString("yyyyMMdd");
                     entity.CandleTime = candle.begin.ToString("HHmm00");
                     entity.MaxPrice = candle.high;
+                    entity.MinPrice = candle.low; 
                     entity.OpenPrice = candle.open;
                     entity.ClosePrice = candle.close;
+                    entity.Volume = candle.volume;
+                    entity.Value = candle.value;
                     entity.Code = sec;
 
                     unit.CandleRepository.Create(entity);

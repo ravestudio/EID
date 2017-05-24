@@ -146,6 +146,10 @@
     <Compile Include="Migrations\201705170931516_addMoneylimit.Designer.cs">
       <DependentUpon>201705170931516_addMoneylimit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705240850400_addValue.cs" />
+    <Compile Include="Migrations\201705240850400_addValue.Designer.cs">
+      <DependentUpon>201705240850400_addValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -195,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705170931516_addMoneylimit.resx">
       <DependentUpon>201705170931516_addMoneylimit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705240850400_addValue.resx">
+      <DependentUpon>201705240850400_addValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
