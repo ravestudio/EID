@@ -15,16 +15,21 @@ namespace EIDClient.Core.Entities
         public decimal close { get; set; }
         public decimal high { get; set; }
         public string Code { get; set; }
+        public decimal low { get; set; }
+        public decimal value { get; set; }
+        public decimal volume { get; set; }
 
         public override void ReadData(JsonObject jsonObj)
         {
             this.Code = jsonObj["Code"].GetString();
 
             this.begin = DateTime.Parse(jsonObj["begin"].GetString());
-
             this.open = (decimal)jsonObj["open"].GetNumber();
             this.close = (decimal)jsonObj["close"].GetNumber();
             this.high = (decimal)jsonObj["high"].GetNumber();
+            this.low = (decimal)jsonObj["low"].GetNumber();
+            this.value = (decimal)jsonObj["value"].GetNumber();
+            this.volume = (decimal)jsonObj["volume"].GetNumber();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace EIDService.Common.Entities
         public decimal ClosePrice { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
+        public decimal Value { get; set; }
         public decimal Volume { get; set; }
     }
 }

@@ -30,7 +30,8 @@ namespace EIDService.Common.ISS
             this.close = candle.ClosePrice;
             this.high = candle.MaxPrice;
             this.low = candle.MinPrice;
-            this.value = candle.v
+            this.value = candle.Value;
+            this.volume = candle.Volume;
         }
 
         public string Code { get; set; }
@@ -40,5 +41,6 @@ namespace EIDService.Common.ISS
         public decimal high { get; set; }
         public decimal low { get; set; }
         public decimal value { get; set; }
+        public decimal volume { get; set; }
     }
 }

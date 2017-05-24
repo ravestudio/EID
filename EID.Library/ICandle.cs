@@ -15,5 +15,6 @@ namespace EID.Library
         decimal high { get; set; }
         decimal low { get; set; }
         decimal value { get; set; }
+        decimal volume { get; set; }
     }
 }

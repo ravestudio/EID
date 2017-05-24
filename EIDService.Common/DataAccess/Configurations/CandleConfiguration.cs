@@ -32,6 +32,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.MaxPrice).HasColumnName("MaxPrice").IsRequired();
                 Property(p => p.MinPrice).HasColumnName("MinPrice").IsRequired();
 
+                Property(p => p.Value).HasColumnName("Volue").HasPrecision(18, 0).IsRequired();
                 Property(p => p.Volume).HasColumnName("Volume").HasPrecision(18,0).IsRequired();
 
             }).ToTable("CandleSet");

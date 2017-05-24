@@ -101,7 +101,9 @@ namespace EIDService.Common.ISS
                         open = decimal.Parse(GetAttribute(el, "open"), CultureInfo.InvariantCulture),
                         close = decimal.Parse(GetAttribute(el, "close"), CultureInfo.InvariantCulture),
                         high = decimal.Parse(GetAttribute(el, "high"), CultureInfo.InvariantCulture),
-                        low
+                        low = decimal.Parse(GetAttribute(el, "low"), CultureInfo.InvariantCulture),
+                        volume = decimal.Parse(GetAttribute(el, "volume"), CultureInfo.InvariantCulture),
+                        value = decimal.Parse(GetAttribute(el, "value"), CultureInfo.InvariantCulture)
                     };
                     candlelist.Add(candle);        
                 }
