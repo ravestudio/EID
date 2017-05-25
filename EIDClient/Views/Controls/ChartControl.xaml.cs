@@ -23,12 +23,12 @@ using Windows.UI.Xaml.Shapes;
 
 namespace EIDClient.Views.Controls
 {
-    public sealed partial class ChartControl : UserControl
+public sealed partial class ChartControl : UserControl
     {
 
         private int count = 0;
         double k = 0;
-        double div = 0;
+        double cutvalue = 0;
 
         public ChartControl()
         {
@@ -51,30 +51,43 @@ namespace EIDClient.Views.Controls
 
             k = 200 / y;
 
-            div = (double)max;
+            cutvalue = (double)min;
 
             int i = 0;
             foreach(Candle candle in candleList)
             {
                 i++;
-                DrawItem(candle, i, k, div);
+                DrawItem(candle, i, k, cutvalue);
             }
         }
 
-        void DrawItem(Candle item, int i, double k, double div)
+        void DrawItem(Candle item, int i, double k, double cutvalue)
         {
             Rectangle rect = new Rectangle()
             {
-                Width = 5,
-                Height = (double)Math.Abs(item.open - item.close) * k,
-                Fill = item.close >= item.open ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red)
+                Width = 8,
+                Height = (double)Math.Abs(item.open - item.close)*k,
+                Fill = item.close >= item.open ? new SolidColorBrush(Colors.LightGreen) : new SolidColorBrush(Colors.HotPink),
+                Stroke = item.close > item.open ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red)
             };
 
             Canvas.SetLeft(rect, i * 10);
             double y = item.close >= item.open ? (double)item.close : (double)item.open;
 
-            Canvas.SetTop(rect, 100 - (y-div)*k);
+            Canvas.SetTop(rect, 200 - getDiff(item)*k);
             canvas.Children.Add(rect);
+        }
+
+        private double getDiff(Candle item)
+        {
+
+            decimal Height = Math.Abs(item.open - item.close);
+
+            double res = item.close >= item.open ? (double)Height + (double)item.open : (double)item.open;
+
+            res -= cutvalue;
+
+            return res;
         }
 
         public void ShowMA(IList<decimal> ma, Color color)
@@ -87,7 +100,7 @@ namespace EIDClient.Views.Controls
             foreach(decimal p in ma)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, 100-((double)p - div) * k));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, 100-((double)p - cutvalue) * k));
             }
 
             Canvas.SetLeft(poliline, 0);
@@ -146,4 +159,4 @@ namespace EIDClient.Views.Controls
 
         }
     }
-}
+    
