@@ -46,6 +46,8 @@ namespace Robot
             //TREND minutesTrend = new TREND(minutes_ema, 3);
             TREND macdTrend = new TREND(macd, 2);
 
+            AverageTrueRange atr = new AverageTrueRange(data[5], 14);
+
             //hoursTrend.GetResult();
             //macdTrend.GetResult();
 

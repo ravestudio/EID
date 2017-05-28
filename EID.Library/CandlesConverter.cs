@@ -66,6 +66,9 @@ namespace EIDClient.Library
                 candle.open = temp.First().open;
                 candle.close = temp.Last().close;
                 candle.high = temp.Max(c => c.high);
+                candle.low = temp.Min(c => c.low);
+                candle.volume = temp.Sum(c => c.volume);
+                candle.value = temp.Sum(c => c.value);
             }
 
             return candle;

@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace EIDClient.Views.Controls
 {
-public sealed partial class ChartControl : UserControl
+    public sealed partial class ChartControl : UserControl
     {
 
         private int count = 0;
@@ -54,7 +54,7 @@ public sealed partial class ChartControl : UserControl
             cutvalue = (double)min;
 
             int i = 0;
-            foreach(Candle candle in candleList)
+            foreach (Candle candle in candleList)
             {
                 i++;
                 DrawItem(candle, i, k, cutvalue);
@@ -66,7 +66,7 @@ public sealed partial class ChartControl : UserControl
             Rectangle rect = new Rectangle()
             {
                 Width = 8,
-                Height = (double)Math.Abs(item.open - item.close)*k,
+                Height = (double)Math.Abs(item.open - item.close) * k,
                 Fill = item.close >= item.open ? new SolidColorBrush(Colors.LightGreen) : new SolidColorBrush(Colors.HotPink),
                 Stroke = item.close > item.open ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red)
             };
@@ -74,7 +74,7 @@ public sealed partial class ChartControl : UserControl
             Canvas.SetLeft(rect, i * 10);
             double y = item.close >= item.open ? (double)item.close : (double)item.open;
 
-            Canvas.SetTop(rect, 200 - getDiff(item)*k);
+            Canvas.SetTop(rect, 200 - getDiff(item) * k);
             canvas.Children.Add(rect);
         }
 
@@ -95,12 +95,12 @@ public sealed partial class ChartControl : UserControl
             Windows.UI.Xaml.Shapes.Polyline poliline = new Polyline();
             poliline.Stroke = new SolidColorBrush(color);
             poliline.StrokeThickness = 2;
- 
-            int i = count-ma.Count;
-            foreach(decimal p in ma)
+
+            int i = count - ma.Count;
+            foreach (decimal p in ma)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, 100-((double)p - cutvalue) * k));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, 100 - ((double)p - cutvalue) * k));
             }
 
             Canvas.SetLeft(poliline, 0);
@@ -124,8 +124,8 @@ public sealed partial class ChartControl : UserControl
             foreach (MACDItem item in macd)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD)*k*-3));
-                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k*-3));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD) * k * -3));
+                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k * -3));
 
                 Line line = new Line()
                 {
@@ -136,7 +136,7 @@ public sealed partial class ChartControl : UserControl
                 line.X1 = 0;
                 line.Y1 = 0;
                 line.X2 = 0;
-                line.Y2 = ((double)item.Histogram) * k*(-3);
+                line.Y2 = ((double)item.Histogram) * k * (-3);
 
                 Canvas.SetLeft(line, i * 10);
                 Canvas.SetTop(line, 400);
@@ -159,4 +159,5 @@ public sealed partial class ChartControl : UserControl
 
         }
     }
+}
     
