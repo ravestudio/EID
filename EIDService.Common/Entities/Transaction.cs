@@ -21,6 +21,8 @@ namespace EIDService.Common.Entities
 
         public bool Processed { get; set; }
 
+        public decimal Profit { get; set; }
+        public decimal StopLoss { get; set; }
         public decimal MaxProfit { get; set; } 
     }
 }

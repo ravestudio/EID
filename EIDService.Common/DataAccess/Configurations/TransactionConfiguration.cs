@@ -26,6 +26,8 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Processed).HasColumnName("Processed").IsRequired();
 
                 Property(p => p.MaxProfit).HasColumnName("MaxProfit").IsRequired();
+                Property(p => p.Profit).HasColumnName("Profit").IsRequired();
+                Property(p => p.StopLoss).HasColumnName("StopLoss").IsRequired();
 
             }).ToTable("TransactionSet");
         }

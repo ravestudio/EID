@@ -21,6 +21,9 @@ namespace EIDClient.Core.Entities
         public string Client { get; set; }
         public string Comment { get; set; }
 
+        public decimal Profit { get; set; }
+        public decimal StopLoss { get; set; }
+
         public List<KeyValuePair<string, string>> ConverToKeyValue()
         {
             List<KeyValuePair<string, string>> keyValueData = new List<KeyValuePair<string, string>>();
@@ -37,6 +40,8 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("Class", Class));
             keyValueData.Add(new KeyValuePair<string, string>("Client", Client));
             keyValueData.Add(new KeyValuePair<string, string>("Comment", Comment));
+            keyValueData.Add(new KeyValuePair<string, string>("Profit", Profit.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            keyValueData.Add(new KeyValuePair<string, string>("StopLoss", StopLoss.ToString(System.Globalization.CultureInfo.InvariantCulture)));
 
             return keyValueData;
         }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Robot
+namespace EIDClient.Core.Robot
 {
     public class Strategy
     {
@@ -27,14 +27,9 @@ namespace Robot
             return res;
         }
 
-        public string GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
+        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
         {
-            string dec = null;
-
-            if (CurrentDt >= new DateTime(2017, 5, 15, 15,25, 0))
-            {
-
-            }
+            StrategyDecision dec = new StrategyDecision() { Decision = null };
 
             ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
 
@@ -45,8 +40,11 @@ namespace Robot
             TREND hoursTrend = new TREND(hours_ema, 3);
             //TREND minutesTrend = new TREND(minutes_ema, 3);
             TREND macdTrend = new TREND(macd, 2);
+            bool valueConfirm = new ValueConfirm(data[5], 5).GetResult();
 
             AverageTrueRange atr = new AverageTrueRange(data[5], 14);
+
+            Extremum extremum = new Extremum(atr, 3, 20);
 
             //hoursTrend.GetResult();
             //macdTrend.GetResult();
@@ -65,24 +63,41 @@ namespace Robot
             TRENDResult power = macdTrend.GetResult();
 
 
-            if (trend == TRENDResult.Up && (power == TRENDResult.Up || power == TRENDResult.StrongUp) && currentPos == "free")
+            decimal value = data[5].Last().value; 
+
+            //*if (extremum.Count() > 0 && extremum.Last().ext == "L" && extremum.Last().val < atr.Last())
+            if (atr.Last() > 10m && valueConfirm)
             {
-                dec = "open long";
+
+                dec.Profit = Math.Round(atr.Last() * 4m, 2);
+                dec.StopLoss = Math.Round(atr.Last(), 2);
+
+
+
+                if (trend == TRENDResult.Up && (power == TRENDResult.Up || power == TRENDResult.StrongUp) && currentPos == "free")
+                {
+                    dec.Decision = "open long";
+                }
+
+                if (trend == TRENDResult.Flat && power == TRENDResult.StrongUp && currentPos == "free")
+                {
+                    dec.Decision = "open long";
+                }
+
+                if (trend == TRENDResult.Down && (power == TRENDResult.Down || power == TRENDResult.StrongDown) && currentPos == "free")
+                {
+                    dec.Decision = "open short";
+                }
+
+                if (trend == TRENDResult.Flat && power == TRENDResult.StrongDown && currentPos == "free")
+                {
+                    dec.Decision = "open short";
+                }
             }
 
-            if (trend == TRENDResult.Flat && power == TRENDResult.StrongUp && currentPos == "free")
+            if (CurrentDt >= new DateTime(2017, 5, 15, 15, 20, 0))
             {
-                dec = "open long";
-            }
-
-            if (trend == TRENDResult.Down && (power == TRENDResult.Down || power == TRENDResult.StrongDown) && currentPos == "free")
-            {
-                dec = "open short";
-            }
-
-            if (trend == TRENDResult.Flat && power == TRENDResult.StrongDown && currentPos == "free")
-            {
-                dec = "open short";
+                //dec = null;
             }
 
             return dec;

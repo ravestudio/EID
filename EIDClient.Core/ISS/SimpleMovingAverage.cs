@@ -19,7 +19,7 @@ namespace EIDClient.Core.ISS
         {
             IList<ICandle> temp = candles.OrderBy(c => c.begin).ToList();
 
-            Calculate(temp.Select(c => c.close).ToArray(), period);
+            Calculate(temp.Select(c => c.close).ToArray(), period);     
         }
 
         void Calculate(decimal[] data, int period)

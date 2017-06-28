@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Robot
+namespace EIDClient.Core.Robot
 {
     public class Robot
     {
@@ -19,7 +19,7 @@ namespace Robot
         private Strategy _strategy = null;
         private System.Threading.CancellationTokenSource _stop = null;
 
-        private IDictionary<string, Action<string>> actions = null;
+        private IDictionary<string, Action<string, StrategyDecision>> actions = null;
 
 
         public Robot(Strategy strategy)
@@ -28,9 +28,9 @@ namespace Robot
 
             _frames = new Dictionary<int, IList<decimal>>();
 
-            actions = new Dictionary<string, Action<string>>();
+            actions = new Dictionary<string, Action<string, StrategyDecision>>();
 
-            actions.Add("open long", (sec) =>
+            actions.Add("open long", (sec, dec) =>
                 {
                     Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                     {
@@ -41,11 +41,13 @@ namespace Robot
                         Operation = "Купля",
                         Class = "QJSIM",
                         Client = "11272",
-                        Comment = "11272"
+                        Comment = "11272",
+                        Profit = dec.Profit,
+                        StopLoss = dec.StopLoss
                     });
                 });
 
-            actions.Add("open short", (sec) =>
+            actions.Add("open short", (sec, dec) =>
             {
                 Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                 {
@@ -56,7 +58,9 @@ namespace Robot
                     Operation = "Продажа",
                     Class = "QJSIM",
                     Client = "11272",
-                    Comment = "11272"
+                    Comment = "11272",
+                    Profit = dec.Profit,
+                    StopLoss = dec.StopLoss
                 });
             });
 
@@ -77,11 +81,11 @@ namespace Robot
             {
                 foreach(string sec in msg.Сandles.Keys)
                 {
-                    string d = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], msg.DateTime);
+                    StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], msg.DateTime);
 
-                    if (!string.IsNullOrEmpty(d))
+                    if (!string.IsNullOrEmpty(dec.Decision))
                     {
-                        actions[d].Invoke(sec);
+                        actions[dec.Decision].Invoke(sec, dec);
                     }
                 }
             });

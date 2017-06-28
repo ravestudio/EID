@@ -150,6 +150,10 @@
     <Compile Include="Migrations\201705240850400_addValue.Designer.cs">
       <DependentUpon>201705240850400_addValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706090624576_ATRtoDeals.cs" />
+    <Compile Include="Migrations\201706090624576_ATRtoDeals.Designer.cs">
+      <DependentUpon>201706090624576_ATRtoDeals.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -202,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705240850400_addValue.resx">
       <DependentUpon>201705240850400_addValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706090624576_ATRtoDeals.resx">
+      <DependentUpon>201706090624576_ATRtoDeals.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

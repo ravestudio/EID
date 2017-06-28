@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication4
+namespace EIDClient.Core.ISS
 {
     public class ExtItem
     {
@@ -13,12 +13,12 @@ namespace ConsoleApplication4
     }
     public class Extremum : List<ExtItem>
     {
-        public Extremum(IList<decimal> data, int period)
+        public Extremum(IList<decimal> data, int period, int period2)
         {
 
             List<ExtItem> temp = new List<ExtItem>();
 
-            foreach (decimal v in data)
+            foreach (decimal v in data.Skip(data.Count - period2))
             {
                 temp.Add(new ExtItem() { val = v });
             }

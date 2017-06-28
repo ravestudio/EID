@@ -37,6 +37,9 @@ namespace EIDService.Common.Entities
         public string Client { get; set; }
         public string Comment { get; set; }
 
+        public decimal Profit { get; set; }
+        public decimal StopLoss { get; set; }
+
         public OrderStateType StateType
         {
             get

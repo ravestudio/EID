@@ -114,7 +114,9 @@ namespace EIDClient.Core.DataModel
                     Count = msg.Count,
                     Class = msg.Class,
                     Client = msg.Client,
-                    Comment = msg.Comment
+                    Comment = msg.Comment,
+                    Profit = msg.Profit,
+                    StopLoss = msg.StopLoss
                 };
 
                string result = _orderRepository.Create(order).Result;

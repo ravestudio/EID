@@ -37,6 +37,8 @@ namespace EIDService.Controllers
                     OrderNumber = order.Number,
                     Name = "Ввод заявки",
                     Status = 3,
+                    Profit = order.Profit,
+                    StopLoss = order.StopLoss,
                     Processed = false
                 };
 

@@ -127,9 +127,11 @@
     <Compile Include="Integration\Terminal.cs" />
     <Compile Include="ISS\AverageTrueRange.cs" />
     <Compile Include="ISS\ExponentialMovingAverage.cs" />
+    <Compile Include="ISS\Extremum.cs" />
     <Compile Include="ISS\MACD.cs" />
     <Compile Include="ISS\SimpleMovingAverage.cs" />
     <Compile Include="ISS\TREND.cs" />
+    <Compile Include="ISS\ValueConfirm.cs" />
     <Compile Include="Managers\IChart.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Managers\ITradeMode.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Repository\TradeSessionRepository.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />
+    <Compile Include="Robot\StrategyDecision.cs" />
     <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
     <Compile Include="ViewModel\FinancialEditViewModel.cs" />
