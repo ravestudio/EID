@@ -23,7 +23,8 @@ namespace EIDClient.Core.ViewModel
             _itemList.Add(new MenuItem() { Key = "emitents", Text = "Emitents" });
             _itemList.Add(new MenuItem() { Key = "securities", Text = "Securities" });
             _itemList.Add(new MenuItem() { Key = "robot", Text = "Robot" });
-        }
+            _itemList.Add(new MenuItem() { Key = "analysis", Text = "Analysis" });
+            }
 
         public IList<IMenuItem> GetMenuItems()
         {

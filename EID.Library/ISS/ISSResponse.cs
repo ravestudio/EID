@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EIDService.Common.ISS
+namespace EID.Library.ISS
 {
     public class ISSResponse
     {

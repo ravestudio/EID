@@ -1,0 +1,76 @@
+﻿<Page
+    x:Class="EIDMobile.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EIDMobile.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
+
+    <Page.Resources>
+        <DataTemplate x:Key="MenuItemTemplate">
+            <TextBlock HorizontalAlignment="Stretch" Text="{Binding Text}"></TextBlock>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel Grid.Row="0">
+            <Button
+                x:Name="homebtn"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE700;"
+                Background="Transparent"
+                Command="{Binding ClickMenuCmd}"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"></Button>
+            <TextBlock Text="Home" Margin="0,0,0,0" VerticalAlignment="Center"
+                       RelativePanel.RightOf="homebtn"
+                       RelativePanel.AlignTopWithPanel="True"
+                       RelativePanel.AlignBottomWithPanel="True"/>
+        </RelativePanel>
+
+        <SplitView
+            x:Name="panel_splitter"
+            IsPaneOpen="False"
+            CompactPaneLength="50"
+            OpenPaneLength="100"
+            DisplayMode="CompactOverlay"
+            Grid.Row="1">
+
+            <SplitView.Pane>
+                <ListView
+                    x:Name="menu"
+                    IsItemClickEnabled="True"
+                    SelectionMode="Single"
+                    ItemsSource="{Binding MenuItems}"
+                    ItemTemplate="{StaticResource MenuItemTemplate}"
+                    Background="Indigo">
+
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding MenuSelectionChanged}" CommandParameter="{Binding ElementName=menu, Path=SelectedItem}"/>
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+
+                </ListView>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+
+                <Frame x:Name="mainFrame">
+                </Frame>
+
+            </SplitView.Content>
+        </SplitView>
+
+    </Grid>
+</Page>

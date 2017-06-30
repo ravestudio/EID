@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDService", "EIDService\EIDService.csproj", "{581F7315-33EC-4873-B3CB-85D5B73BC490}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDClient.Core", "EIDClient.Core\EIDClient.Core.csproj", "{F28E0A17-38B6-4031-B9AB-6B73040D39E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EID.Library", "EID.Library\EID.Library.csproj", "{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIDMobile", "EIDMobile\EIDMobile.csproj", "{21A6F603-420F-464B-9E22-6B9D1FB4046D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,26 @@ Global
 		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x64.Build.0 = Release|Any CPU
 		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x86.ActiveCfg = Release|Any CPU
 		{9F1F8AB3-8C7E-4470-A8B1-14099F1908D6}.Release|x86.Build.0 = Release|Any CPU
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|ARM.ActiveCfg = Debug|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|ARM.Build.0 = Debug|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|ARM.Deploy.0 = Debug|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x64.ActiveCfg = Debug|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x64.Build.0 = Debug|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x64.Deploy.0 = Debug|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x86.ActiveCfg = Debug|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x86.Build.0 = Debug|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Debug|x86.Deploy.0 = Debug|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|Any CPU.ActiveCfg = Release|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|ARM.ActiveCfg = Release|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|ARM.Build.0 = Release|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|ARM.Deploy.0 = Release|ARM
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x64.ActiveCfg = Release|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x64.Build.0 = Release|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x64.Deploy.0 = Release|x64
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x86.ActiveCfg = Release|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x86.Build.0 = Release|x86
+		{21A6F603-420F-464B-9E22-6B9D1FB4046D}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

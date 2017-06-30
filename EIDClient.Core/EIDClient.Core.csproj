@@ -162,6 +162,7 @@
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />
     <Compile Include="Robot\StrategyDecision.cs" />
+    <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
     <Compile Include="ViewModel\FinancialEditViewModel.cs" />

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace EIDService.Common.ISS
+namespace EID.Library.ISS
 {
     public class MicexISSClient
     {

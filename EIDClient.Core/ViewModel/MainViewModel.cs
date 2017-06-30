@@ -44,6 +44,11 @@ namespace EIDClient.Core.ViewModel
                 this._navigationServie.NavigateTo("Robot");
             });
 
+            _menuActions.Add("analysis", () =>
+            {
+                this._navigationServie.NavigateTo("Analysis");
+            });
+
             this.ClickMenuCmd = new RelayCommand(() =>
             {
                 this._menu.Open();

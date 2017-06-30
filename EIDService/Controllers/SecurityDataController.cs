@@ -1,5 +1,4 @@
-﻿using EIDClient.Library;
-using EIDService.Common.ISS;
+﻿using EID.Library.ISS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
