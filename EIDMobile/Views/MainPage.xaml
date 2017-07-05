@@ -36,6 +36,11 @@
                        RelativePanel.RightOf="homebtn"
                        RelativePanel.AlignTopWithPanel="True"
                        RelativePanel.AlignBottomWithPanel="True"/>
+            <CommandBar x:Name="mainCommandBar"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True">
+            </CommandBar>
         </RelativePanel>
 
         <SplitView

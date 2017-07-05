@@ -28,13 +28,16 @@ namespace EIDClient.Core.DataModel
         private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles = null;
         private IDictionary<string, string> _positions = null;
 
+        private object _token = null;
+
         public TradeModel(TradeSessionRepository TradeSessionRepository,
             CandleRepository CandleRepository,
             OrderRepository OrderRepository,
             PositionRepository PositionRepository,
             DealRepository DealRepository,
-            ITradeMode mode)
+            ITradeMode mode, object token)
         {
+            _token = token;
             _tradeSessionRepository = TradeSessionRepository;
             _candleRepository = CandleRepository;
             _orderRepository = OrderRepository;
@@ -45,7 +48,7 @@ namespace EIDClient.Core.DataModel
 
             _candles = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
 
-            Messenger.Default.Register<InitTradeModelMessage>(this, async (msg) =>
+            Messenger.Default.Register<InitTradeModelMessage>(this, _token, async (msg) =>
             {
                 var temp_sessions = await _tradeSessionRepository.GetAll();
                 _sessions = temp_sessions.OrderBy(t => t.Date).ToList();
@@ -85,7 +88,7 @@ namespace EIDClient.Core.DataModel
                         DateTime = mode.GetDate(),
                         Сandles = _candles,
                         Positions = _positions
-                    });
+                    }, _token);
                 });
 
                 _mode.SetAction("showData", () =>

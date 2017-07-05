@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CandleToISS.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />

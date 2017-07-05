@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EIDClient.Core.Entities;
-using EIDClient.Library;
+using EID.Library;
 
 namespace EIDClient.Core.Repository
 {

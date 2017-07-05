@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EIDClient.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace EIDMobile.Views
         public AnalysisPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ((AnalysisViewModel)this.DataContext).LoadData();
         }
     }
 }

@@ -16,13 +16,13 @@ namespace EIDClient.Core.Robot
     {
         private IDictionary<int, IList<decimal>> _frames = null;
 
-        private Strategy _strategy = null;
+        private IStrategy _strategy = null;
         private System.Threading.CancellationTokenSource _stop = null;
 
         private IDictionary<string, Action<string, StrategyDecision>> actions = null;
 
 
-        public Robot(Strategy strategy)
+        public Robot(IStrategy strategy)
         {
             _strategy = strategy;
 

@@ -1,4 +1,4 @@
-﻿using EIDClient.Library;
+﻿using EID.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;

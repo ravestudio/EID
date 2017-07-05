@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\EmitentModel.cs" />
+    <Compile Include="DataModel\TokenModel.cs" />
     <Compile Include="DataModel\TradeModel.cs" />
     <Compile Include="DataModel\SecurityModel.cs" />
     <Compile Include="DDE\MyDDEServer.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="ISS\SimpleMovingAverage.cs" />
     <Compile Include="ISS\TREND.cs" />
     <Compile Include="ISS\ValueConfirm.cs" />
+    <Compile Include="Managers\AnalystMode.cs" />
     <Compile Include="Managers\IChart.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Managers\ITradeMode.cs" />
@@ -159,6 +161,10 @@
     <Compile Include="Repository\SecurityRepository.cs" />
     <Compile Include="Repository\SettingsRepository.cs" />
     <Compile Include="Repository\TradeSessionRepository.cs" />
+    <Compile Include="Robot\Analyst.cs" />
+    <Compile Include="Robot\AnalystData.cs" />
+    <Compile Include="Robot\AnalystStrategy.cs" />
+    <Compile Include="Robot\IStrategy.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />
     <Compile Include="Robot\StrategyDecision.cs" />

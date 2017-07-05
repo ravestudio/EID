@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using EID.Library;
+using EIDClient.Core.ISS;
+
+namespace EIDClient.Core.Robot
+{
+    public class AnalystStrategy : IStrategy
+    {
+        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
+        {
+            StrategyDecision dec = new StrategyDecision() { Decision = null };
+
+            ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
+            MACD macd = new MACD(data[60], 12, 26, 9);
+
+            TREND macdTrend = new TREND(macd, 2);
+            TREND hoursTrend = new TREND(hours_ema, 3);
+
+            TRENDResult trend = hoursTrend.GetResult();
+            TRENDResult power = macdTrend.GetResult();
+
+            if (trend == TRENDResult.Up && (power == TRENDResult.Up || power == TRENDResult.StrongUp))
+            {
+                dec.Decision = "open long";
+            }
+
+
+
+            return dec;
+        }
+
+        public IList<int> Need()
+        {
+            IList<int> res = new List<int>();
+
+            res.Add(60);
+
+            return res;
+        }
+    }
+}

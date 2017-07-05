@@ -47,8 +47,9 @@ namespace EIDService.Models
 
         public decimal GetPrice(UnitOfWork unit, string sec, DateTime dateTime)
         {
+            EIDService.Common.CandleToISS candleToISS = new Common.CandleToISS();
             var tempdata = unit.CandleRepository.Query<Common.Entities.Candle>(c => c.Code == sec).ToList();
-            var candles = tempdata.Select(c => new EIDService.Common.ISS.Candle(c)).ToList();
+            var candles = tempdata.Select(c => candleToISS.Convert(c)).ToList();
 
             decimal price = candles.Last(c => c.begin < dateTime).close;
 

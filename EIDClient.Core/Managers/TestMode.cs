@@ -1,6 +1,6 @@
 ﻿using EIDClient.Core.Entities;
 using EIDClient.Core.Repository;
-using EIDClient.Library;
+using EID.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;

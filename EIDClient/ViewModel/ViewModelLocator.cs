@@ -14,7 +14,7 @@ using GalaSoft.MvvmLight.Views;
 using EIDClient.Core.DataModel;
 using EIDClient.Core.Managers;
 using EIDClient.Managers;
-using EIDClient.Library;
+using EID.Library;
 using EIDClient.Core.Entities;
 
 namespace EIDClient.ViewModel

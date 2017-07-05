@@ -32,10 +32,11 @@ namespace EIDService.Controllers
 
             actions.Add((pr) => { return !pr.from.HasValue; }, () =>
             {
+                EIDService.Common.CandleToISS candleToISS = new Common.CandleToISS();
                 using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
                 {
                     var tempData = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).ToList();
-                    candles = tempData.Select(c => CandleToISS(c));
+                    candles = tempData.Select(c => candleToISS.Convert(c));
 
                     if (settings.ModeType == ModeType.Test)
                     {
@@ -67,30 +68,6 @@ namespace EIDService.Controllers
             actions.Single(f => f.Key.Invoke(request)).Value.Invoke();
 
             return candles;
-        }
-
-        private EID.Library.ISS.Candle CandleToISS(EIDService.Common.Entities.Candle c)
-        {
-            EID.Library.ISS.Candle candle = new EID.Library.ISS.Candle();
-
-            candle.Code = c.Code;
-
-            int year = int.Parse(c.CandleDate.Substring(0, 4));
-            int moth = int.Parse(c.CandleDate.Substring(4, 2));
-            int day = int.Parse(c.CandleDate.Substring(6, 2));
-
-            int hour = int.Parse(c.CandleTime.Substring(0, 2));
-            int minute = int.Parse(c.CandleTime.Substring(2, 2));
-
-            candle.begin = new DateTime(year, moth, day, hour, minute, 0);
-            candle.open = c.OpenPrice;
-            candle.close = c.ClosePrice;
-            candle.high = c.MaxPrice;
-            candle.low = c.MinPrice;
-            candle.value = c.Value;
-            candle.volume = c.Volume;
-
-            return candle;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.Robot
 {
-    public class Strategy
+    public class Strategy : IStrategy
     {
         
         public Strategy()

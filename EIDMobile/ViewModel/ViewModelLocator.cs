@@ -1,7 +1,7 @@
 ﻿using EIDClient.Core.Managers;
 using EIDClient.Core.Repository;
 using EIDClient.Core.ViewModel;
-using EIDClient.Library;
+using EID.Library;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EIDClient.Core.DataModel;
 
 namespace EIDMobile.ViewModel
 {
@@ -22,17 +23,34 @@ namespace EIDMobile.ViewModel
             SimpleIoc.Default.Register<WebApiClient>();
 
             SimpleIoc.Default.Register<CandleRepository>();
+            SimpleIoc.Default.Register<TradeSessionRepository>();
+            SimpleIoc.Default.Register<OrderRepository>();
+            SimpleIoc.Default.Register<PositionRepository>();
+            SimpleIoc.Default.Register<DealRepository>();
+
 
 
             SimpleIoc.Default.Register<IMenu, Menu>();
             //SimpleIoc.Default.Register<IChart, Chart>();
-            //SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
+            SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AnalysisViewModel>();
+            SimpleIoc.Default.Register<ITradeMode, AnalystMode>();
 
-
+            SimpleIoc.Default.Register<TradeModel>(()=>
+            {
+                return new TradeModel(
+                    ServiceLocator.Current.GetInstance<TradeSessionRepository>(),
+                    ServiceLocator.Current.GetInstance<CandleRepository>(),
+                    ServiceLocator.Current.GetInstance<OrderRepository>(),
+                    ServiceLocator.Current.GetInstance<PositionRepository>(),
+                    ServiceLocator.Current.GetInstance<DealRepository>(),
+                    ServiceLocator.Current.GetInstance<ITradeMode>(),
+                    TokenModel.Instance.AnalystToken()
+                    );
+            },true);
         }
 
         public MainViewModel MainViewModel
