@@ -18,7 +18,7 @@ namespace EIDClient.Core.Managers
         public DateTime GetDate()
         {
             return DateTime.Now.AddHours(3);
-            //return new DateTime(2017, 7, 5, 10, 0, 0);
+            //return new DateTime(2017, 7, 6, 10, 0, 0);
         }
 
         public void SetAction(string name, Action action)

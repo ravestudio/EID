@@ -33,7 +33,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Text="{Binding Sec}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
-                        <TextBlock Text="{Binding Advice}" Style="{StaticResource rowTextBlockStyle }"/>
+                        <TextBlock Text="{Binding Advice}" Foreground="{Binding ForegroundColor}" Style="{StaticResource rowTextBlockStyle }"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

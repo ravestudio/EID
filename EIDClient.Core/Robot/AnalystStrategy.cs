@@ -14,18 +14,19 @@ namespace EIDClient.Core.Robot
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 
-            ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
-            MACD macd = new MACD(data[60], 12, 26, 9);
+            SimpleMovingAverage short_ma = new SimpleMovingAverage(data[60], 9);
+            SimpleMovingAverage long_ma = new SimpleMovingAverage(data[60], 20);
 
-            TREND macdTrend = new TREND(macd, 2);
-            TREND hoursTrend = new TREND(hours_ema, 3);
+            TRENDResult trend = new TREND(long_ma, 3).GetResult();
 
-            TRENDResult trend = hoursTrend.GetResult();
-            TRENDResult power = macdTrend.GetResult();
-
-            if (trend == TRENDResult.Up && (power == TRENDResult.Up || power == TRENDResult.StrongUp))
+            if (trend == TRENDResult.Up && new Crossover(short_ma, long_ma).GetResult())
             {
                 dec.Decision = "open long";
+            }
+
+            if (trend == TRENDResult.Down && new Crossover(long_ma, short_ma).GetResult())
+            {
+                dec.Decision = "open short";
             }
 
 
