@@ -84,7 +84,9 @@ namespace EID.Library.ISS
 
             TaskCompletionSource<IList<Candle>> TCS = new TaskCompletionSource<IList<Candle>>();
 
-            _apiClient.GetData(url).ContinueWith(t =>
+            Task<string> task = _apiClient.GetData(url);
+            
+            task.ContinueWith(t =>
             {
                 IList<Candle> candlelist = new List<Candle>();
                 string data = t.Result;
@@ -109,7 +111,12 @@ namespace EID.Library.ISS
                 }
 
                 TCS.SetResult(candlelist);
-            });
+            },TaskContinuationOptions.OnlyOnRanToCompletion);
+
+            task.ContinueWith(t =>
+            {
+
+            }, TaskContinuationOptions.OnlyOnFaulted);
 
             return TCS.Task;
         }

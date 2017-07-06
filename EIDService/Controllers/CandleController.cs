@@ -16,6 +16,7 @@ namespace EIDService.Controllers
 {
     public class CandleController : ApiController
     {
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(CandleController));
         // GET api/candle
         public IEnumerable<ICandle> Get([FromUri] CandleRequestModel request)
         {
@@ -63,6 +64,8 @@ namespace EIDService.Controllers
                  MicexISSClient client = new MicexISSClient(new WebApiClient());
 
                 candles = client.GetCandles(request.security, request.from.Value, till, request.interval.Value).Result;
+
+                logger.Info("Данные с ММВБ получены");
             });
 
             actions.Single(f => f.Key.Invoke(request)).Value.Invoke();
