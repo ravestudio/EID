@@ -17,7 +17,7 @@ namespace EIDClient.Core.Managers
 
         public DateTime GetDate()
         {
-            return DateTime.Now.AddHours(3);
+            return DateTime.Now.AddHours(-3);
             //return new DateTime(2017, 7, 6, 10, 0, 0);
         }
 
@@ -35,7 +35,7 @@ namespace EIDClient.Core.Managers
                     actions["init"].Invoke();
                     actions["sendToRobo"].Invoke();
 
-                    Task.Delay(15000).Wait();
+                    Task.Delay(5*60*1000).Wait();
                 }
             });
         }

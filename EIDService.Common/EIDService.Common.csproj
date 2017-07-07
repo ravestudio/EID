@@ -87,6 +87,7 @@
     <Compile Include="Entities\StopOrder.cs" />
     <Compile Include="Entities\TradeSession.cs" />
     <Compile Include="Entities\Transaction.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Migrations\201702261607513_InitialCreate.cs" />
     <Compile Include="Migrations\201702261607513_InitialCreate.Designer.cs">
       <DependentUpon>201702261607513_InitialCreate.cs</DependentUpon>

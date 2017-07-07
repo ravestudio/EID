@@ -31,12 +31,13 @@ namespace EIDMobile.ViewModel
 
 
             SimpleIoc.Default.Register<IMenu, Menu>();
-            //SimpleIoc.Default.Register<IChart, Chart>();
+            SimpleIoc.Default.Register<IChart, Chart>();
             SimpleIoc.Default.Register<IMainCommandBar, MainCommandBar>();
             SimpleIoc.Default.Register<INavigationService>(GetNavigationService);
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AnalysisViewModel>();
+            SimpleIoc.Default.Register<AnalysisDetailsViewModel>();
             SimpleIoc.Default.Register<ITradeMode, AnalystMode>();
 
             SimpleIoc.Default.Register<TradeModel>(()=>
@@ -69,11 +70,20 @@ namespace EIDMobile.ViewModel
             }
         }
 
+        public AnalysisDetailsViewModel AnalysisDetailsViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AnalysisDetailsViewModel>();
+            }
+        }
+
         private static INavigationService GetNavigationService()
         {
 
             var navigationService = new EIDClient.Core.ViewModel.NavigationService();
 
+            navigationService.Configure("AnalysisDetails", typeof(Views.AnalysisDetailsPage));
             navigationService.Configure("Analysis", typeof(Views.AnalysisPage));
             navigationService.Configure("Main", typeof(Views.MainPage));
 

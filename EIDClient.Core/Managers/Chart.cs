@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EIDClient.Views.Controls;
 using Windows.UI.Xaml;
 using Windows.UI;
 using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using EID.Library;
+using EIDClient.Core.Controls;
 
-namespace EIDClient.Managers
+namespace EIDClient.Core.Managers
 {
     public class Chart : IChart
     {

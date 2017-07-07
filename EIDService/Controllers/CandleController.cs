@@ -1,6 +1,7 @@
 ﻿using EID.Library;
 using EID.Library.ISS;
 using EIDClient.Library;
+using EIDService.Common;
 using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
 using EIDService.Models;
@@ -16,10 +17,12 @@ namespace EIDService.Controllers
 {
     public class CandleController : ApiController
     {
-        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(CandleController));
+
         // GET api/candle
         public IEnumerable<ICandle> Get([FromUri] CandleRequestModel request)
         {
+            Logger.InitLogger();
+
             IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
 
             IEnumerable<ICandle> candles = null;
@@ -63,9 +66,17 @@ namespace EIDService.Controllers
 
                  MicexISSClient client = new MicexISSClient(new WebApiClient());
 
-                candles = client.GetCandles(request.security, request.from.Value, till, request.interval.Value).Result;
+                try
+                {
+                    candles = client.GetCandles(request.security, request.from.Value, till, request.interval.Value).Result;
+                    Logger.Log.InfoFormat("Данные с ММВБ получены. Count {0}", candles.Count());
+                }
+                catch(Exception ex)
+                {
+                    Logger.Log.Error("ошибка", ex);
+                }
 
-                logger.Info("Данные с ММВБ получены");
+                
             });
 
             actions.Single(f => f.Key.Invoke(request)).Value.Invoke();

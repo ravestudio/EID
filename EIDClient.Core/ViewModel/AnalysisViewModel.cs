@@ -18,6 +18,8 @@ namespace EIDClient.Core.ViewModel
 {
     public class AnalysisViewModel : ViewModelBase
     {
+        public RelayCommand<object> SelectSecurityCmd { get; set; }
+
         private INavigationService _navigationService = null;
         private IMainCommandBar _commandBar = null;
 
@@ -40,6 +42,14 @@ namespace EIDClient.Core.ViewModel
                 this._analyst = new Robot.Analyst(new Robot.AnalystStrategy());
 
                 this._analyst.Run();
+            });
+
+            SelectSecurityCmd = new RelayCommand<object>((parameter) =>
+            {
+                Windows.UI.Xaml.Controls.ItemClickEventArgs e = (Windows.UI.Xaml.Controls.ItemClickEventArgs)parameter;
+                Robot.AnalystData selected = (Robot.AnalystData)e.ClickedItem;
+
+                this._navigationService.NavigateTo("AnalysisDetails", selected.Sec);
             });
 
             Messenger.Default.Register<ShowDataMessage>(this, (msg) =>

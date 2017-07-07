@@ -13,7 +13,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using EIDClient.Core.DataModel;
 using EIDClient.Core.Managers;
-using EIDClient.Managers;
 using EID.Library;
 using EIDClient.Core.Entities;
 

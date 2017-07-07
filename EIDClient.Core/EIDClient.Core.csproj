@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ChartControl.xaml.cs">
+      <DependentUpon>ChartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\EmitentModel.cs" />
     <Compile Include="DataModel\TokenModel.cs" />
     <Compile Include="DataModel\TradeModel.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="ISS\TREND.cs" />
     <Compile Include="ISS\ValueConfirm.cs" />
     <Compile Include="Managers\AnalystMode.cs" />
+    <Compile Include="Managers\Chart.cs" />
     <Compile Include="Managers\IChart.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Managers\ITradeMode.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />
     <Compile Include="Robot\StrategyDecision.cs" />
+    <Compile Include="ViewModel\AnalysisDetailsViewModel.cs" />
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
@@ -195,6 +200,12 @@
       <Project>{9f1f8ab3-8c7e-4470-a8b1-14099f1908d6}</Project>
       <Name>EID.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ChartControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

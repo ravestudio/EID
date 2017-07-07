@@ -268,6 +268,19 @@ namespace EIDClient.Core.DataModel
 
         private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime currentDate)
         {
+
+            TradeSession lastSession = sessions.Last();
+
+            if (lastSession.Date.AddHours(19) < currentDate)
+            {
+                currentDate = lastSession.Date.AddHours(19).AddMinutes(-1);
+            }
+
+            if (lastSession.Date.AddHours(10) > currentDate)
+            {
+                currentDate = sessions[sessions.Count -2].Date.AddHours(19).AddMinutes(-1);
+            }
+
             //количество фреймов
             int count = 40;
 

@@ -115,7 +115,7 @@ namespace EID.Library.ISS
 
             task.ContinueWith(t =>
             {
-
+                TCS.SetException(t.Exception);
             }, TaskContinuationOptions.OnlyOnFaulted);
 
             return TCS.Task;
