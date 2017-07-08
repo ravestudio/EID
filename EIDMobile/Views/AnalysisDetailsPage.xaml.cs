@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EID.Library;
+using EIDClient.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +24,23 @@ namespace EIDMobile.Views
     /// </summary>
     public sealed partial class AnalysisDetailsPage : Page
     {
+        private object _prs = null;
+
         public AnalysisDetailsPage()
         {
             this.InitializeComponent();
+
+            this.Loaded += AnalysisDetailsPage_Loaded;
+        }
+
+        private void AnalysisDetailsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((AnalysisDetailsViewModel)this.DataContext).LoadData((IDictionary<int, IList<ICandle>>)_prs);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _prs = e.Parameter;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.Messages;
+﻿using EID.Library;
+using EIDClient.Core.Messages;
 using EIDClient.Core.Robot;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -30,6 +31,7 @@ namespace EIDClient.Core.ViewModel
         private CoreDispatcher dispatcher;
 
         public ObservableCollection<Robot.AnalystData> AnalystDataList { get; set; }
+        private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles { get; set; }
 
         public AnalysisViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
@@ -49,11 +51,13 @@ namespace EIDClient.Core.ViewModel
                 Windows.UI.Xaml.Controls.ItemClickEventArgs e = (Windows.UI.Xaml.Controls.ItemClickEventArgs)parameter;
                 Robot.AnalystData selected = (Robot.AnalystData)e.ClickedItem;
 
-                this._navigationService.NavigateTo("AnalysisDetails", selected.Sec);
+                this._navigationService.NavigateTo("AnalysisDetails", _candles[selected.Sec]);
             });
 
             Messenger.Default.Register<ShowDataMessage>(this, (msg) =>
             {
+                _candles = msg.Сandles;
+
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     AnalystDataList.Clear();

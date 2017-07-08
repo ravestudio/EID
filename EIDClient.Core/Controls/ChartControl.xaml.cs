@@ -100,11 +100,11 @@ namespace EIDClient.Core.Controls
             foreach (decimal p in ma)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, 100 - ((double)p - cutvalue) * k));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)p - cutvalue) * k*-1));
             }
 
             Canvas.SetLeft(poliline, 0);
-            Canvas.SetTop(poliline, 0);
+            Canvas.SetTop(poliline, 200);
 
             canvas.Children.Add(poliline);
         }
