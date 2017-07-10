@@ -14,7 +14,7 @@ namespace EIDClient.Core.ViewModel
     {
         public RelayCommand ClickMenuCmd { get; set; }
 
-        public RelayCommand<object> MenuSelectionChanged { get; set; }
+        public RelayCommand<object> MenuClickItemCmd { get; set; }
 
         private IMenu _menu = null;
         private INavigationService _navigationServie = null;
@@ -54,9 +54,11 @@ namespace EIDClient.Core.ViewModel
                 this._menu.Open();
             });
 
-            this.MenuSelectionChanged = new RelayCommand<object>((obj) =>
+            this.MenuClickItemCmd = new RelayCommand<object>((obj) =>
             {
-                var menu_item = (IMenuItem)obj;
+                Windows.UI.Xaml.Controls.ItemClickEventArgs args = (Windows.UI.Xaml.Controls.ItemClickEventArgs)obj;
+
+                var menu_item = (IMenuItem)args.ClickedItem;
 
                 _menuActions[menu_item.Key].Invoke();
             });

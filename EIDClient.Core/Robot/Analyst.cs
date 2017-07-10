@@ -25,8 +25,8 @@ namespace EIDClient.Core.Robot
 
         public void Run()
         {
-            //IList<string> securities = new List<string>(new string[] { "GMKN", "LKOH", "GAZP", "MOEX", "SBER", "NVTK", "AFLT", "CHMF", "MFON", "ALRS", "MAGN", "MTLR" });
-            IList<string> securities = new List<string>(new string[] { "AFLT" });
+            IList<string> securities = new List<string>(new string[] { "GMKN", "LKOH", "GAZP", "MOEX", "SBER", "NVTK", "AFLT", "CHMF", "MFON", "ALRS", "MAGN", "MTLR", "MVID" });
+            //IList<string> securities = new List<string>(new string[] { "AFLT" });
 
             Messenger.Default.Send<InitTradeModelMessage>(new InitTradeModelMessage()
             {

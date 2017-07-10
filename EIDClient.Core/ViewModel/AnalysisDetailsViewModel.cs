@@ -43,14 +43,15 @@ namespace EIDClient.Core.ViewModel
 
                 this._chart.ShowCandles(candlelist);
 
-                //SimpleMovingAverage smaLong = new SimpleMovingAverage(candlelist, 20);
-                //this._chart.ShowMA(smaLong, Colors.LemonChiffon);
 
                 SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
                 this._chart.ShowMA(sma, Colors.Green);
 
                 SimpleMovingAverage long_sma = new SimpleMovingAverage(candlelist, 20);
                 this._chart.ShowMA(long_sma, Colors.Yellow);
+
+                MACD macd = new MACD(candlelist, 12, 26, 9);
+                this._chart.ShowMACD(macd, Colors.Blue);
 
             });
         }
