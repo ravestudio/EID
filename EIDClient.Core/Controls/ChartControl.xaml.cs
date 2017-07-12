@@ -30,21 +30,38 @@ namespace EIDClient.Core.Controls
         double k = 0;
         double cutvalue = 0;
 
+        int frameCount = 0;
+
         public ChartControl()
         {
             this.InitializeComponent();
+
+            this.SizeChanged += ChartControl_SizeChanged;
+
+            this.canvas.Background = new SolidColorBrush(Color.FromArgb(100, 24, 100, 172));
+
+            this.macd_canvas.Background = new SolidColorBrush(Colors.Gray);
+
+        }
+
+        private void ChartControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            frameCount = (int)e.NewSize.Width / 15;
         }
 
         public void ShowCandles(IList<ICandle> candleList)
         {
+
+            IList<ICandle> list = candleList.Skip(candleList.Count - frameCount).ToList();
+
             canvas.Children.Clear();
 
-            count = candleList.Count;
+            count = list.Count;
 
-            decimal max = Math.Max(candleList.Max(c => c.open), candleList.Max(c => c.close));
-            decimal min = Math.Min(candleList.Min(c => c.open), candleList.Min(c => c.close));
+            decimal max = Math.Max(list.Max(c => c.open), list.Max(c => c.close));
+            decimal min = Math.Min(list.Min(c => c.open), list.Min(c => c.close));
 
-            double l = (double)candleList.Max(c => Math.Abs(c.open - c.close));
+            double l = (double)list.Max(c => Math.Abs(c.open - c.close));
 
             //коридор
             double y = (double)(max - min);
@@ -54,7 +71,7 @@ namespace EIDClient.Core.Controls
             cutvalue = (double)min;
 
             int i = 0;
-            foreach (Candle candle in candleList)
+            foreach (Candle candle in list)
             {
                 i++;
                 DrawItem(candle, i, k, cutvalue);
@@ -92,12 +109,14 @@ namespace EIDClient.Core.Controls
 
         public void ShowMA(IList<decimal> ma, Color color)
         {
+            IList<decimal> list = ma.Skip(ma.Count - frameCount).ToList();
+
             Windows.UI.Xaml.Shapes.Polyline poliline = new Polyline();
             poliline.Stroke = new SolidColorBrush(color);
             poliline.StrokeThickness = 2;
 
-            int i = count - ma.Count;
-            foreach (decimal p in ma)
+            int i = count - list.Count;
+            foreach (decimal p in list)
             {
                 i++;
                 poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)p - cutvalue) * k*-1));
@@ -109,8 +128,13 @@ namespace EIDClient.Core.Controls
             canvas.Children.Add(poliline);
         }
 
-        public void ShowMACD(MACD macd, Color color)
+        public void ShowMACD(MACD macdSource, Color color)
         {
+            int km = -20;
+
+            IList<MACDItem> list = macdSource.Skip(macdSource.Count - frameCount).ToList();
+            MACD macd = new MACD(list);
+
             Windows.UI.Xaml.Shapes.Polyline poliline = new Polyline();
             poliline.Stroke = new SolidColorBrush(color);
             poliline.StrokeThickness = 2;
@@ -124,8 +148,8 @@ namespace EIDClient.Core.Controls
             foreach (MACDItem item in macd)
             {
                 i++;
-                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD) * k * -3));
-                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * k * -3));
+                poliline.Points.Add(new Windows.Foundation.Point(i * 10, ((double)item.MACD) * km));
+                signal.Points.Add(new Point(i * 10, ((double)item.Signal) * km));
 
                 Line line = new Line()
                 {
@@ -136,25 +160,25 @@ namespace EIDClient.Core.Controls
                 line.X1 = 0;
                 line.Y1 = 0;
                 line.X2 = 0;
-                line.Y2 = ((double)item.Histogram) * k * (-3);
+                line.Y2 = ((double)item.Histogram) * km;
 
                 Canvas.SetLeft(line, i * 10);
-                Canvas.SetTop(line, 400);
+                Canvas.SetTop(line, 100);
 
-                canvas.Children.Add(line);
+                macd_canvas.Children.Add(line);
             }
 
             Canvas.SetLeft(poliline, 0);
-            Canvas.SetTop(poliline, 350);
+            Canvas.SetTop(poliline, 100);
 
             Canvas.SetLeft(signal, 0);
-            Canvas.SetTop(signal, 350);
+            Canvas.SetTop(signal, 100);
 
             //Canvas.SetLeft(histogram, 0);
             //Canvas.SetTop(histogram, 400);
 
-            canvas.Children.Add(poliline);
-            canvas.Children.Add(signal);
+            macd_canvas.Children.Add(poliline);
+            macd_canvas.Children.Add(signal);
             //canvas.Children.Add(histogram);
 
         }

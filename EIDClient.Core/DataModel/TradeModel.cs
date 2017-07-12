@@ -282,7 +282,7 @@ namespace EIDClient.Core.DataModel
             }
 
             //количество фреймов
-            int count = 40;
+            int count = 80;
 
             //текущая сессия
             TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));

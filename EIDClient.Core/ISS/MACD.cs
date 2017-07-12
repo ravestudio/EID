@@ -10,6 +10,11 @@ namespace EIDClient.Core.ISS
 {
     public class MACD : List<MACDItem>
     {
+        public MACD(IList<MACDItem> items)
+        {
+            this.AddRange(items);
+        }
+
         public MACD(IList<ICandle> candles, int shortPeriod, int longPeriod, int signalPeriod)
         {
             this.Clear();

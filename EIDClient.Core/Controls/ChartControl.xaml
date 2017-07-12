@@ -9,5 +9,15 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Canvas x:Name="canvas"></Canvas>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Canvas x:Name="canvas" Grid.Row="0"></Canvas>
+
+        <Canvas x:Name="macd_canvas" Grid.Row="1"></Canvas>
+    </Grid>
 </UserControl>

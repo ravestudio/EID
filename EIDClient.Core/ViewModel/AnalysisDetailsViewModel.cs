@@ -43,6 +43,7 @@ namespace EIDClient.Core.ViewModel
 
                 this._chart.ShowCandles(candlelist);
 
+                int framecount = 40;
 
                 SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
                 this._chart.ShowMA(sma, Colors.Green);
