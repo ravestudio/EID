@@ -130,10 +130,21 @@ namespace EIDClient.Core.Controls
 
         public void ShowMACD(MACD macdSource, Color color)
         {
-            int km = -20;
 
             IList<MACDItem> list = macdSource.Skip(macdSource.Count - frameCount).ToList();
             MACD macd = new MACD(list);
+
+            //decimal max = list.Max(c => c.Histogram);
+            //decimal min = list.Min(c => c.Histogram);
+
+            decimal max = list.Max(c => c.MACD);
+            decimal min = list.Min(c => c.MACD);
+
+
+            //коридор
+            double y = (double)(max - min);
+
+            double km = 90 / y*-1;
 
             Windows.UI.Xaml.Shapes.Polyline poliline = new Polyline();
             poliline.Stroke = new SolidColorBrush(color);
