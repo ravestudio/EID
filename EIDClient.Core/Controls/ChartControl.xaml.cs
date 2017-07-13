@@ -91,7 +91,7 @@ namespace EIDClient.Core.Controls
             Canvas.SetLeft(rect, i * 10);
             double y = item.close >= item.open ? (double)item.close : (double)item.open;
 
-            Canvas.SetTop(rect, 200 - getDiff(item) * k);
+            Canvas.SetTop(rect, 250 - getDiff(item) * k);
             canvas.Children.Add(rect);
         }
 
