@@ -1,0 +1,24 @@
+PORTFOLIO_EX CandleExport;
+DESCRIPTION Исторические свечки;
+CLIENTS_LIST ALL_CLIENTS;
+FIRMS_LIST ALL_FIRMS;
+
+PROGRAM
+
+msg = GET_CANDLE("TQBR", "GMKN", "", "5", "PRICE", 20170714, 103500)
+MESSAGE(msg, 2)
+
+output = CREATE_MAP()
+output = SET_VALUE(output, "OpenPrice", 500)
+
+ADD_ITEM(1, output)
+
+END_PROGRAM
+
+PARAMETER OpenPrice;
+PARAMETER_TITLE Цена открытия;
+PARAMETER_DESCRIPTION Цена открытия свечки;
+PARAMETER_TYPE NUMERIC(10,2);
+END
+
+END_PORTFOLIO_EX
