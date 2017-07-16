@@ -16,7 +16,7 @@ dateTime = GET_DATETIME()
 yearPart = GET_VALUE(dateTime, "YEAR")
 monthPart = GET_VALUE(dateTime, "MONTH")
 dayPart = GET_VALUE(dateTime, "DAY")
-hourPart = GET_VALUE(dateTime, "HOUR")-3
+hourPart = GET_VALUE(dateTime, "HOUR")
 minutePart = GET_VALUE(dateTime, "MIN")
 
 minutePart = timeFrame * FLOOR(minutePart / timeFrame)

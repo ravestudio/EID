@@ -5,11 +5,11 @@ FIRMS_LIST ALL_FIRMS;
 
 PROGRAM
 
-secClass = "QJSIM"
+secClass = "TQBR"
 secCode = "GMKN"
 timeFrame = 5
-dateString = 20170716
-timeString = 072500
+dateString = "20170714"
+timeString = "183000"
 
 DELETE_ALL_ITEMS()
   
