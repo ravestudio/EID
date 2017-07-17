@@ -54,7 +54,19 @@ namespace EIDClient.ViewModel
 
             SimpleIoc.Default.Register<EmitentModel>(true);
             SimpleIoc.Default.Register<SecurityModel>(true);
-            SimpleIoc.Default.Register<TradeModel>(true);
+
+            SimpleIoc.Default.Register<TradeModel>(() =>
+            {
+                return new TradeModel(
+                    ServiceLocator.Current.GetInstance<TradeSessionRepository>(),
+                    ServiceLocator.Current.GetInstance<CandleRepository>(),
+                    ServiceLocator.Current.GetInstance<OrderRepository>(),
+                    ServiceLocator.Current.GetInstance<PositionRepository>(),
+                    ServiceLocator.Current.GetInstance<DealRepository>(),
+                    ServiceLocator.Current.GetInstance<ITradeMode>(),
+                    TokenModel.Instance.RobotToken()
+                    );
+            }, true);
         }
 
         public MainViewModel MainViewModel
@@ -127,6 +139,11 @@ namespace EIDClient.ViewModel
             if (settings.Mode == "Test")
             {
                 result = new TestMode(apiClient, repo);
+            }
+
+            if (settings.Mode == "Demo")
+            {
+                result = new DemoMode(apiClient);
             }
 
             return result;

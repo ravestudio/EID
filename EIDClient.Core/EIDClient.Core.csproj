@@ -139,6 +139,7 @@
     <Compile Include="ISS\ValueConfirm.cs" />
     <Compile Include="Managers\AnalystMode.cs" />
     <Compile Include="Managers\Chart.cs" />
+    <Compile Include="Managers\DemoMode.cs" />
     <Compile Include="Managers\IChart.cs" />
     <Compile Include="Managers\ChildFinder.cs" />
     <Compile Include="Managers\ITradeMode.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Robot\Analyst.cs" />
     <Compile Include="Robot\AnalystData.cs" />
     <Compile Include="Robot\AnalystStrategy.cs" />
+    <Compile Include="Robot\DemoStrategy.cs" />
     <Compile Include="Robot\IStrategy.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Strategy.cs" />

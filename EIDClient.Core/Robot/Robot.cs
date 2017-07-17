@@ -1,4 +1,5 @@
 ﻿using EIDClient.Core;
+using EIDClient.Core.DataModel;
 using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
 using EIDClient.Core.Messages;
@@ -37,11 +38,11 @@ namespace EIDClient.Core.Robot
                         Account = "NL0011100043",
                         Code = sec,
                         Count = 10,
-                        Price = 0,
+                        Price = dec.Price,
                         Operation = "Купля",
                         Class = "QJSIM",
-                        Client = "11272",
-                        Comment = "11272",
+                        Client = "10944",
+                        Comment = "10944",
                         Profit = dec.Profit,
                         StopLoss = dec.StopLoss
                     });
@@ -54,11 +55,11 @@ namespace EIDClient.Core.Robot
                     Account = "NL0011100043",
                     Code = sec,
                     Count = 10,
-                    Price = 0,
+                    Price = dec.Price,
                     Operation = "Продажа",
                     Class = "QJSIM",
-                    Client = "11272",
-                    Comment = "11272",
+                    Client = "10944",
+                    Comment = "10944",
                     Profit = dec.Profit,
                     StopLoss = dec.StopLoss
                 });
@@ -75,9 +76,9 @@ namespace EIDClient.Core.Robot
             {
                 securities = securities,
                 frames = _strategy.Need()
-            });
+            }, TokenModel.Instance.RobotToken());
 
-            Messenger.Default.Register<GetCandlesResponseMessage>(this, (msg) =>
+            Messenger.Default.Register<GetCandlesResponseMessage>(this, TokenModel.Instance.RobotToken(), (msg) =>
             {
                 foreach(string sec in msg.Сandles.Keys)
                 {

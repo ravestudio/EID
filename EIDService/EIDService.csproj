@@ -222,6 +222,7 @@
     <Compile Include="Models\StopOrderCreator.cs" />
     <Compile Include="Models\StopOrderExecute.cs" />
     <Compile Include="Models\TradeModel.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

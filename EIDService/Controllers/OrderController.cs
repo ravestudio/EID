@@ -1,5 +1,6 @@
 ﻿using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
+using EIDService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -52,6 +53,28 @@ namespace EIDService.Controllers
 
             actions.Add(ModeType.Work, () =>
             {
+
+            });
+
+            actions.Add(ModeType.Demo, () =>
+            {
+                Transaction trn = new Transaction()
+                {
+                    Name = "Ввод заявки",
+                    Status = 0,
+                    Profit = order.Profit,
+                    StopLoss = order.StopLoss,
+                    Processed = false
+                };
+
+                using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+                {
+                    unit.TransactionRepository.Create(trn);
+                    unit.Commit();
+                }
+
+                TransactionModel trsModel = new TransactionModel();
+                trsModel.CreateOrder(order, trn.Id);
 
             });
 

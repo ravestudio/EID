@@ -65,6 +65,18 @@ namespace EIDClient.Core.DataModel
                     }
                 });
 
+                _mode.SetAction("initEmpty", () =>
+                {
+                    foreach (string sec in msg.securities)
+                    {
+                        _candles[sec] = new Dictionary<int, IList<ICandle>>();
+                        foreach (int frame in msg.frames)
+                        {
+                            _candles[sec][frame] = new List<ICandle>();
+                        }
+                    }
+                });
+
                 _mode.SetAction("update", () =>
                 {
                     IEnumerable<Candle> candles = _candleRepository.GetAll().Result;
@@ -192,8 +204,14 @@ namespace EIDClient.Core.DataModel
         {
             DateTime dt = candles.First().begin;
 
-            ICandle candle = _candles[code][frame].First(c => c.begin >= dt);
-            int index = _candles[code][frame].IndexOf(candle);
+            int index = 0;
+
+            ICandle candle = _candles[code][frame].FirstOrDefault(c => c.begin >= dt);
+
+            if (candle != null)
+            {
+                index = _candles[code][frame].IndexOf(candle);
+            }
 
             foreach (ICandle item in candles)
             {

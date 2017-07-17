@@ -11,16 +11,25 @@ namespace EIDService.Common.Entities
         public string Mode { get; set; }
         public DateTime TestDateTime { get; set; }
 
+        private IDictionary<string, ModeType> _modeTypedic = new Dictionary<string, ModeType>();
+
+        public Settings()
+        {
+            _modeTypedic.Add("Test", ModeType.Test);
+            _modeTypedic.Add("Work", ModeType.Work);
+            _modeTypedic.Add("Demo", ModeType.Demo);
+        }
+
         public ModeType ModeType
         {
             get
             {
-                return Mode == "Test" ? ModeType.Test : ModeType.Work;
+                return _modeTypedic[Mode];
             }
 
             set
             {
-                this.Mode = value == ModeType.Test ? "Test" : "Work";
+                this.Mode = _modeTypedic.Single(m => m.Value == value).Key;
             }
         }
     }

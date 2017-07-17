@@ -13,8 +13,8 @@ namespace EIDClient.Core.Repository
 
         protected WebApiClient _apiClient = null;
 
-        protected string ServerURL = "http://eidservice.somee.com/";
-        //protected string ServerURL = "http://localhost:99/";
+        //protected string ServerURL = "http://eidservice.somee.com/";
+        protected string ServerURL = "http://localhost:99/";
         //protected string ServerURL = "http://localhost:61943/";
         //protected string ServerURL = "http://ravestudio-001-site1.htempurl.com/";
 

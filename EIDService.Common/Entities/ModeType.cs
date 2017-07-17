@@ -9,6 +9,7 @@ namespace EIDService.Common.Entities
     public enum ModeType
     {
         Test,
-        Work
+        Work,
+        Demo
     }
 }

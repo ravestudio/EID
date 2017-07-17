@@ -6,7 +6,7 @@ FIRMS_LIST ALL_FIRMS;
 PROGRAM
 
 secClass = "QJSIM"
-secCode = "SBER"
+secCode = "GMKN"
 timeFrame = 5
 candleMaxCount = 100
 
@@ -35,6 +35,7 @@ for i from 1 to candleMaxCount
 	  volume = GET_VALUE(candle, "Volume")
 
 	  output = CREATE_MAP()
+	  output = SET_VALUE(output, "Code", secCode)
 	  output = SET_VALUE(output, "Date", dateString)
 	  output = SET_VALUE(output, "Time", timeString)
 	  output = SET_VALUE(output, "OpenPrice", open)
@@ -90,6 +91,12 @@ func GetTimeString(hour, min)
 end func
 
 END_PROGRAM
+
+PARAMETER Code;
+PARAMETER_TITLE Код;
+PARAMETER_DESCRIPTION Тикер инструмента;
+PARAMETER_TYPE STRING(30);
+END
 
 PARAMETER Date;
 PARAMETER_TITLE Дата;

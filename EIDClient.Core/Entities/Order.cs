@@ -33,7 +33,7 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("Code", Code));
             keyValueData.Add(new KeyValuePair<string, string>("Operation", Operation));
             keyValueData.Add(new KeyValuePair<string, string>("Account", Account));
-            keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             keyValueData.Add(new KeyValuePair<string, string>("Count", Count.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Volume", Volume.ToString()));
             //keyValueData.Add(new KeyValuePair<string, string>("State", State));

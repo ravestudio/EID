@@ -56,14 +56,14 @@
                 <ListView
                     x:Name="menu"
                     IsItemClickEnabled="True"
-                    SelectionMode="Single"
+                    SelectionMode="None"
                     ItemsSource="{Binding MenuItems}"
                     ItemTemplate="{StaticResource MenuItemTemplate}"
                     Background="Indigo">
 
                     <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="SelectionChanged">
-                            <core:InvokeCommandAction Command="{Binding MenuSelectionChanged}" CommandParameter="{Binding ElementName=menu, Path=SelectedItem}"/>
+                        <core:EventTriggerBehavior EventName="ItemClick">
+                            <core:InvokeCommandAction Command="{Binding MenuClickItemCmd}"/>
                         </core:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                     
