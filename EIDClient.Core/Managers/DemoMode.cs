@@ -42,9 +42,13 @@ namespace EIDClient.Core.Managers
                     actions["update"].Invoke();
                     actions["sendToRobo"].Invoke();
 
-                    //string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
+                    Task.Delay(5 * 1000).Wait();
 
-                    Task.Delay(5 * 60 * 1000).Wait();
+                    string read_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/ReadTransactionResult")).Result;
+
+                    string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
+
+                    Task.Delay(5 * 1000).Wait();
                 }
             });
         }

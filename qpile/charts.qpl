@@ -6,18 +6,32 @@ FIRMS_LIST ALL_FIRMS;
 PROGRAM
 
 secClass = "QJSIM"
-secCode = "GMKN"
+secCode = ""
 timeFrame = 5
 candleMaxCount = 100
 
+col=CREATE_COLLECTION()
+col=INSERT_COLLECTION_ITEM(col,0,"GAZP")
+col=INSERT_COLLECTION_ITEM(col,1,"SBER")
+col=INSERT_COLLECTION_ITEM(col,2,"GMKN")
+
 DELETE_ALL_ITEMS()
 
-dateTime = GET_DATETIME()
-yearPart = GET_VALUE(dateTime, "YEAR")
-monthPart = GET_VALUE(dateTime, "MONTH")
-dayPart = GET_VALUE(dateTime, "DAY")
-hourPart = GET_VALUE(dateTime, "HOUR")-3
-minutePart = GET_VALUE(dateTime, "MIN")
+SERVERDATE=GET_INFO_PARAM("TRADEDATE")
+SERVERTIME=GET_INFO_PARAM("SERVERTIME")
+
+output = CREATE_MAP()
+row = 1
+	  
+FOR x FROM 0 TO 2
+secCode = GET_COLLECTION_ITEM(col,x)
+
+yearPart = SUBSTR(SERVERDATE,6,4)
+monthPart = SUBSTR(SERVERDATE,3,2)
+dayPart = SUBSTR(SERVERDATE,0,2)
+
+hourPart = SUBSTR(SERVERTIME,0,2)
+minutePart = SUBSTR(SERVERTIME,3,2)
 
 minutePart = timeFrame * FLOOR(minutePart / timeFrame)
 
@@ -34,7 +48,6 @@ for i from 1 to candleMaxCount
 	  close = GET_VALUE(Candle, "Close")
 	  volume = GET_VALUE(candle, "Volume")
 
-	  output = CREATE_MAP()
 	  output = SET_VALUE(output, "Code", secCode)
 	  output = SET_VALUE(output, "Date", dateString)
 	  output = SET_VALUE(output, "Time", timeString)
@@ -44,7 +57,8 @@ for i from 1 to candleMaxCount
 	  output = SET_VALUE(output, "ClosePrice", close)
 	  output = SET_VALUE(output, "Volume", volume)
 
-	  ADD_ITEM(i, output)
+	  ADD_ITEM(row, output)
+	  row = row +1
 	end if
 
 	minutePart = minutePart - timeFrame
@@ -58,17 +72,35 @@ for i from 1 to candleMaxCount
 			dayPart = dayPart - 1
 			
 			if dayPart < 1
-				dayPart = 31
 				monthPart = monthPart - 1
+				
+				if monthPart == 1 OR 3 OR 5 OR 7 OR 8 OR 10
+					dayPart=31
+					end if
+
+				if monthPart == 4 OR 6 OR 9 OR 11
+					dayPart=30
+				end if
+
+				if monthPart == 2
+					MOD(yearPart,4)
+					if RESULT == 0
+						dayPart=29
+					else
+						dayPart=28
+					end if
+				end if
 				
 				if monthPart < 1
 					monthPart = 12
 					yearPart = yearPart - 1
 				end if
+
 			end if
 		end if
 	end if
 end for
+END FOR
 
 func GetDataString(year, month, day)
   if (LEN(month) < 2)

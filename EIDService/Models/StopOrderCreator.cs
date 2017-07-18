@@ -36,25 +36,44 @@ namespace EIDService.Models
                 Account = order.Account,
                 OrderType = "Тэйк - профит и стоп - лимит",
                 Count = order.Count,
-                StopPrice = _strategy.GetStopPrice(price, profit),
-                StopLimitPrice = _strategy.GetStopLimitPrice(price, limit),
-                Price = _strategy.GetPrice(price, limit),
+                StopPrice = Math.Round(_strategy.GetStopPrice(price, profit)),
+                StopLimitPrice = Math.Round(_strategy.GetStopLimitPrice(price, limit)),
+                Price = Math.Round(_strategy.GetPrice(price, limit)),
 
                 Client = order.Client,
                 Class = order.Class,
                 State = "Активна"
             };
 
-            Common.Entities.Transaction stop_trn = new Common.Entities.Transaction()
+            if (settings.Mode == "Demo")
             {
-                OrderNumber = stop.Number,
-                Name = "Ввод лимитной заявки",
-                Status = 3,
-                Processed = false
-            };
+                Common.Entities.Transaction stop_trn = new Common.Entities.Transaction()
+                {
+                    Name = "Ввод лимитной заявки",
+                    Status = 0,
+                    Processed = false
+                };
+                unit.TransactionRepository.Create(stop_trn);
+                unit.Commit();
 
-            unit.TransactionRepository.Create(stop_trn);
-            unit.StopOrderRepository.Create(stop);
+                Models.TransactionModel model = new TransactionModel();
+
+                model.CreateStopOrder(stop, stop_trn.Id);
+            }
+
+            if (settings.Mode == "Test")
+            {
+                Common.Entities.Transaction stop_trn = new Common.Entities.Transaction()
+                {
+                    OrderNumber = stop.Number,
+                    Name = "Ввод лимитной заявки",
+                    Status = 3,
+                    Processed = false
+                };
+
+                unit.TransactionRepository.Create(stop_trn);
+                unit.StopOrderRepository.Create(stop);
+            }
 
             trn.Processed = true;
         }

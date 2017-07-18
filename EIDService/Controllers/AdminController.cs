@@ -1,6 +1,7 @@
 ﻿using EID.Library;
 using EID.Library.ISS;
 using EIDService.Common.DataAccess;
+using EIDService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -152,14 +153,14 @@ namespace EIDService.Controllers
 
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>>();
 
-            actions.Add((o) => { return o != null && o.StateType == Common.Entities.OrderStateType.Executed && o.Operation == "Купля"; },
+            actions.Add((o) => { return o.Operation == "Купля"; },
                 (unit, order, trn) =>
                 {
                     Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateSellStrategy());
                     creator.Create(unit, order, settings, trn);
                 });
 
-            actions.Add((o) => { return o != null && o.StateType == Common.Entities.OrderStateType.Executed && o.Operation == "Продажа"; },
+            actions.Add((o) => { return o.Operation == "Продажа"; },
                 (unit, order, trn) =>
                 {
                     Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateBuyStrategy());
@@ -174,13 +175,27 @@ namespace EIDService.Controllers
 
                 foreach(Common.Entities.Transaction transaction in transactions)
                 {
-                    var order = unit.OrderRepository.Query<Common.Entities.Order>(o => o.Number == transaction.OrderNumber).SingleOrDefault();
+                    var order = unit.OrderRepository.Query<Common.Entities.Order>(o => o.Number == transaction.OrderNumber && o.State == "Исполнена").SingleOrDefault();
 
-                    actions.Single(a => a.Key(order)).Value.Invoke(unit, order, transaction);
+                    if (order != null)
+                    {
+                        actions.Single(a => a.Key(order)).Value.Invoke(unit, order, transaction);
+                    }
                 }
 
                 unit.Commit();
             }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult ReadTransactionResult()
+        {
+            TransactionModel model = new TransactionModel();
+
+            model.ReadResults();
+            model.PreocessResults();
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
