@@ -1,4 +1,5 @@
 ﻿using EIDClient.Core.DataModel;
+using EIDClient.Core.Entities;
 using EIDClient.Core.Messages;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -14,9 +15,11 @@ namespace EIDClient.Core.Robot
         private IDictionary<int, IList<decimal>> _frames = null;
 
         private IStrategy _strategy = null;
+        private IList<Security> _securitylist = null;
 
-        public Analyst(IStrategy strategy)
+        public Analyst(IStrategy strategy, IList<Security> securitylist)
         {
+            _securitylist = securitylist;
             _strategy = strategy;
 
             _frames = new Dictionary<int, IList<decimal>>();
@@ -25,7 +28,8 @@ namespace EIDClient.Core.Robot
 
         public void Run()
         {
-            IList<string> securities = new List<string>(new string[] { "GMKN", "LKOH", "GAZP", "MOEX", "SBER", "NVTK", "AFLT", "CHMF", "MFON", "ALRS", "MAGN", "MTLR", "MVID" });
+            //IList<string> securities = new List<string>(new string[] { "GMKN", "LKOH", "GAZP", "MOEX", "SBER", "NVTK", "AFLT", "CHMF", "MFON", "ALRS", "MAGN", "MTLR", "MVID" });
+            IList<string> securities = _securitylist.Select(s => s.Code).ToList();
             //IList<string> securities = new List<string>(new string[] { "GAZP" });
 
             Messenger.Default.Send<InitTradeModelMessage>(new InitTradeModelMessage()
@@ -40,7 +44,9 @@ namespace EIDClient.Core.Robot
 
                 foreach (string sec in msg.Сandles.Keys)
                 {
-                    StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, null, msg.DateTime);
+                    Security securirty = _securitylist.Single(s => s.Code == sec);
+
+                    StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, null, securirty, msg.DateTime);
                     analystData.Add(new AnalystData()
                     {
                         Sec = sec,

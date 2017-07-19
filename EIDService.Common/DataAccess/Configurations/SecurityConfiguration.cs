@@ -17,6 +17,13 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Name).HasColumnName("Name").IsRequired();
                 Property(p => p.IssueSize).HasColumnName("IssueSize").IsRequired();
 
+                Property(p => p.IssueSize).HasColumnName("IssueSize").IsRequired();
+                Property(p => p.IssueSize).HasColumnName("IssueSize").IsRequired();
+
+                Property(p => p.MinStep).HasColumnName("MinStep").IsRequired();
+                Property(p => p.LotSize).HasColumnName("LotSize").IsRequired();
+                Property(p => p.AlgoTrade).HasColumnName("AlgoTrade").IsRequired();
+
                 HasRequired(p => p.Emitent).WithMany(e => e.Securities).Map(mp => mp.MapKey("EmitentId"));
 
             }).ToTable("SecuritySet");

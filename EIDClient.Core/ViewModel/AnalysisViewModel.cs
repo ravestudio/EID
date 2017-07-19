@@ -33,15 +33,22 @@ namespace EIDClient.Core.ViewModel
         public ObservableCollection<Robot.AnalystData> AnalystDataList { get; set; }
         private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles { get; set; }
 
+        private IList<Entities.Security> SecurityList = null;
+
         public AnalysisViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
             this._navigationService = navigationService;
             this.AnalystDataList = new ObservableCollection<Robot.AnalystData>();
             this._commandBar = commandBar;
 
+            Messenger.Default.Register<SecurityListLoadedMessage>(this, (msg) =>
+            {
+                this.SecurityList = msg.SecurityList.Where(s => s.AlgoTrade).ToList();
+            });
+
             this.StartAnalyst = new RelayCommand(() =>
             {
-                this._analyst = new Robot.Analyst(new Robot.AnalystStrategy());
+                this._analyst = new Robot.Analyst(new Robot.AnalystStrategy(), SecurityList);
 
                 this._analyst.Run();
             });
@@ -73,6 +80,8 @@ namespace EIDClient.Core.ViewModel
 
         public void LoadData()
         {
+            Messenger.Default.Send<LoadSecurityListMessage>(new LoadSecurityListMessage());
+
             dispatcher = Window.Current.Content.Dispatcher;
 
             _commandBar.Clear();

@@ -21,10 +21,11 @@ namespace EIDClient.Core.Robot
         private System.Threading.CancellationTokenSource _stop = null;
 
         private IDictionary<string, Action<string, StrategyDecision>> actions = null;
+        private IList<Security> _securitylist = null;
 
-
-        public Robot(IStrategy strategy)
+        public Robot(IStrategy strategy, IList<Security> securitylist)
         {
+            _securitylist = securitylist;
             _strategy = strategy;
 
             _frames = new Dictionary<int, IList<decimal>>();
@@ -70,7 +71,7 @@ namespace EIDClient.Core.Robot
         public void Run()
         {
 
-            IList<string> securities = new List<string>(new string[]{ "GMKN" });
+            IList<string> securities = _securitylist.Select(s => s.Code).ToList();
 
             Messenger.Default.Send<InitTradeModelMessage>(new InitTradeModelMessage()
             {
@@ -82,7 +83,9 @@ namespace EIDClient.Core.Robot
             {
                 foreach(string sec in msg.Сandles.Keys)
                 {
-                    StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], msg.DateTime);
+                    Security securirty = _securitylist.Single(s => s.Code == sec);
+
+                    StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], securirty, msg.DateTime);
 
                     if (!string.IsNullOrEmpty(dec.Decision))
                     {

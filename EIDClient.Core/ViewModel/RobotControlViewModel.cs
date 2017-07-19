@@ -32,16 +32,25 @@ namespace EIDClient.Core.ViewModel
 
         private CoreDispatcher dispatcher;
 
+        private IList<Entities.Security> SecurityList = null;
+
         public RobotControlViewModel(INavigationService navigationService, IMainCommandBar commandBar, IChart chart)
         {
+            SecurityList = new List<Entities.Security>();
+
             this._navigationService = navigationService;
             this.DealList = new ObservableCollection<Entities.Deal>();
             this._commandBar = commandBar;
             this._chart = chart;
 
+            Messenger.Default.Register<SecurityListLoadedMessage>(this, (msg) =>
+            {
+                this.SecurityList = msg.SecurityList.Where(s => s.AlgoTrade).ToList();
+            });
+
             this.StartRobot = new RelayCommand(() =>
             {
-                this._robot = new Robot.Robot(new Robot.DemoStrategy());
+                this._robot = new Robot.Robot(new Robot.DemoStrategy(), SecurityList);
 
                 this._robot.Run();
 
@@ -82,6 +91,8 @@ namespace EIDClient.Core.ViewModel
 
         public void LoadData()
         {
+            Messenger.Default.Send<LoadSecurityListMessage>(new LoadSecurityListMessage());
+
             dispatcher = Window.Current.Content.Dispatcher;
 
             _commandBar.Clear();

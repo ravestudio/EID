@@ -158,6 +158,14 @@
     <Compile Include="Migrations\201707180316590_addTransactionResult.Designer.cs">
       <DependentUpon>201707180316590_addTransactionResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707190400272_addSecInfo.cs" />
+    <Compile Include="Migrations\201707190400272_addSecInfo.Designer.cs">
+      <DependentUpon>201707190400272_addSecInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707190815206_editfield.cs" />
+    <Compile Include="Migrations\201707190815206_editfield.Designer.cs">
+      <DependentUpon>201707190815206_editfield.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -216,6 +224,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707180316590_addTransactionResult.resx">
       <DependentUpon>201707180316590_addTransactionResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707190400272_addSecInfo.resx">
+      <DependentUpon>201707190400272_addSecInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707190815206_editfield.resx">
+      <DependentUpon>201707190815206_editfield.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

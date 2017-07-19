@@ -11,8 +11,12 @@ namespace EIDService.Common.Entities
         public string Code { get; set; }
         public string Name { get; set; } 
 
-        public int IssueSize { get; set; }
+        public Int64 IssueSize { get; set; }
 
         public virtual Emitent Emitent { get; set; }
+
+        public decimal MinStep { get; set; }
+        public int LotSize { get; set; }
+        public bool AlgoTrade { get; set; }
     }
 }

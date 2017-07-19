@@ -27,7 +27,7 @@ namespace EIDClient.Core.Robot
             return res;
         }
 
-        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
+        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 

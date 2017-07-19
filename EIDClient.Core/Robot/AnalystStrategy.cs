@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using EID.Library;
 using EIDClient.Core.ISS;
+using EIDClient.Core.Entities;
 
 namespace EIDClient.Core.Robot
 {
     public class AnalystStrategy : IStrategy
     {
-        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, DateTime CurrentDt)
+        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 

@@ -12,7 +12,11 @@ namespace EIDClient.Core.Entities
         public string Code { get; set; }
         public string Name { get; set; }
 
-        public int IssueSize { get; set; }
+        public Int64 IssueSize { get; set; }
+
+        public decimal MinStep { get; set; }
+        public int LotSize { get; set; }
+        public bool AlgoTrade { get; set; }
 
         public override void ReadData(JsonObject jsonObj)
         {
@@ -20,6 +24,10 @@ namespace EIDClient.Core.Entities
             this.Code = jsonObj["Code"].GetString();
             this.Name = jsonObj["Name"].GetString();
             this.IssueSize = (int)jsonObj["IssueSize"].GetNumber();
+
+            this.MinStep = (decimal)jsonObj["MinStep"].GetNumber();
+            this.LotSize = (int)jsonObj["LotSize"].GetNumber();
+            this.AlgoTrade = jsonObj["AlgoTrade"].GetBoolean();
         }
 
         private SecurityInfo _securityInfo = null;

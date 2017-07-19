@@ -23,6 +23,8 @@ namespace EIDService.Models
 
             var deals = unit.DealRepository.Query<Common.Entities.Deal>(d => d.OrderNumber == order.Number).ToList();
 
+            var security = unit.SecurityRepository.Query<Common.Entities.Security>(s => s.Code == order.Code).Single();
+
             decimal price = _strategy.GetDealPrice(deals);
 
             Random rnd = new Random();
@@ -36,14 +38,21 @@ namespace EIDService.Models
                 Account = order.Account,
                 OrderType = "Тэйк - профит и стоп - лимит",
                 Count = order.Count,
-                StopPrice = Math.Round(_strategy.GetStopPrice(price, profit)),
-                StopLimitPrice = Math.Round(_strategy.GetStopLimitPrice(price, limit)),
-                Price = Math.Round(_strategy.GetPrice(price, limit)),
+                StopPrice = Math.Round(_strategy.GetStopPrice(price, profit),2),
+                StopLimitPrice = Math.Round(_strategy.GetStopLimitPrice(price, limit),2),
+                Price = Math.Round(_strategy.GetPrice(price, limit),2),
 
                 Client = order.Client,
                 Class = order.Class,
                 State = "Активна"
             };
+
+            if (security.MinStep == 1)
+            {
+                stop.StopPrice = Math.Round(stop.StopPrice);
+                stop.StopLimitPrice = Math.Round(stop.StopLimitPrice);
+                stop.Price = Math.Round(stop.Price);
+            }
 
             if (settings.Mode == "Demo")
             {
