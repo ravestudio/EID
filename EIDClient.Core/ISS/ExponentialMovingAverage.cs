@@ -33,14 +33,14 @@ namespace EIDClient.Core.ISS
 
             decimal sma = Average(newdata);
 
-            this.Add(Math.Round(sma, 2));
+            this.Add(Math.Round(sma, 4));
 
             for (int i = 0; i < diff; i++)
             {
                 decimal prev = this[this.Count - 1];
                 decimal price = data[period + i];
                 decimal next = factor * (price - prev) + prev;
-                this.Add(Math.Round(next, 2));
+                this.Add(Math.Round(next, 4));
             }
         }
 

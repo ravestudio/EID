@@ -64,7 +64,7 @@ namespace EIDClient.Core.ViewModel
                 {
                     //this.DealList.Clear();
 
-                    var candlelist = msg.Сandles["GMKN"][5];
+                    var candlelist = msg.Сandles["AFLT"][5];
 
                     this._chart.ShowCandles(candlelist);
 

@@ -48,7 +48,7 @@ namespace EIDClient.Core.Managers
 
                 for (int i = 0; i < 550; i++)
                 {
-                    actions["showData"].Invoke();
+                    //actions["showData"].Invoke();
 
                     actions["update"].Invoke();
 

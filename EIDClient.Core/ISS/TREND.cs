@@ -54,27 +54,27 @@ namespace EIDClient.Core.ISS
             {
                 decimal d = GetDiff(_data[0], _data.Last());
 
-                if (Math.Abs(_data.Last()) < 1m && Math.Abs(_data[0]) < 1m)
-                {
-                    d = 0m;
-                }
+                //if (Math.Abs(_data.Last()) < 1m && Math.Abs(_data[0]) < 1m)
+                //{
+                //    d = 0m;
+                //}
 
-                if (d > 10m && d <= 100 && _data.Last() > 2)
+                if (d > 10m && d <= 100)
                 {
                     this.result = TRENDResult.Up;
                 };
 
-                if (d < -10m && d >= -100 && _data.Last() < -2)
+                if (d < -10m && d >= -100)
                 { 
                     this.result = TRENDResult.Down;
                 }
 
-                if (d > 100m && _data.Last() > 2)
+                if (d > 100m)
                 {
                     this.result = TRENDResult.StrongUp;
                 };
 
-                if (d < -100m && _data.Last() < -2)
+                if (d < -100m)
                 {
                     this.result = TRENDResult.StrongDown;
                 }

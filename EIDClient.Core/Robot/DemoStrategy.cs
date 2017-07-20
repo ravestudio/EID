@@ -17,7 +17,7 @@ namespace EIDClient.Core.Robot
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 
             SimpleMovingAverage short_ma = new SimpleMovingAverage(data[5], 9);
-            SimpleMovingAverage long_ma = new SimpleMovingAverage(data[5], 20);
+            SimpleMovingAverage long_ma = new SimpleMovingAverage(data[5], 30);
 
             MACD macd = new MACD(data[5], 12, 26, 9);
             TREND macdTrend = new TREND(macd, 2);
@@ -27,22 +27,25 @@ namespace EIDClient.Core.Robot
 
             AverageTrueRange atr = new AverageTrueRange(data[5], 14);
 
-            dec.Profit = Math.Round(atr.Last() * 4m, 2);
-            dec.StopLoss = Math.Round(atr.Last(), 2);
+            //dec.Profit = Math.Round(atr.Last() * 2m, 2);
+            //dec.StopLoss = Math.Round(atr.Last(), 2);
 
-            if ((power == TRENDResult.Up || power == TRENDResult.StrongUp) && new Crossover(short_ma, long_ma).GetResult() && currentPos == "free")
+            dec.Profit = Math.Round(data[5].Last().close * 0.006m, 2);
+            dec.StopLoss = Math.Round(data[5].Last().close * 0.002m, 2);
+
+            if (power == TRENDResult.StrongUp && new Crossover(short_ma, long_ma).GetResult() && currentPos == "free")
             {
                 dec.Decision = "open long";
 
                 dec.Price = Math.Round(data[5].Last().close * 1.005m, 2);
             }
 
-            if ((power == TRENDResult.Down || power == TRENDResult.StrongDown) && new Crossover(long_ma, short_ma).GetResult() && currentPos == "free")
-            {
-                dec.Decision = "open short";
+            //if ((power == TRENDResult.Down || power == TRENDResult.StrongDown) && new Crossover(long_ma, short_ma).GetResult() && currentPos == "free")
+            //{
+            //    dec.Decision = "open short";
 
-                dec.Price = Math.Round(data[5].Last().close * 0.995m, 2);
-            }
+            //    dec.Price = Math.Round(data[5].Last().close * 0.995m, 2);
+            //}
             
 
             if (security.MinStep == 1)

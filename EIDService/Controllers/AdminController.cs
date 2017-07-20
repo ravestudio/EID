@@ -32,7 +32,7 @@ namespace EIDService.Controllers
 
                 context.Settings.First().TestDateTime = testTime;
 
-                context.MoneyLimit.First().Available = 100000m;
+                context.MoneyLimit.First().Available = 1000000m;
 
                 context.SaveChanges();
             }
@@ -95,14 +95,14 @@ namespace EIDService.Controllers
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
             IDictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>> stop_actions = new Dictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>>();
 
-            actions.Add((o) => { return o.Price == 0 && o.Operation == "Продажа"; },
+            actions.Add((o) => { return o.Operation == "Продажа"; },
                 (unit, order) =>
                 {
                     Common.Entities.Position pos = tradeModel.ApplyOrder(unit, order, settings);
                     pos.CurrentBalance -= order.Count;
                 });
 
-            actions.Add((o) => { return o.Price == 0 && o.Operation == "Купля"; },
+            actions.Add((o) => { return o.Operation == "Купля"; },
                 (unit, order) =>
                 {
 

@@ -32,7 +32,9 @@ namespace EIDService.Models
 
             decimal? lossProfit = _strategy.GetLossProfit(transaction, price);
 
-            if (lossProfit.HasValue && lossProfit.Value > 5m)
+
+
+            if (lossProfit.HasValue && (lossProfit.Value / price)*100 > 0.05m)
             {
                 apply = true;
             }
