@@ -13,7 +13,7 @@ namespace EIDClient.Core.Messages
     {
         public IEnumerable<Deal> Deals { get; set; }
 
-        public IDictionary<string, IDictionary<int, IList<ICandle>>> Сandles { get; set; }
+        public IDictionary<string, IDictionary<string, IList<ICandle>>> Сandles { get; set; }
 
         public IList<AnalystData> AnalystDatalist { get; set; }
     }

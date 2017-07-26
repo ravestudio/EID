@@ -11,12 +11,12 @@ namespace EIDClient.Core.Robot
 {
     public class AnalystStrategy : IStrategy
     {
-        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
+        public StrategyDecision GetDecision(IDictionary<string, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 
-            SimpleMovingAverage short_ma = new SimpleMovingAverage(data[60], 9);
-            SimpleMovingAverage long_ma = new SimpleMovingAverage(data[60], 20);
+            SimpleMovingAverage short_ma = new SimpleMovingAverage(data["60"], 9);
+            SimpleMovingAverage long_ma = new SimpleMovingAverage(data["60"], 20);
 
             TRENDResult trend = new TREND(long_ma, 3).GetResult();
 
@@ -35,11 +35,11 @@ namespace EIDClient.Core.Robot
             return dec;
         }
 
-        public IList<int> Need()
+        public IList<string> Need()
         {
-            IList<int> res = new List<int>();
+            IList<string> res = new List<string>();
 
-            res.Add(60);
+            res.Add("60");
 
             return res;
         }

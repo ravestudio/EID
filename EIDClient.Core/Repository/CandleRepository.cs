@@ -17,7 +17,7 @@ namespace EIDClient.Core.Repository
             this.apiPath = "api/candle/";
         }
 
-        public Task<IEnumerable<ICandle>> GetHistory(string sec, DateTime from, int interval)
+        public Task<IEnumerable<ICandle>> GetHistory(string sec, DateTime from, string interval)
         {
             TaskCompletionSource<IEnumerable<ICandle>> TCS = new TaskCompletionSource<IEnumerable<ICandle>>();
 

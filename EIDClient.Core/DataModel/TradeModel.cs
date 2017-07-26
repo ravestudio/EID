@@ -25,7 +25,7 @@ namespace EIDClient.Core.DataModel
         private ITradeMode _mode = null;
 
         private IList<TradeSession> _sessions = null;
-        private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles = null;
+        private IDictionary<string, IDictionary<string, IList<ICandle>>> _candles = null;
         private IDictionary<string, string> _positions = null;
 
         private object _token = null;
@@ -46,7 +46,7 @@ namespace EIDClient.Core.DataModel
 
             _mode = mode;
 
-            _candles = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
+            _candles = new Dictionary<string, IDictionary<string, IList<ICandle>>>();
 
             Messenger.Default.Register<InitTradeModelMessage>(this, _token, async (msg) =>
             {
@@ -57,8 +57,8 @@ namespace EIDClient.Core.DataModel
                 {
                     foreach (string sec in msg.securities)
                     {
-                        _candles[sec] = new Dictionary<int, IList<ICandle>>();
-                        foreach (int frame in msg.frames)
+                        _candles[sec] = new Dictionary<string, IList<ICandle>>();
+                        foreach (string frame in msg.frames)
                         {
                             string res = InitCandles(sec, frame).Result;
                         }
@@ -69,8 +69,8 @@ namespace EIDClient.Core.DataModel
                 {
                     foreach (string sec in msg.securities)
                     {
-                        _candles[sec] = new Dictionary<int, IList<ICandle>>();
-                        foreach (int frame in msg.frames)
+                        _candles[sec] = new Dictionary<string, IList<ICandle>>();
+                        foreach (string frame in msg.frames)
                         {
                             _candles[sec][frame] = new List<ICandle>();
                         }
@@ -146,15 +146,15 @@ namespace EIDClient.Core.DataModel
             //});
         }
 
-        private IDictionary<string, IDictionary<int, IList<ICandle>>> CopyCandles(IDictionary<string, IDictionary<int, IList<ICandle>>> candles)
+        private IDictionary<string, IDictionary<string, IList<ICandle>>> CopyCandles(IDictionary<string, IDictionary<string, IList<ICandle>>> candles)
         {
-            IDictionary<string, IDictionary<int, IList<ICandle>>> newdata = new Dictionary<string, IDictionary<int, IList<ICandle>>>();
+            IDictionary<string, IDictionary<string, IList<ICandle>>> newdata = new Dictionary<string, IDictionary<string, IList<ICandle>>>();
 
             foreach(string sec in candles.Keys)
             {
-                newdata.Add(sec, new Dictionary<int, IList<ICandle>>());
+                newdata.Add(sec, new Dictionary<string, IList<ICandle>>());
 
-                foreach(int f in candles[sec].Keys)
+                foreach(string f in candles[sec].Keys)
                 {
                     newdata[sec].Add(f, new List<ICandle>());
 
@@ -200,7 +200,7 @@ namespace EIDClient.Core.DataModel
             return res;
         }
 
-        private void updateStoredData(IEnumerable<ICandle> candles, string code, int frame)
+        private void updateStoredData(IEnumerable<ICandle> candles, string code, string frame)
         {
             DateTime dt = candles.First().begin;
 
@@ -227,49 +227,49 @@ namespace EIDClient.Core.DataModel
             }
         }
 
-        private void UpdateCadles(string code, IEnumerable<Candle> candles, IList<int> frames)
+        private void UpdateCadles(string code, IEnumerable<Candle> candles, IList<string> frames)
         {
-            IDictionary<int, Action> actions = new Dictionary<int, Action>();
+            IDictionary<string, Action> actions = new Dictionary<string, Action>();
 
-            actions.Add(5, () => {
+            actions.Add("5", () => {
 
-                updateStoredData(candles, code, 5);
+                updateStoredData(candles, code, "5");
             });
 
-            actions.Add(60, () =>
+            actions.Add("60", () =>
             {
                 CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
-                var work_data = converter.Convert(_candles[code][5], 5, 60);
+                var work_data = converter.Convert(_candles[code]["5"], 5, 60);
 
-                updateStoredData(work_data, code, 60);
+                updateStoredData(work_data, code, "60");
             });
 
-            foreach(int f in frames)
+            foreach(string f in frames)
             {
                 actions[f].Invoke();
             }
         }
 
-        private Task<string> InitCandles(string sec, int timeframe)
+        private Task<string> InitCandles(string sec, string timeframe)
         {
             TaskCompletionSource<string> TCS = new TaskCompletionSource<string>(); 
 
-            IDictionary<Func<int, bool>, Action> actions = new Dictionary<Func<int, bool>, Action>();
+            IDictionary<Func<string, bool>, Action> actions = new Dictionary<Func<string, bool>, Action>();
 
-            actions.Add((frame) => { return frame == 5; }, () =>
+            actions.Add((frame) => { return frame == "5"; }, () =>
             {
-                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, _mode.GetDate()), 1).ContinueWith(t =>
+                _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, _mode.GetDate()), "1").ContinueWith(t =>
                 {
                     CandlesConverter converter = new CandlesConverter(() => { return new Candle(); });
 
-                    var work_data = converter.Convert(t.Result.ToList(), 1, timeframe);
+                    var work_data = converter.Convert(t.Result.ToList(), 1, 5);
                     _candles[sec][timeframe] = work_data;
 
                     TCS.SetResult("ok");
                 });
             });
 
-            actions.Add((frame) => { return frame == 60; }, () =>
+            actions.Add((frame) => { return frame == "60"; }, () =>
             {
                 _candleRepository.GetHistory(sec, GetStartDate(timeframe, _sessions, _mode.GetDate()), timeframe).ContinueWith(t =>
                 {
@@ -284,20 +284,24 @@ namespace EIDClient.Core.DataModel
             return TCS.Task;
         }
 
-        private DateTime GetStartDate(int timeframe, IList<TradeSession> sessions, DateTime currentDate)
+        private DateTime GetStartDate(string timeframe, IList<TradeSession> sessions, DateTime currentDate)
         {
+            IDictionary<string, int> _frameDic = new Dictionary<string, int>();
+
+            _frameDic.Add("5", 5);
+            _frameDic.Add("60", 60);
 
             TradeSession lastSession = sessions.Last();
 
-            if (lastSession.Date.AddHours(19) < currentDate)
-            {
-                currentDate = lastSession.Date.AddHours(19).AddMinutes(-1);
-            }
+            //if (lastSession.Date.AddHours(19) < currentDate)
+            //{
+            //    currentDate = lastSession.Date.AddHours(19).AddMinutes(-1);
+            //}
 
-            if (lastSession.Date.AddHours(10) > currentDate)
-            {
-                currentDate = sessions[sessions.Count -2].Date.AddHours(19).AddMinutes(-1);
-            }
+            //if (lastSession.Date.AddHours(10) > currentDate)
+            //{
+            //    currentDate = sessions[sessions.Count -2].Date.AddHours(19).AddMinutes(-1);
+            //}
 
             //количество фреймов
             int count = 80;
@@ -314,7 +318,7 @@ namespace EIDClient.Core.DataModel
             //длина сессии
             int sessionlength = 9 * 60;
             //длина смещения
-            int sessiondiv = timeframe * count;
+            int sessiondiv = _frameDic[timeframe] * count;
 
             //полных сессий
             int fullSession = sessiondiv / sessionlength;

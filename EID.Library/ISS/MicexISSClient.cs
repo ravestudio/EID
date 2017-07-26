@@ -72,7 +72,52 @@ namespace EID.Library.ISS
             return TCS.Task;
         }
 
-        public Task<IList<Candle>> GetCandles(string security, DateTime from, DateTime? till, int interval)
+        public Task<IList<ICandle>> GetHistory(string security, DateTime from, DateTime? till)
+        {
+            string url = string.Format("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities/{0}.xml?from={1:yyyy-MM-dd}&till={2:yyyy-MM-dd}", security, from, till);
+
+            TaskCompletionSource<IList<ICandle>> TCS = new TaskCompletionSource<IList<ICandle>>();
+
+            Task<string> task = _apiClient.GetData(url);
+
+            task.ContinueWith(t =>
+            {
+                IList<ICandle> candlelist = new List<ICandle>();
+                string data = t.Result;
+
+                XElement history = GetDataBlock(XDocument.Parse(data), "history");
+                XElement rows = GetRows(history);
+
+
+                foreach (XElement el in rows.Elements())
+                {
+                    ICandle candle = new Candle()
+                    {
+                        Code = security,
+                        begin = DateTime.Parse(GetAttribute(el, "tradedate"), CultureInfo.InvariantCulture),
+                        open = decimal.Parse(GetAttribute(el, "open"), CultureInfo.InvariantCulture),
+                        close = decimal.Parse(GetAttribute(el, "close"), CultureInfo.InvariantCulture),
+                        high = decimal.Parse(GetAttribute(el, "high"), CultureInfo.InvariantCulture),
+                        low = decimal.Parse(GetAttribute(el, "low"), CultureInfo.InvariantCulture),
+                        volume = decimal.Parse(GetAttribute(el, "volume"), CultureInfo.InvariantCulture),
+                        value = decimal.Parse(GetAttribute(el, "value"), CultureInfo.InvariantCulture)
+                    };
+                    candlelist.Add(candle);
+                }
+
+                TCS.SetResult(candlelist);
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+            task.ContinueWith(t =>
+            {
+                TCS.SetException(t.Exception);
+            }, TaskContinuationOptions.OnlyOnFaulted);
+
+
+            return TCS.Task;
+        }
+
+        public Task<IList<ICandle>> GetCandles(string security, DateTime from, DateTime? till, string interval)
         {
 
             string url = string.Format("http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{0}/candles.xml?from={1:yyyy-MM-dd HH:mm}&interval={2}", security, from, interval);
@@ -82,13 +127,13 @@ namespace EID.Library.ISS
                 url = string.Format("{0}&till={1:yyyy-MM-dd HH:mm}", url, till.Value);
             }
 
-            TaskCompletionSource<IList<Candle>> TCS = new TaskCompletionSource<IList<Candle>>();
+            TaskCompletionSource<IList<ICandle>> TCS = new TaskCompletionSource<IList<ICandle>>();
 
             Task<string> task = _apiClient.GetData(url);
             
             task.ContinueWith(t =>
             {
-                IList<Candle> candlelist = new List<Candle>();
+                IList<ICandle> candlelist = new List<ICandle>();
                 string data = t.Result;
 
                 XElement candles = GetDataBlock(XDocument.Parse(data), "candles");
@@ -96,7 +141,7 @@ namespace EID.Library.ISS
 
                 foreach(XElement el in rows.Elements())
                 {
-                    Candle candle = new Candle()
+                    ICandle candle = new Candle()
                     {
                         Code = security,
                         begin = DateTime.Parse(GetAttribute(el, "begin"), CultureInfo.InvariantCulture),

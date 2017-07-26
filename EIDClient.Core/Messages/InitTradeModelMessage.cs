@@ -9,6 +9,6 @@ namespace EIDClient.Core.Messages
     public class InitTradeModelMessage
     {
         public IList<string> securities { get; set; }
-        public IList<int> frames { get; set; }
+        public IList<string> frames { get; set; }
     }
 }

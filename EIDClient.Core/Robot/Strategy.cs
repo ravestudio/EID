@@ -17,32 +17,32 @@ namespace EIDClient.Core.Robot
 
         }
 
-        public IList<int> Need()
+        public IList<string> Need()
         {
-            IList<int> res = new List<int>();
+            IList<string> res = new List<string>();
 
-            res.Add(5);
-            res.Add(60);
+            res.Add("5");
+            res.Add("60");
 
             return res;
         }
 
-        public StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
+        public StrategyDecision GetDecision(IDictionary<string, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
 
-            ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data[60], 9);
+            ExponentialMovingAverage hours_ema = new ExponentialMovingAverage(data["60"], 9);
 
             //ExponentialMovingAverage minutes_ema = new ExponentialMovingAverage(data[5], 4);
 
-            MACD macd = new MACD(data[5], 12, 26, 9);
+            MACD macd = new MACD(data["5"], 12, 26, 9);
 
             TREND hoursTrend = new TREND(hours_ema, 3);
             //TREND minutesTrend = new TREND(minutes_ema, 3);
             TREND macdTrend = new TREND(macd, 2);
-            bool valueConfirm = new ValueConfirm(data[5], 5).GetResult();
+            bool valueConfirm = new ValueConfirm(data["5"], 5).GetResult();
 
-            AverageTrueRange atr = new AverageTrueRange(data[5], 14);
+            AverageTrueRange atr = new AverageTrueRange(data["5"], 14);
 
             Extremum extremum = new Extremum(atr, 3, 20);
 
@@ -63,7 +63,7 @@ namespace EIDClient.Core.Robot
             TRENDResult power = macdTrend.GetResult();
 
 
-            decimal value = data[5].Last().value; 
+            decimal value = data["5"].Last().value; 
 
             //*if (extremum.Count() > 0 && extremum.Last().ext == "L" && extremum.Last().val < atr.Last())
             if (atr.Last() > 10m && valueConfirm)

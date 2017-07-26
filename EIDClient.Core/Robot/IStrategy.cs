@@ -10,8 +10,8 @@ namespace EIDClient.Core.Robot
 {
     public interface IStrategy
     {
-        IList<int> Need();
+        IList<string> Need();
 
-        StrategyDecision GetDecision(IDictionary<int, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt);
+        StrategyDecision GetDecision(IDictionary<string, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt);
     }
 }

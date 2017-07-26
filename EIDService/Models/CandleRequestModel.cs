@@ -9,6 +9,7 @@ namespace EIDService.Models
     {
         public string security { get; set; }
         public DateTime? from { get; set; }
-        public int? interval { get; set; }
+        public DateTime? till { get; set; }
+        public string interval { get; set; }
     }
 }

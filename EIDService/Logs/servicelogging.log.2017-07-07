@@ -1,0 +1,9 @@
+2017-07-07 06:23:04,807  ERROR ошибка
+System.AggregateException: Произошла одна или несколько ошибок. ---> System.Exception: test error
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   в System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   в System.Threading.Tasks.Task`1.get_Result()
+   в EIDService.Controllers.CandleController.<>c__DisplayClass0_0.<Get>b__6() в C:\GitProjects\EID\EIDService\Controllers\CandleController.cs:строка 71
+---> (Внутреннее исключение #0) System.Exception: test error<---
+

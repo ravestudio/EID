@@ -31,7 +31,7 @@ namespace EIDClient.Core.ViewModel
         private CoreDispatcher dispatcher;
 
         public ObservableCollection<Robot.AnalystData> AnalystDataList { get; set; }
-        private IDictionary<string, IDictionary<int, IList<ICandle>>> _candles { get; set; }
+        private IDictionary<string, IDictionary<string, IList<ICandle>>> _candles { get; set; }
 
         private IList<Entities.Security> SecurityList = null;
 

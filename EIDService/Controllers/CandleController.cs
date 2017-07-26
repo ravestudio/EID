@@ -58,17 +58,36 @@ namespace EIDService.Controllers
 
             actions.Add((pr) => { return !string.IsNullOrEmpty(pr.security) && pr.from.HasValue; }, () =>
             {
+                MicexISSClient client = new MicexISSClient(new WebApiClient());
+
                 DateTime? till = null;
                 if (settings.ModeType == ModeType.Test)
                 {
                     till = settings.TestDateTime;
                 }
 
-                 MicexISSClient client = new MicexISSClient(new WebApiClient());
+                IDictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>> interval_actions = new Dictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>>();
+
+                interval_actions.Add("5", (req) =>
+                {
+                    return client.GetCandles(request.security, request.from.Value, till, request.interval).Result;
+                });
+
+                interval_actions.Add("60", (req) =>
+                {
+                    return client.GetCandles(request.security, request.from.Value, till, request.interval).Result;
+                });
+
+                interval_actions.Add("D", (req) =>
+                {
+                    return client.GetHistory(request.security, request.from.Value, till).Result;
+                });
+
 
                 try
                 {
-                    candles = client.GetCandles(request.security, request.from.Value, till, request.interval.Value).Result;
+                    candles = interval_actions[request.interval].Invoke(request);
+
                     Logger.Log.InfoFormat("Данные с ММВБ получены. Count {0}", candles.Count());
                 }
                 catch(Exception ex)
