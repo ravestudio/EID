@@ -44,7 +44,12 @@ namespace EIDService.Controllers
         public JsonResult PrepareData(string sec, DateTime from)
         {
             MicexISSClient client = new MicexISSClient(new WebApiClient());
-            var candles = client.GetCandles(sec, from, null, "1").Result;
+            var part1 = client.GetCandles(sec, from, from.AddHours(14), "1").Result;
+            var part2 = client.GetCandles(sec, from.AddHours(14).AddMinutes(1), from.AddHours(19), "1").Result;
+
+            List<ICandle> candles = new List<ICandle>();
+            candles.AddRange(part1);
+            candles.AddRange(part2);
 
 
             //using (DataContext context = new DataContext())

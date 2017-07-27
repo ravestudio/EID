@@ -68,7 +68,7 @@ namespace EIDService.Controllers
 
                 IDictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>> interval_actions = new Dictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>>();
 
-                interval_actions.Add("5", (req) =>
+                interval_actions.Add("1", (req) =>
                 {
                     return client.GetCandles(request.security, request.from.Value, till, request.interval).Result;
                 });
