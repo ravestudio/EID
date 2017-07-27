@@ -59,22 +59,22 @@ namespace EIDClient.Core.ISS
                 //    d = 0m;
                 //}
 
-                if (d > 10m && d <= 100)
+                if (d > 10m && d <= 70m)
                 {
                     this.result = TRENDResult.Up;
                 };
 
-                if (d < -10m && d >= -100)
+                if (d < -10m && d >= -70m)
                 { 
                     this.result = TRENDResult.Down;
                 }
 
-                if (d > 100m)
+                if (d > 70m)
                 {
                     this.result = TRENDResult.StrongUp;
                 };
 
-                if (d < -100m)
+                if (d < -70m)
                 {
                     this.result = TRENDResult.StrongDown;
                 }
