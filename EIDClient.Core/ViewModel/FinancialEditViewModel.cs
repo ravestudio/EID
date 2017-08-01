@@ -47,6 +47,7 @@ namespace EIDClient.Core.ViewModel
             this.PeriodTypes.Add(new KeyValuePair<int, string>(2, "Q2"));
             this.PeriodTypes.Add(new KeyValuePair<int, string>(3, "Q3"));
             this.PeriodTypes.Add(new KeyValuePair<int, string>(4, "Q4"));
+            this.PeriodTypes.Add(new KeyValuePair<int, string>(7, "Y"));
 
             this.SaveCmd = new RelayCommand(() =>
             {
@@ -61,7 +62,7 @@ namespace EIDClient.Core.ViewModel
                 _financial.FixedAssets = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FixedAssets").Value);
                 _financial.Equity = decimal.Parse(this.FinancialItems.Single(i => i.Name == "Equity").Value);
                 _financial.CurrentLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "CurrentLiabilities").Value);
-                _financial.LongTermLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "CurrentLiabilities").Value);
+                _financial.LongTermLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "LongTermLiabilities").Value);
 
                 Messenger.Default.Send<SaveFinancialMessage>(new SaveFinancialMessage() { Financial= _financial });
             });
