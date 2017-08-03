@@ -21,16 +21,23 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Year).HasColumnName("Year").IsRequired();
                 Property(p => p.Period).HasColumnName("Period").IsRequired();
 
-                Property(p => p.Revenue).HasColumnName("Revenue").IsOptional();
-                Property(p => p.OperatingExpenses).HasColumnName("OperatingExpenses").IsOptional();
-                Property(p => p.Expenses).HasColumnName("Expenses").IsOptional();
-                Property(p => p.OperatingIncome).HasColumnName("OperatingIncome").IsOptional();
-                Property(p => p.NetIncome).HasColumnName("NetIncome").IsOptional();
-                Property(p => p.CurrentAssets).HasColumnName("CurrentAssets").IsOptional();
-                Property(p => p.FixedAssets).HasColumnName("FixedAssets").IsOptional();
-                Property(p => p.Equity).HasColumnName("Equity").IsOptional();
-                Property(p => p.CurrentLiabilities).HasColumnName("CurrentLiabilities").IsOptional();
-                Property(p => p.LongTermLiabilities).HasColumnName("LongTermLiabilities").IsOptional();
+                Property(p => p.Revenue).HasColumnName("Revenue").IsRequired();
+                Property(p => p.OperatingIncome).HasColumnName("OperatingIncome").IsRequired();
+                Property(p => p.NetIncome).HasColumnName("NetIncome").IsRequired();
+
+                Property(p => p.CurrentAssets).HasColumnName("CurrentAssets").IsRequired();
+                Property(p => p.FixedAssets).HasColumnName("FixedAssets").IsRequired();
+
+                Property(p => p.CurrentLiabilities).HasColumnName("CurrentLiabilities").IsRequired();
+                Property(p => p.LongTermLiabilities).HasColumnName("LongTermLiabilities").IsRequired();
+
+                Property(p => p.FlowOperatingActivities).HasColumnName("FlowOperatingActivities").IsRequired();
+                Property(p => p.FlowInvestingActivities).HasColumnName("FlowInvestingActivities").IsRequired();
+                Property(p => p.FlowFinancingActivities).HasColumnName("FlowFinancingActivities").IsRequired();
+
+                Property(p => p.StockIssuance).HasColumnName("StockIssuance").IsRequired();
+                Property(p => p.DividendsPaid).HasColumnName("DividendsPaid").IsRequired();
+                Property(p => p.EarningsPerShare).HasColumnName("EarningsPerShare").IsRequired();
 
                 HasRequired(p => p.Emitent).WithMany(e => e.Financials).Map(mp => mp.MapKey("EmitentId"));
 

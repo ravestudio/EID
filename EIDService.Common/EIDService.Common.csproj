@@ -166,6 +166,14 @@
     <Compile Include="Migrations\201707190815206_editfield.Designer.cs">
       <DependentUpon>201707190815206_editfield.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708030321068_AlterFinancial.cs" />
+    <Compile Include="Migrations\201708030321068_AlterFinancial.Designer.cs">
+      <DependentUpon>201708030321068_AlterFinancial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708030341439_AlterFinancial1.cs" />
+    <Compile Include="Migrations\201708030341439_AlterFinancial1.Designer.cs">
+      <DependentUpon>201708030341439_AlterFinancial1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -230,6 +238,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707190815206_editfield.resx">
       <DependentUpon>201707190815206_editfield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708030321068_AlterFinancial.resx">
+      <DependentUpon>201708030321068_AlterFinancial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708030341439_AlterFinancial1.resx">
+      <DependentUpon>201708030341439_AlterFinancial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

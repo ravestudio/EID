@@ -24,13 +24,10 @@ namespace EIDService.Common.DataAccess
                 Year = 2016,
                 Period = (int)PeriodType.Q3,
                 Revenue = 81115,
-                OperatingExpenses = 64429,
-                Expenses = 24745,
                 OperatingIncome = 16686,
                 NetIncome = 6545,
                 CurrentAssets = 88796,
                 FixedAssets = 376612,
-                Equity = 135894,
                 CurrentLiabilities = 69198,
                 LongTermLiabilities = 260316,
                 Emitent = megafon

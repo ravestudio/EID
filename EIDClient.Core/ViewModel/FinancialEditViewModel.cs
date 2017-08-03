@@ -54,15 +54,20 @@ namespace EIDClient.Core.ViewModel
                 _financial.Year = this.Year;
                 _financial.Period = this.SelectedPeriod.Key;
                 _financial.Revenue = decimal.Parse(this.FinancialItems.Single(i => i.Name == "Revenue").Value);
-                _financial.OperatingExpenses = decimal.Parse(this.FinancialItems.Single(i => i.Name == "OperatingExpenses").Value);
-                _financial.Expenses = decimal.Parse(this.FinancialItems.Single(i => i.Name == "Expenses").Value);
                 _financial.OperatingIncome = decimal.Parse(this.FinancialItems.Single(i => i.Name == "OperatingIncome").Value);
                 _financial.NetIncome = decimal.Parse(this.FinancialItems.Single(i => i.Name == "NetIncome").Value);
                 _financial.CurrentAssets = decimal.Parse(this.FinancialItems.Single(i => i.Name == "CurrentAssets").Value);
                 _financial.FixedAssets = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FixedAssets").Value);
-                _financial.Equity = decimal.Parse(this.FinancialItems.Single(i => i.Name == "Equity").Value);
                 _financial.CurrentLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "CurrentLiabilities").Value);
                 _financial.LongTermLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "LongTermLiabilities").Value);
+
+                _financial.FlowOperatingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowOperatingActivities").Value);
+                _financial.FlowInvestingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowInvestingActivities").Value);
+                _financial.FlowFinancingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowFinancingActivities").Value);
+
+                _financial.StockIssuance = decimal.Parse(this.FinancialItems.Single(i => i.Name == "StockIssuance").Value);
+                _financial.DividendsPaid = decimal.Parse(this.FinancialItems.Single(i => i.Name == "DividendsPaid").Value);
+                _financial.EarningsPerShare = decimal.Parse(this.FinancialItems.Single(i => i.Name == "EarningsPerShare").Value);
 
                 Messenger.Default.Send<SaveFinancialMessage>(new SaveFinancialMessage() { Financial= _financial });
             });
@@ -82,16 +87,23 @@ namespace EIDClient.Core.ViewModel
             this.Year = financial.Year;
 
             AddItem("Revenue", _financial.Revenue);
-            AddItem("OperatingExpenses", _financial.OperatingExpenses);
-            AddItem("Expenses", _financial.Expenses);
             AddItem("OperatingIncome", _financial.OperatingIncome);
             AddItem("NetIncome", _financial.NetIncome);
 
             AddItem("CurrentAssets", _financial.CurrentAssets);
             AddItem("FixedAssets", _financial.FixedAssets);
-            AddItem("Equity", _financial.Equity);
+
             AddItem("CurrentLiabilities", _financial.CurrentLiabilities);
             AddItem("LongTermLiabilities", _financial.LongTermLiabilities);
+
+            AddItem("FlowOperatingActivities", _financial.FlowOperatingActivities);
+            AddItem("FlowInvestingActivities", _financial.FlowInvestingActivities);
+            AddItem("FlowFinancingActivities", _financial.FlowFinancingActivities);
+            
+
+            AddItem("StockIssuance", _financial.StockIssuance);
+            AddItem("DividendsPaid", _financial.DividendsPaid);
+            AddItem("EarningsPerShare", _financial.EarningsPerShare);
 
             this._commandBar.Clear();
             this._commandBar.AddCommandButton(new Windows.UI.Xaml.Controls.AppBarButton()

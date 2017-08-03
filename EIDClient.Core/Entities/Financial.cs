@@ -145,7 +145,7 @@ namespace EIDClient.Core.Entities
 
             keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingActivities", FlowOperatingActivities.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("FlowInvestingActivities", FlowInvestingActivities.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("FlowFinancingActivities", LongTermLiabilities.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowFinancingActivities", FlowFinancingActivities.ToString()));
 
             keyValueData.Add(new KeyValuePair<string, string>("StockIssuance", StockIssuance.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("DividendsPaid", DividendsPaid.ToString()));
