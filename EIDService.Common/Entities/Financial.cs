@@ -107,6 +107,19 @@ namespace EIDService.Common.Entities
         /// </summary>
         public decimal EarningsPerShare { get; set; }
 
+        /// <summary>
+        /// Цена за акцию
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// P/E Ratio 
+        /// </summary>
+        public decimal PriceEarningsRatio
+        {
+            get { return Math.Round(Price / EarningsPerShare, 2); }
+        }
+
 
         public virtual Emitent Emitent { get; set; }
     }

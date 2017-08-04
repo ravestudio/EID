@@ -92,6 +92,17 @@ namespace EIDClient.Core.Entities
         /// </summary>
         public decimal EarningsPerShare { get; set; }
 
+        /// <summary>
+        /// Цена за акцию
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// P/E Ratio 
+        /// </summary>
+        public decimal PriceEarningsRatio { get; set; }
+
+
         public int EmitentId { get; set; }
 
         public override void ReadData(Windows.Data.Json.JsonObject jsonObj)
@@ -123,6 +134,8 @@ namespace EIDClient.Core.Entities
             this.DividendsPaid = (decimal)jsonObj["DividendsPaid"].GetNumber();
 
             this.EarningsPerShare = (decimal)jsonObj["EarningsPerShare"].GetNumber();
+            this.Price = (decimal)jsonObj["Price"].GetNumber();
+            this.PriceEarningsRatio = (decimal)jsonObj["PriceEarningsRatio"].GetNumber();
 
         }
 
@@ -149,7 +162,9 @@ namespace EIDClient.Core.Entities
 
             keyValueData.Add(new KeyValuePair<string, string>("StockIssuance", StockIssuance.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("DividendsPaid", DividendsPaid.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("EarningsPerShare", EarningsPerShare.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("EarningsPerShare", EarningsPerShare.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+
+            keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString(System.Globalization.CultureInfo.InvariantCulture)));
 
             if (EmitentId != 0)
             {

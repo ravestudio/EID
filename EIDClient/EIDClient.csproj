@@ -98,9 +98,6 @@
     <Compile Include="Views\Controls\FinancialLineItem.xaml.cs">
       <DependentUpon>FinancialLineItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\FinancialViewer.xaml.cs">
-      <DependentUpon>FinancialViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\EmitentDetailsPage.xaml.cs">
       <DependentUpon>EmitentDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -147,10 +144,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Views\Controls\FinancialLineItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\FinancialViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

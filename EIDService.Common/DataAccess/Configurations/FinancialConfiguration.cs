@@ -39,6 +39,8 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.DividendsPaid).HasColumnName("DividendsPaid").IsRequired();
                 Property(p => p.EarningsPerShare).HasColumnName("EarningsPerShare").IsRequired();
 
+                Property(p => p.Price).HasColumnName("Price").IsRequired();
+
                 HasRequired(p => p.Emitent).WithMany(e => e.Financials).Map(mp => mp.MapKey("EmitentId"));
 
             }).ToTable("FinancialSet");

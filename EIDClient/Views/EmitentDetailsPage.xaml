@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EIDClient.Views"
-    xmlns:controls ="using:EIDClient.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,19 +10,41 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core">
 
+    <Page.Resources>
+        <DataTemplate x:Key="financialItemTemplate" >
+            <StackPanel Width="100">
+                <TextBlock Text="{Binding Year}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding Revenue}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding OperatingExpenses}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding OperatingIncome}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding NetIncome}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding CurrentAssets}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FixedAssets}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding TotalAssets}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding CurrentLiabilities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding LongTermLiabilities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding TotalLiabilities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding Equity}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding LiabilitiesAndEquity}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FlowOperatingActivities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FlowInvestingActivities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FlowFinancingActivities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding StockIssuance}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding DividendsPaid}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding EarningsPerShare}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding PriceEarningsRatio}" HorizontalAlignment="Right"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Title="Pivot">
             <PivotItem Header="Financials">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="60"/>
-                    </Grid.RowDefinitions>
                     <ListView
                         ItemsSource="{Binding FinancialList}"
                         SelectionMode="Single"
-                        IsItemClickEnabled="True"
-                        Grid.Row="0">
+                        IsItemClickEnabled="True">
 
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
@@ -42,12 +63,48 @@
                         </ListView.ItemTemplate>
 
                     </ListView>
-
-
                 </Grid>
             </PivotItem>
             <PivotItem Header="Reports">
-                <controls:FinancialViewer></controls:FinancialViewer>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
+                        <TextBlock Text="Финансовый год"></TextBlock>
+                        <TextBlock Text="Выручка"></TextBlock>
+                        <TextBlock Text="Операционные расходы"></TextBlock>
+                        <TextBlock Text="Операционная прибыль"></TextBlock>
+                        <TextBlock Text="Чистая прибыль"></TextBlock>
+                        <TextBlock Text="Оборотные активы"></TextBlock>
+                        <TextBlock Text="Внеоборотные активы"></TextBlock>
+                        <TextBlock Text="Итого активы"></TextBlock>
+                        <TextBlock Text="Краткосрочные обязательства"></TextBlock>
+                        <TextBlock Text="Долгосрочные обязательства"></TextBlock>
+                        <TextBlock Text="Итого обязательства"></TextBlock>
+                        <TextBlock Text="Капитал"></TextBlock>
+                        <TextBlock Text="Итого капитал и обязательства"></TextBlock>
+                        <TextBlock Text="Операционная деятельность"></TextBlock>
+                        <TextBlock Text="Инвестиционная деятельность"></TextBlock>
+                        <TextBlock Text="Финансовая деятельность"></TextBlock>
+                        <TextBlock Text="Продажа (выкуп) собственых акций"></TextBlock>
+                        <TextBlock Text="Дивиденды, выплаченные по акциям"></TextBlock>
+                        <TextBlock Text="Прибыль на акцию"></TextBlock>
+                        <TextBlock Text="P/E Ratio"></TextBlock>
+                    </StackPanel>
+
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding FinancialList}" ItemTemplate="{StaticResource financialItemTemplate}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                </Grid>
+
             </PivotItem>
         </Pivot>
     </Grid>

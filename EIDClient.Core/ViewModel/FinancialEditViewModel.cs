@@ -68,6 +68,7 @@ namespace EIDClient.Core.ViewModel
                 _financial.StockIssuance = decimal.Parse(this.FinancialItems.Single(i => i.Name == "StockIssuance").Value);
                 _financial.DividendsPaid = decimal.Parse(this.FinancialItems.Single(i => i.Name == "DividendsPaid").Value);
                 _financial.EarningsPerShare = decimal.Parse(this.FinancialItems.Single(i => i.Name == "EarningsPerShare").Value);
+                _financial.Price = decimal.Parse(this.FinancialItems.Single(i => i.Name == "Price").Value);
 
                 Messenger.Default.Send<SaveFinancialMessage>(new SaveFinancialMessage() { Financial= _financial });
             });
@@ -104,6 +105,8 @@ namespace EIDClient.Core.ViewModel
             AddItem("StockIssuance", _financial.StockIssuance);
             AddItem("DividendsPaid", _financial.DividendsPaid);
             AddItem("EarningsPerShare", _financial.EarningsPerShare);
+
+            AddItem("Price", _financial.Price);
 
             this._commandBar.Clear();
             this._commandBar.AddCommandButton(new Windows.UI.Xaml.Controls.AppBarButton()

@@ -32,5 +32,6 @@ namespace EIDClient.Views
         {
             ((EmitentDetailsViewModel)this.DataContext).LoadData((int)e.Parameter);
         }
+
     }
 }
