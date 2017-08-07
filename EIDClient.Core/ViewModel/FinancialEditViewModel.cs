@@ -3,11 +3,14 @@ using EIDClient.Core.Messages;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace EIDClient.Core.ViewModel
@@ -36,9 +39,13 @@ namespace EIDClient.Core.ViewModel
         }
 
         private IMainCommandBar _commandBar = null;
+        private INavigationService _navigationService = null;
+        private CoreDispatcher dispatcher;
 
-        public FinancialEditViewModel(IMainCommandBar commandBar)
+        public FinancialEditViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
+            this._navigationService = navigationService;
+
             this._commandBar = commandBar;
             this.FinancialItems = new List<FinancialItem>();
 
@@ -73,7 +80,23 @@ namespace EIDClient.Core.ViewModel
                 Messenger.Default.Send<SaveFinancialMessage>(new SaveFinancialMessage() { Financial= _financial });
             });
 
-            
+            Messenger.Default.Register<SaveFinancialResultMeassage>(this, (msg) =>
+            {
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    string message = msg.Result == "success" ? "Сохранение успешно": "Возникли ошибки";
+
+                    var dlg = new Windows.UI.Popups.MessageDialog(message);
+
+                    await dlg.ShowAsync();
+
+                    if (msg.Result == "success")
+                    {
+                        _navigationService.GoBack();
+                    }
+                });
+            });
+
         }
 
         public void Set(Financial financial)
@@ -86,6 +109,8 @@ namespace EIDClient.Core.ViewModel
             }
 
             this.Year = financial.Year;
+
+            this.FinancialItems.Clear();
 
             AddItem("Revenue", _financial.Revenue);
             AddItem("OperatingIncome", _financial.OperatingIncome);
@@ -121,6 +146,11 @@ namespace EIDClient.Core.ViewModel
         {
             this.FinancialItems.Add(new Core.ViewModel.FinancialItem() { Name = name, Value = value.ToString() });
 
+        }
+
+        public void LoadData()
+        {
+            dispatcher = Window.Current.Content.Dispatcher;
         }
     }
 }

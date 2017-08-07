@@ -76,9 +76,9 @@ namespace EIDClient.Core.Repository
 
         }
 
-        public virtual void Update(G model)
+        public virtual Task<string> Update(G model)
         {
-
+            return null;
         }
 
         public G GetObject(Windows.Data.Json.IJsonValue jsonValue)

@@ -43,15 +43,25 @@ namespace EIDClient.Core.DataModel
 
             Messenger.Default.Register<SaveFinancialMessage>(this, (msg) =>
             {
+                Task<string> task = null;
+
                 if (msg.Financial.Id != 0)
                 {
-                    this._financialRepository.Update(msg.Financial);
+                    task = this._financialRepository.Update(msg.Financial);
                 }
 
                 if (msg.Financial.Id == 0)
                 {
-                    this._financialRepository.Create(msg.Financial);
+                    task = this._financialRepository.Create(msg.Financial);
                 }
+
+                task.ContinueWith(t =>
+                {
+                    Messenger.Default.Send<SaveFinancialResultMeassage>(new SaveFinancialResultMeassage()
+                    {
+                        Result = t.Result
+                    });
+                });
             });
         }
     }

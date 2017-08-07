@@ -156,6 +156,7 @@
     <Compile Include="Messages\LoadSecurityListMessage.cs" />
     <Compile Include="Messages\LoadSecurityMessage.cs" />
     <Compile Include="Messages\SaveFinancialMessage.cs" />
+    <Compile Include="Messages\SaveFinancialResultMeassage.cs" />
     <Compile Include="Messages\SecurityListLoadedMessage.cs" />
     <Compile Include="Messages\SecurityLoadedMessage.cs" />
     <Compile Include="Messages\ShowDataMessage.cs" />

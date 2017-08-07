@@ -27,6 +27,13 @@ namespace EIDClient.Views
         public FinancialEditPage()
         {
             this.InitializeComponent();
+
+            this.Loaded += FinancialEditPage_Loaded;
+        }
+
+        private void FinancialEditPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((FinancialEditViewModel)this.DataContext).LoadData();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

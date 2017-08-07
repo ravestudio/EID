@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,9 +28,9 @@ namespace EID.Library
             return TCS.Task;
         }
 
-        public Task<string> PostData(string url, List<KeyValuePair<string, string>> data)
+        public Task<bool> PostData(string url, List<KeyValuePair<string, string>> data)
         {
-            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+            TaskCompletionSource<bool> TCS = new TaskCompletionSource<bool>();
 
             var uri = new Uri(url);
             System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
@@ -42,16 +43,15 @@ namespace EID.Library
 
             response.ContinueWith(r =>
             {
-                string msg = r.Result.Content.ReadAsStringAsync().Result;
-                TCS.SetResult(msg);
+                TCS.SetResult(r.Result.IsSuccessStatusCode);
             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return TCS.Task;
         }
 
-        public Task<string> PutData(string url, List<KeyValuePair<string, string>> data)
+        public Task<bool> PutData(string url, List<KeyValuePair<string, string>> data)
         {
-            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+            TaskCompletionSource<bool> TCS = new TaskCompletionSource<bool>();
 
             var uri = new Uri(url);
             System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
@@ -64,8 +64,7 @@ namespace EID.Library
 
             response.ContinueWith(r =>
             {
-                string msg = r.Result.Content.ReadAsStringAsync().Result;
-                TCS.SetResult(msg);
+                TCS.SetResult(r.Result.IsSuccessStatusCode);
             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return TCS.Task;

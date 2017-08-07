@@ -24,9 +24,8 @@ namespace EIDClient.Core.Repository
 
             this._apiClient.PostData(url, model.ConverToKeyValue()).ContinueWith(t =>
             {
-                string data = t.Result;
 
-                TCS.SetResult(data);
+                TCS.SetResult(t.Result ? "success" : "fail");
             });
 
             return TCS.Task;

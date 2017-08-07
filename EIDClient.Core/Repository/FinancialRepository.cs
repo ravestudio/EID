@@ -24,23 +24,30 @@ namespace EIDClient.Core.Repository
 
             this._apiClient.PutData(url, model.ConverToKeyValue()).ContinueWith(t =>
             {
-                string data = t.Result;
 
-                TCS.SetResult(data);
+
+
+                TCS.SetResult(t.Result ? "success" : "fail");
             });
 
             return TCS.Task;
         }
 
-        public override void Update(Financial model)
+        public override Task<string> Update(Financial model)
         {
+            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+
             string url = string.Format("{0}{1}", this.ServerURL, "api/financial/");
 
             this._apiClient.PostData(url, model.ConverToKeyValue()).ContinueWith(t =>
             {
-                string data = t.Result;
+                //string data = t.Result;
+
+                TCS.SetResult(t.Result?"success":"fail");
 
             });
+
+            return TCS.Task;
         }
 
         public Task<IEnumerable<Financial>> GetByEmitentId(int EmitentId)
