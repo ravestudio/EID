@@ -32,6 +32,9 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.LongTermLiabilities).HasColumnName("LongTermLiabilities").IsRequired();
 
                 Property(p => p.FlowOperatingActivities).HasColumnName("FlowOperatingActivities").IsRequired();
+                Property(p => p.ChangesInAssets).HasColumnName("ChangesInAssets").IsRequired();
+                Property(p => p.FlowOperatingTaxesPaid).HasColumnName("FlowOperatingTaxesPaid").IsRequired();
+
                 Property(p => p.FlowInvestingActivities).HasColumnName("FlowInvestingActivities").IsRequired();
                 Property(p => p.FlowFinancingActivities).HasColumnName("FlowFinancingActivities").IsRequired();
 

@@ -69,6 +69,9 @@ namespace EIDClient.Core.ViewModel
                 _financial.LongTermLiabilities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "LongTermLiabilities").Value);
 
                 _financial.FlowOperatingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowOperatingActivities").Value);
+                _financial.ChangesInAssets = decimal.Parse(this.FinancialItems.Single(i => i.Name == "ChangesInAssets").Value);
+                _financial.FlowOperatingTaxesPaid = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowOperatingTaxesPaid").Value);
+
                 _financial.FlowInvestingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowInvestingActivities").Value);
                 _financial.FlowFinancingActivities = decimal.Parse(this.FinancialItems.Single(i => i.Name == "FlowFinancingActivities").Value);
 
@@ -123,6 +126,9 @@ namespace EIDClient.Core.ViewModel
             AddItem("LongTermLiabilities", _financial.LongTermLiabilities);
 
             AddItem("FlowOperatingActivities", _financial.FlowOperatingActivities);
+            AddItem("ChangesInAssets", _financial.ChangesInAssets);
+            AddItem("FlowOperatingTaxesPaid", _financial.FlowOperatingTaxesPaid);
+
             AddItem("FlowInvestingActivities", _financial.FlowInvestingActivities);
             AddItem("FlowFinancingActivities", _financial.FlowFinancingActivities);
             

@@ -73,6 +73,12 @@ namespace EIDClient.Core.Entities
 
         public decimal FlowOperatingActivities { get; set; }
 
+        public decimal ChangesInAssets { get; set; }
+
+        public decimal FlowOperatingTaxesPaid { get; set; }
+
+        public decimal NetFlowOperatingActivities { get; set; }
+
         public decimal FlowInvestingActivities { get; set; }
 
         public decimal FlowFinancingActivities { get; set; }
@@ -127,6 +133,10 @@ namespace EIDClient.Core.Entities
             this.LiabilitiesAndEquity = (decimal)jsonObj["LiabilitiesAndEquity"].GetNumber();
 
             this.FlowOperatingActivities = (decimal)jsonObj["FlowOperatingActivities"].GetNumber();
+            this.ChangesInAssets = (decimal)jsonObj["ChangesInAssets"].GetNumber();
+            this.FlowOperatingTaxesPaid = (decimal)jsonObj["FlowOperatingTaxesPaid"].GetNumber();
+            this.NetFlowOperatingActivities = (decimal)jsonObj["NetFlowOperatingActivities"].GetNumber();
+
             this.FlowInvestingActivities = (decimal)jsonObj["FlowInvestingActivities"].GetNumber();
             this.FlowFinancingActivities = (decimal)jsonObj["FlowFinancingActivities"].GetNumber();
 
@@ -157,6 +167,9 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("LongTermLiabilities", LongTermLiabilities.ToString()));
 
             keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingActivities", FlowOperatingActivities.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("ChangesInAssets", ChangesInAssets.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingTaxesPaid", FlowOperatingTaxesPaid.ToString()));
+
             keyValueData.Add(new KeyValuePair<string, string>("FlowInvestingActivities", FlowInvestingActivities.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("FlowFinancingActivities", FlowFinancingActivities.ToString()));
 

@@ -26,7 +26,12 @@
                 <TextBlock Text="{Binding TotalLiabilities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding Equity}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding LiabilitiesAndEquity}" HorizontalAlignment="Right"></TextBlock>
+                
                 <TextBlock Text="{Binding FlowOperatingActivities}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding ChangesInAssets}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FlowOperatingTaxesPaid}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding NetFlowOperatingActivities}" HorizontalAlignment="Right"></TextBlock>
+                
                 <TextBlock Text="{Binding FlowInvestingActivities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding FlowFinancingActivities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding StockIssuance}" HorizontalAlignment="Right"></TextBlock>
@@ -86,7 +91,12 @@
                         <TextBlock Text="Итого обязательства"></TextBlock>
                         <TextBlock Text="Капитал"></TextBlock>
                         <TextBlock Text="Итого капитал и обязательства"></TextBlock>
+                        
                         <TextBlock Text="Операционная деятельность"></TextBlock>
+                        <TextBlock Text="Изменения в активах"></TextBlock>
+                        <TextBlock Text="Налог на прибыль уплаченный"></TextBlock>
+                        <TextBlock Text="Операционная деятельность, нетто"></TextBlock>
+                        
                         <TextBlock Text="Инвестиционная деятельность"></TextBlock>
                         <TextBlock Text="Финансовая деятельность"></TextBlock>
                         <TextBlock Text="Продажа (выкуп) собственых акций"></TextBlock>

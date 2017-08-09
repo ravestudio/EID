@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201708040955035_AlterPrice.Designer.cs">
       <DependentUpon>201708040955035_AlterPrice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708090527017_AlterFinancial2.cs" />
+    <Compile Include="Migrations\201708090527017_AlterFinancial2.Designer.cs">
+      <DependentUpon>201708090527017_AlterFinancial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -258,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708040955035_AlterPrice.resx">
       <DependentUpon>201708040955035_AlterPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708090527017_AlterFinancial2.resx">
+      <DependentUpon>201708090527017_AlterFinancial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

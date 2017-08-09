@@ -88,6 +88,24 @@ namespace EIDService.Common.Entities
 
         public decimal FlowOperatingActivities { get; set; }
 
+        /// <summary>
+        /// Изменения в активах
+        /// </summary>
+        public decimal ChangesInAssets { get; set; }
+		
+        /// <summary>
+        /// Налог на прибыль уплаченный
+        /// </summary>
+		public decimal FlowOperatingTaxesPaid { get; set; }
+
+        /// <summary>
+        /// Чистые денежные средства, полученные от операционной деятельности 
+        /// </summary>
+        public decimal NetFlowOperatingActivities
+		{
+			get { return this.FlowOperatingActivities + this.ChangesInAssets - this.FlowOperatingTaxesPaid; }
+		}
+
         public decimal FlowInvestingActivities { get; set; }
 
         public decimal FlowFinancingActivities { get; set; }
