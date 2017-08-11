@@ -14,6 +14,9 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Key).HasColumnName("Key");
                 Property(p => p.Name).HasColumnName("Name").IsRequired();
 
+                Property(p => p.Description).HasColumnName("Description").IsOptional();
+                Property(p => p.WebSite).HasColumnName("WebSite").IsOptional();
+
 
 
             }).ToTable("EmitentSet");

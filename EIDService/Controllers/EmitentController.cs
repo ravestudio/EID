@@ -24,5 +24,15 @@ namespace EIDService.Controllers
 
             return emitents;
         }
+
+        public void Post([FromBody]Emitent emitent)
+        {
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                unit.EmitentRepository.Update(emitent);
+
+                unit.Commit();
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EIDClient.Core.Entities;
 using EIDClient.Core.ViewModel;
+using EIDClient.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,11 +25,31 @@ namespace EIDClient.Views
     /// </summary>
     public sealed partial class FinancialEditPage : Page
     {
+        private Dictionary<FinancialItemGroup, Action<FinancialLineItem>> addItemActions = null;
+
         public FinancialEditPage()
         {
             this.InitializeComponent();
 
             this.Loaded += FinancialEditPage_Loaded;
+
+            addItemActions = new Dictionary<FinancialItemGroup, Action<FinancialLineItem>>();
+
+            addItemActions.Add(FinancialItemGroup.IncomeStatement, (item) =>
+            {
+                this.IncomeItems.Children.Add(item);
+            });
+
+            addItemActions.Add(FinancialItemGroup.BalanceItems, (item) =>
+            {
+                this.BalanceItems.Children.Add(item);
+            });
+
+            addItemActions.Add(FinancialItemGroup.CashFlowItems, (item) =>
+            {
+                this.CashFlowItems.Children.Add(item);
+            });
+
         }
 
         private void FinancialEditPage_Loaded(object sender, RoutedEventArgs e)
@@ -65,7 +86,8 @@ namespace EIDClient.Views
             Controls.FinancialLineItem line_item = new Controls.FinancialLineItem();
             line_item.AddItem(item);
 
-            this.FinancialItems.Children.Add(line_item);
+            addItemActions[item.Group].Invoke(line_item);
+            //this.FinancialItems.Children.Add(line_item);
 
         }
     }

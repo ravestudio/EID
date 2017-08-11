@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace EIDClient.Core.ViewModel
 {
-    public class FinancialItem
+    public enum FinancialItemGroup
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
-
-        public FinancialItemGroup Group { get; set; }
+        IncomeStatement,
+        BalanceItems,
+        CashFlowItems
     }
 }

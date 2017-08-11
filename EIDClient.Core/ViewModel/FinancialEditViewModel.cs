@@ -115,29 +115,29 @@ namespace EIDClient.Core.ViewModel
 
             this.FinancialItems.Clear();
 
-            AddItem("Revenue", _financial.Revenue);
-            AddItem("OperatingIncome", _financial.OperatingIncome);
-            AddItem("NetIncome", _financial.NetIncome);
+            AddItem("Revenue", _financial.Revenue, FinancialItemGroup.IncomeStatement);
+            AddItem("OperatingIncome", _financial.OperatingIncome, FinancialItemGroup.IncomeStatement);
+            AddItem("NetIncome", _financial.NetIncome, FinancialItemGroup.IncomeStatement);
 
-            AddItem("CurrentAssets", _financial.CurrentAssets);
-            AddItem("FixedAssets", _financial.FixedAssets);
+            AddItem("CurrentAssets", _financial.CurrentAssets, FinancialItemGroup.BalanceItems);
+            AddItem("FixedAssets", _financial.FixedAssets, FinancialItemGroup.BalanceItems);
 
-            AddItem("CurrentLiabilities", _financial.CurrentLiabilities);
-            AddItem("LongTermLiabilities", _financial.LongTermLiabilities);
+            AddItem("CurrentLiabilities", _financial.CurrentLiabilities, FinancialItemGroup.BalanceItems);
+            AddItem("LongTermLiabilities", _financial.LongTermLiabilities, FinancialItemGroup.BalanceItems);
 
-            AddItem("FlowOperatingActivities", _financial.FlowOperatingActivities);
-            AddItem("ChangesInAssets", _financial.ChangesInAssets);
-            AddItem("FlowOperatingTaxesPaid", _financial.FlowOperatingTaxesPaid);
+            AddItem("FlowOperatingActivities", _financial.FlowOperatingActivities, FinancialItemGroup.CashFlowItems);
+            AddItem("ChangesInAssets", _financial.ChangesInAssets, FinancialItemGroup.CashFlowItems);
+            AddItem("FlowOperatingTaxesPaid", _financial.FlowOperatingTaxesPaid, FinancialItemGroup.CashFlowItems);
 
-            AddItem("FlowInvestingActivities", _financial.FlowInvestingActivities);
-            AddItem("FlowFinancingActivities", _financial.FlowFinancingActivities);
+            AddItem("FlowInvestingActivities", _financial.FlowInvestingActivities, FinancialItemGroup.CashFlowItems);
+            AddItem("FlowFinancingActivities", _financial.FlowFinancingActivities, FinancialItemGroup.CashFlowItems);
             
 
-            AddItem("StockIssuance", _financial.StockIssuance);
-            AddItem("DividendsPaid", _financial.DividendsPaid);
-            AddItem("EarningsPerShare", _financial.EarningsPerShare);
+            AddItem("StockIssuance", _financial.StockIssuance, FinancialItemGroup.CashFlowItems);
+            AddItem("DividendsPaid", _financial.DividendsPaid, FinancialItemGroup.CashFlowItems);
+            AddItem("EarningsPerShare", _financial.EarningsPerShare, FinancialItemGroup.IncomeStatement);
 
-            AddItem("Price", _financial.Price);
+            AddItem("Price", _financial.Price, FinancialItemGroup.IncomeStatement);
 
             this._commandBar.Clear();
             this._commandBar.AddCommandButton(new Windows.UI.Xaml.Controls.AppBarButton()
@@ -148,9 +148,9 @@ namespace EIDClient.Core.ViewModel
             });
         }
 
-        private void AddItem(string name, decimal value)
+        private void AddItem(string name, decimal value, FinancialItemGroup group)
         {
-            this.FinancialItems.Add(new Core.ViewModel.FinancialItem() { Name = name, Value = value.ToString() });
+            this.FinancialItems.Add(new Core.ViewModel.FinancialItem() { Name = name, Value = value.ToString(), Group = group });
 
         }
 

@@ -9,34 +9,65 @@
     DataContext="{Binding FinancialEditViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel x:Name="FinancialItems" Orientation="Vertical" HorizontalAlignment="Left" Width="400">
 
-            <RelativePanel Height="40">
-                <TextBlock x:Name="tb_period"
-                           Text="Период:"
-                           RelativePanel.AlignBottomWithPanel="True"
-                           RelativePanel.AlignTopWithPanel="True"/>
-                <ComboBox x:Name="cb_period"
-                          Width="150"
-                          ItemsSource="{Binding PeriodTypes}"
-                          SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}"
-                          RelativePanel.AlignRightWithPanel="True">
+        <Pivot Title="Report Editor">
 
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Value}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </RelativePanel>
+            <PivotItem Header="Period">
+                <Grid>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="400">
+                        <RelativePanel Height="40">
+                            <TextBlock x:Name="tb_period"
+                               Text="Период:"
+                               RelativePanel.AlignBottomWithPanel="True"
+                               RelativePanel.AlignTopWithPanel="True"/>
+                            <ComboBox x:Name="cb_period"
+                              Width="150"
+                              ItemsSource="{Binding PeriodTypes}"
+                              SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}"
+                              RelativePanel.AlignRightWithPanel="True">
 
-            <RelativePanel Height="40">
-                <TextBlock Text="Год:"></TextBlock>
-                <TextBox Text="{Binding Year, Mode=TwoWay}"
-                         Width="150"
-                         RelativePanel.AlignRightWithPanel="True"/>
-            </RelativePanel>
-            
-        </StackPanel>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Value}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </RelativePanel>
+
+                        <RelativePanel Height="40">
+                            <TextBlock Text="Год:"></TextBlock>
+                            <TextBox Text="{Binding Year, Mode=TwoWay}"
+                             Width="150"
+                             RelativePanel.AlignRightWithPanel="True"/>
+                        </RelativePanel>
+                    </StackPanel>
+                </Grid>
+                
+            </PivotItem>
+
+            <PivotItem Header="Income Statement">
+                <Grid>
+                    <StackPanel x:Name="IncomeItems" Orientation="Vertical" HorizontalAlignment="Left" Width="400">
+
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="Balance Sheet">
+                <Grid>
+                    <StackPanel x:Name="BalanceItems" Orientation="Vertical" HorizontalAlignment="Left" Width="400">
+
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="Cash Flow ">
+                <Grid>
+                    <StackPanel x:Name="CashFlowItems" Orientation="Vertical" HorizontalAlignment="Left" Width="400">
+
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

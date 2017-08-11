@@ -41,6 +41,17 @@ namespace EIDClient.Core.DataModel
                 });
             });
 
+            Messenger.Default.Register<SaveEmitentMessage>(this, (msg) =>
+            {
+                Task<string> task = null;
+
+                if (msg.Emitent.Id != 0)
+                {
+                    task = this._emitentRepository.Update(msg.Emitent);
+                }
+
+            });
+
             Messenger.Default.Register<SaveFinancialMessage>(this, (msg) =>
             {
                 Task<string> task = null;

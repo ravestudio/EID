@@ -44,5 +44,22 @@ namespace EIDClient.Core.Repository
 
             return TCS.Task;
         }
+
+        public override Task<string> Update(Emitent model)
+        {
+            TaskCompletionSource<string> TCS = new TaskCompletionSource<string>();
+
+            string url = string.Format("{0}{1}", this.ServerURL, "api/emitent/");
+
+            this._apiClient.PostData(url, model.ConverToKeyValue()).ContinueWith(t =>
+            {
+                //string data = t.Result;
+
+                TCS.SetResult(t.Result ? "success" : "fail");
+
+            });
+
+            return TCS.Task;
+        }
     }
 }

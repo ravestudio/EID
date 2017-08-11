@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201708090527017_AlterFinancial2.Designer.cs">
       <DependentUpon>201708090527017_AlterFinancial2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708110953273_EmitentModification.cs" />
+    <Compile Include="Migrations\201708110953273_EmitentModification.Designer.cs">
+      <DependentUpon>201708110953273_EmitentModification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -265,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708090527017_AlterFinancial2.resx">
       <DependentUpon>201708090527017_AlterFinancial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708110953273_EmitentModification.resx">
+      <DependentUpon>201708110953273_EmitentModification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

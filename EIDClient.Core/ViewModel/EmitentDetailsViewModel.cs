@@ -35,6 +35,8 @@ namespace EIDClient.Core.ViewModel
 
         private int _emitentId = 0;
 
+        public Emitent Emitent { get; set; }
+
         public EmitentDetailsViewModel(INavigationService navigationService, IMainCommandBar commandBar)
         {
             this._navigationService = navigationService;
@@ -67,11 +69,13 @@ namespace EIDClient.Core.ViewModel
             });
         }
 
-        public void LoadData(int EmitentId)
+        public void LoadData(Emitent emitent)
         {
-            this._emitentId = EmitentId;
+            this._emitentId = emitent.Id;
 
-            Messenger.Default.Send<LoadFinancialListMessage>(new LoadFinancialListMessage() { EmitentId = EmitentId });
+            this.Emitent = emitent;
+
+            Messenger.Default.Send<LoadFinancialListMessage>(new LoadFinancialListMessage() { EmitentId = this._emitentId });
 
             _commandBar.Clear();
             _commandBar.AddCommandButton(new AppBarButton()

@@ -43,7 +43,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot Title="Pivot">
+        <Pivot Title="{Binding Emitent.Name}">
             <PivotItem Header="Financials">
                 <Grid>
                     <ListView

@@ -1,4 +1,5 @@
-﻿using EIDClient.Core.ViewModel;
+﻿using EIDClient.Core.Entities;
+using EIDClient.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,7 @@ namespace EIDClient.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ((EmitentDetailsViewModel)this.DataContext).LoadData((int)e.Parameter);
+            ((EmitentDetailsViewModel)this.DataContext).LoadData((Emitent)e.Parameter);
         }
 
     }
