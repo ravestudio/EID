@@ -18,8 +18,6 @@ namespace EIDClient.Core.ViewModel
     {
         public RelayCommand<object> SelectEmitentCmd { get; set; }
 
-        public RelayCommand EditEmitentCmd { get; set; }
-
         public ObservableCollection<Core.Entities.Emitent> EmitentList { get; set; }
 
         private INavigationService _navigationService = null;
@@ -49,21 +47,11 @@ namespace EIDClient.Core.ViewModel
                 this._navigationService.NavigateTo("EmitentDetails", SelectedEmitent);
             });
 
-            this.EditEmitentCmd = new RelayCommand(() =>
-            {
-                //this._navigationService.NavigateTo("FinancialEdit", this._selectedFinancial);
-            });
         }
 
         public void LoadEmitents()
         {
             Messenger.Default.Send<LoadEmitentListMessage>(new LoadEmitentListMessage());
-
-            _commandBar.AddCommandButton(new AppBarButton()
-            {
-                Icon = new SymbolIcon(Symbol.Edit),
-                Command = this.EditEmitentCmd
-            });
 
         }
     }

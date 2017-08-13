@@ -44,6 +44,14 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Title="{Binding Emitent.Name}">
+
+            <PivotItem Header="Information">
+                <StackPanel>
+                    <TextBlock Text="{Binding Emitent.Description}" TextWrapping="WrapWholeWords"></TextBlock>
+                    <HyperlinkButton Margin="0,40,0,0" Content="{Binding Emitent.WebSite}" NavigateUri="{Binding Emitent.WebSite}"/>
+                </StackPanel>
+            </PivotItem>
+            
             <PivotItem Header="Financials">
                 <Grid>
                     <ListView

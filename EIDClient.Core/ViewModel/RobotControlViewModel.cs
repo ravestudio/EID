@@ -50,7 +50,7 @@ namespace EIDClient.Core.ViewModel
 
             this.StartRobot = new RelayCommand(() =>
             {
-                this._robot = new Robot.Robot(new Robot.DemoStrategy(), SecurityList);
+                this._robot = new Robot.Robot(new Robot.CandleStrategy(), SecurityList);
 
                 this._robot.Run();
 

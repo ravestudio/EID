@@ -176,6 +176,7 @@
     <Compile Include="Robot\IStrategy.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Signal.cs" />
+    <Compile Include="Robot\CandleStrategy.cs" />
     <Compile Include="Robot\Strategy.cs" />
     <Compile Include="Robot\StrategyDecision.cs" />
     <Compile Include="ViewModel\AnalysisDetailsViewModel.cs" />

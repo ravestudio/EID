@@ -307,6 +307,8 @@ namespace EIDClient.Core.DataModel
             int count = 80;
 
             //текущая сессия
+
+            var ss = sessions.Where(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19)).ToList();
             TradeSession curentSession = sessions.Single(s => currentDate >= s.Date.AddHours(10) && currentDate < s.Date.AddHours(19));
 
             int curIndex = sessions.IndexOf(curentSession);

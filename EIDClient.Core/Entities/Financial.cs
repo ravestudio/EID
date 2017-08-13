@@ -149,6 +149,11 @@ namespace EIDClient.Core.Entities
 
         }
 
+        private string GetString(decimal value)
+        {
+            return value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
         public List<KeyValuePair<string, string>> ConverToKeyValue()
         {
             List<KeyValuePair<string, string>> keyValueData = new List<KeyValuePair<string, string>>();
@@ -157,27 +162,27 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("Year", Year.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Period", Period.ToString()));
 
-            keyValueData.Add(new KeyValuePair<string, string>("Revenue", Revenue.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("OperatingIncome", OperatingIncome.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("NetIncome", NetIncome.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("Revenue", GetString(Revenue)));
+            keyValueData.Add(new KeyValuePair<string, string>("OperatingIncome", GetString(OperatingIncome)));
+            keyValueData.Add(new KeyValuePair<string, string>("NetIncome", GetString(NetIncome)));
 
-            keyValueData.Add(new KeyValuePair<string, string>("CurrentAssets", CurrentAssets.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("FixedAssets", FixedAssets.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("CurrentLiabilities", CurrentLiabilities.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("LongTermLiabilities", LongTermLiabilities.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("CurrentAssets", GetString(CurrentAssets)));
+            keyValueData.Add(new KeyValuePair<string, string>("FixedAssets", GetString(FixedAssets)));
+            keyValueData.Add(new KeyValuePair<string, string>("CurrentLiabilities", GetString(CurrentLiabilities)));
+            keyValueData.Add(new KeyValuePair<string, string>("LongTermLiabilities", GetString(LongTermLiabilities)));
 
-            keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingActivities", FlowOperatingActivities.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("ChangesInAssets", ChangesInAssets.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingTaxesPaid", FlowOperatingTaxesPaid.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingActivities", GetString(FlowOperatingActivities)));
+            keyValueData.Add(new KeyValuePair<string, string>("ChangesInAssets", GetString(ChangesInAssets)));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingTaxesPaid", GetString(FlowOperatingTaxesPaid)));
 
-            keyValueData.Add(new KeyValuePair<string, string>("FlowInvestingActivities", FlowInvestingActivities.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("FlowFinancingActivities", FlowFinancingActivities.ToString()));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowInvestingActivities", GetString(FlowInvestingActivities)));
+            keyValueData.Add(new KeyValuePair<string, string>("FlowFinancingActivities", GetString(FlowFinancingActivities)));
 
-            keyValueData.Add(new KeyValuePair<string, string>("StockIssuance", StockIssuance.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("DividendsPaid", DividendsPaid.ToString()));
-            keyValueData.Add(new KeyValuePair<string, string>("EarningsPerShare", EarningsPerShare.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            keyValueData.Add(new KeyValuePair<string, string>("StockIssuance", GetString(StockIssuance)));
+            keyValueData.Add(new KeyValuePair<string, string>("DividendsPaid", GetString(DividendsPaid)));
+            keyValueData.Add(new KeyValuePair<string, string>("EarningsPerShare", GetString(EarningsPerShare)));
 
-            keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            keyValueData.Add(new KeyValuePair<string, string>("Price", GetString(Price)));
 
             if (EmitentId != 0)
             {
