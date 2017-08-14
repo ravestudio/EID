@@ -10,12 +10,9 @@ namespace EIDClient.Core.Messages
     {
         public string Code { get; set; }
         public string Operation { get; set; }
-        public string Account { get; set; }
+
         public decimal Price { get; set; }
         public int Count { get; set; }
-        public string Class { get; set; }
-        public string Client { get; set; }
-        public string Comment { get; set; }
 
         public decimal Profit { get; set; }
         public decimal StopLoss { get; set; }

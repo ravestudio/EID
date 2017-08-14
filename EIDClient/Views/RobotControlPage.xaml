@@ -22,6 +22,23 @@
 
         <Pivot Title="Robo control">
 
+            <PivotItem Header="Advise">
+                <ListView
+                    ItemsSource="{Binding AnalystDataList}"
+                    SelectionMode="Single">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="{Binding Sec}" Width="100"/>
+                                <TextBlock Text="{Binding Advice}" Foreground="{Binding ForegroundColor}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </PivotItem>
+
             <PivotItem Header="Deals">
 
                 <ListView

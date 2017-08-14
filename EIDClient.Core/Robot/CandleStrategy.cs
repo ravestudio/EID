@@ -14,29 +14,38 @@ namespace EIDClient.Core.Robot
         public StrategyDecision GetDecision(IDictionary<string, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
-
+            
+            //скользящая средняя для 60ти минуток
             SimpleMovingAverage hours_ma = new SimpleMovingAverage(data["60"], 30);
+            //скользящая средняя для пятиминуток
             SimpleMovingAverage ma = new SimpleMovingAverage(data["5"], 30);
 
+            //определяем тренд
             TRENDResult trend = new TREND(hours_ma, 3).GetResult();
 
             ICandle last = data["5"].Last();
             ICandle prev = data["5"][data["5"].Count - 2];
 
-            dec.Profit = Math.Round(last.close * 0.02m, 2);
-            dec.StopLoss = Math.Round(last.close * 0.01m, 2);
+
+            dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
+            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 2%
 
             decimal p = last.open * 1.003m;
 
+            //свеча зеленая
             bool currentGreen = last.close > p;
 
+            //выше предыдущей
             bool lastgrow = last.close > prev.close;
 
+            //свеча вышла за сколящую среднюю
             bool cross = last.close > ma.Last()*1.01m;
 
             if ((trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && cross && currentPos == "free")
             {
+                //покупаем
                 dec.Decision = "open long";
+                dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
             }
 
             return dec;

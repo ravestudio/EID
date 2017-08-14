@@ -17,7 +17,7 @@ namespace EIDClient.Core.Managers
 
         public DateTime GetDate()
         {
-            return DateTime.Now;
+            return DateTime.Now.AddHours(-3);
         }
 
         public void SetAction(string name, Action action)
@@ -25,27 +25,22 @@ namespace EIDClient.Core.Managers
             actions.Add(name, action);
         }
 
+
         public void Start()
         {
-            //Task t = new Task(() =>
-            //{
-            //    while (true)
-            //    {
-            //        Task.Delay(5000).Wait();
-            //        actions["robot"].Invoke();
-            //    }
-            //});
 
-            Task t2 = new Task(() =>
+            Task.Run(() =>
             {
+                actions["init"].Invoke();
+
                 while (true)
                 {
-                    Task.Delay(1000).Wait();
-                    actions["updater"].Invoke();
+                    actions["update"].Invoke();
+                    actions["sendToRobo"].Invoke();
+
+                    Task.Delay(5 * 1000).Wait();
                 }
             });
-
-            t2.Start();
         }
     }
 }

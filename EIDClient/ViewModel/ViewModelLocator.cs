@@ -33,6 +33,7 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<CandleRepository>();
             SimpleIoc.Default.Register<SecurityDataRepository>();
             SimpleIoc.Default.Register<SettingsRepository>();
+            SimpleIoc.Default.Register<ModeRepository>();
             SimpleIoc.Default.Register<OrderRepository>();
             SimpleIoc.Default.Register<PositionRepository>();
             SimpleIoc.Default.Register<DealRepository>();
@@ -57,6 +58,8 @@ namespace EIDClient.ViewModel
 
             SimpleIoc.Default.Register<TradeModel>(() =>
             {
+                Mode modeProperties = ServiceLocator.Current.GetInstance<ModeRepository>().GetSingle().Result;
+
                 return new TradeModel(
                     ServiceLocator.Current.GetInstance<TradeSessionRepository>(),
                     ServiceLocator.Current.GetInstance<CandleRepository>(),
@@ -64,6 +67,7 @@ namespace EIDClient.ViewModel
                     ServiceLocator.Current.GetInstance<PositionRepository>(),
                     ServiceLocator.Current.GetInstance<DealRepository>(),
                     ServiceLocator.Current.GetInstance<ITradeMode>(),
+                    modeProperties,
                     TokenModel.Instance.RobotToken()
                     );
             }, true);
@@ -139,6 +143,11 @@ namespace EIDClient.ViewModel
             if (settings.Mode == "Test")
             {
                 result = new TestMode(apiClient, repo);
+            }
+
+            if (settings.Mode == "Work")
+            {
+                result = new WorkMode();
             }
 
             if (settings.Mode == "Demo")

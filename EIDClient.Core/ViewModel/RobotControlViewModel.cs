@@ -1,6 +1,7 @@
 ﻿using EIDClient.Core.ISS;
 using EIDClient.Core.Managers;
 using EIDClient.Core.Messages;
+using EIDClient.Core.Robot;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -25,6 +26,7 @@ namespace EIDClient.Core.ViewModel
         private IChart _chart = null;
 
         public ObservableCollection<Core.Entities.Deal> DealList { get; set; }
+        public ObservableCollection<Robot.AnalystData> AnalystDataList { get; set; }
 
         public RelayCommand StartRobot { get; set; }
 
@@ -34,12 +36,16 @@ namespace EIDClient.Core.ViewModel
 
         private IList<Entities.Security> SecurityList = null;
 
+        
+
         public RobotControlViewModel(INavigationService navigationService, IMainCommandBar commandBar, IChart chart)
         {
             SecurityList = new List<Entities.Security>();
 
             this._navigationService = navigationService;
             this.DealList = new ObservableCollection<Entities.Deal>();
+            this.AnalystDataList = new ObservableCollection<Robot.AnalystData>();
+
             this._commandBar = commandBar;
             this._chart = chart;
 
@@ -53,6 +59,29 @@ namespace EIDClient.Core.ViewModel
                 this._robot = new Robot.Robot(new Robot.CandleStrategy(), SecurityList);
 
                 this._robot.Run();
+
+            });
+
+            Messenger.Default.Register<ShowAnalystDataMessage>(this, (msg) =>
+            {
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    if (AnalystDataList.Count == 0)
+                    {
+                        foreach (AnalystData data in msg.AnalystDatalist)
+                        {
+                            this.AnalystDataList.Add(data);
+                        }
+                    }
+
+                    if (AnalystDataList.Count > 0)
+                    {
+                        foreach (AnalystData data in msg.AnalystDatalist)
+                        {
+                            this.AnalystDataList.Single(d => d.Sec == data.Sec).Advice = data.Advice;
+                        }
+                    }
+                });
 
             });
 

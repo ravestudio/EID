@@ -202,6 +202,7 @@
     <Compile Include="Controllers\EmitentController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />

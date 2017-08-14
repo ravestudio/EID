@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EIDClient.Core.DataModel;
+using EIDClient.Core.Entities;
 
 namespace EIDMobile.ViewModel
 {
@@ -42,6 +43,8 @@ namespace EIDMobile.ViewModel
 
             SimpleIoc.Default.Register<TradeModel>(()=>
             {
+                Mode modeProperties = ServiceLocator.Current.GetInstance<ModeRepository>().GetSingle().Result;
+
                 return new TradeModel(
                     ServiceLocator.Current.GetInstance<TradeSessionRepository>(),
                     ServiceLocator.Current.GetInstance<CandleRepository>(),
@@ -49,6 +52,7 @@ namespace EIDMobile.ViewModel
                     ServiceLocator.Current.GetInstance<PositionRepository>(),
                     ServiceLocator.Current.GetInstance<DealRepository>(),
                     ServiceLocator.Current.GetInstance<ITradeMode>(),
+                    modeProperties,
                     TokenModel.Instance.AnalystToken()
                     );
             },true);

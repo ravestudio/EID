@@ -21,7 +21,7 @@ namespace EIDService.Common.DataAccess.Configurations
 
                 Property(p => p.Firm).HasColumnName("Firm").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.SecurityName).HasColumnName("SecurityName").HasMaxLength(100).HasColumnType("varchar").IsRequired();
-                Property(p => p.Code).HasColumnName("Code").HasMaxLength(10).HasColumnType("varchar").IsRequired();
+                Property(p => p.Code).HasColumnName("Code").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.Account).HasColumnName("Account").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.Client).HasColumnName("Client").HasMaxLength(20).HasColumnType("varchar").IsRequired();
                 Property(p => p.Type).HasColumnName("Type").HasMaxLength(10).HasColumnType("varchar").IsRequired();

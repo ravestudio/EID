@@ -36,14 +36,10 @@ namespace EIDClient.Core.Robot
                 {
                     Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                     {
-                        Account = "NL0011100043",
                         Code = sec,
                         Count = 10,
                         Price = dec.Price,
                         Operation = "Купля",
-                        Class = "QJSIM",
-                        Client = "10944",
-                        Comment = "10944",
                         Profit = dec.Profit,
                         StopLoss = dec.StopLoss
                     });
@@ -53,14 +49,10 @@ namespace EIDClient.Core.Robot
             {
                 Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                 {
-                    Account = "NL0011100043",
                     Code = sec,
                     Count = 10,
                     Price = dec.Price,
                     Operation = "Продажа",
-                    Class = "QJSIM",
-                    Client = "10944",
-                    Comment = "10944",
                     Profit = dec.Profit,
                     StopLoss = dec.StopLoss
                 });
@@ -81,17 +73,31 @@ namespace EIDClient.Core.Robot
 
             Messenger.Default.Register<GetCandlesResponseMessage>(this, TokenModel.Instance.RobotToken(), (msg) =>
             {
-                foreach(string sec in msg.Сandles.Keys)
+
+                IList<AnalystData> analystData = new List<AnalystData>();
+
+                foreach (string sec in msg.Сandles.Keys)
                 {
                     Security securirty = _securitylist.Single(s => s.Code == sec);
 
                     StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], securirty, msg.DateTime);
 
-                    if (!string.IsNullOrEmpty(dec.Decision))
+                    analystData.Add(new AnalystData()
                     {
-                        actions[dec.Decision].Invoke(sec, dec);
-                    }
+                        Sec = sec,
+                        Advice = string.IsNullOrEmpty(dec.Decision) ? "Neutral" : dec.Decision
+                    });
+
+                    //if (!string.IsNullOrEmpty(dec.Decision))
+                    //{
+                    //    actions[dec.Decision].Invoke(sec, dec);
+                    //}
                 }
+
+                Messenger.Default.Send<ShowAnalystDataMessage>(new ShowAnalystDataMessage()
+                {
+                    AnalystDatalist = analystData
+                });
             });
 
 

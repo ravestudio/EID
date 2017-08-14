@@ -13,8 +13,8 @@ namespace EIDClient.Core.Repository
 
         protected WebApiClient _apiClient = null;
 
-        protected string ServerURL = "http://eidservice.somee.com/";
-        //protected string ServerURL = "http://localhost:99/";
+        //protected string ServerURL = "http://eidservice.somee.com/";
+        protected string ServerURL = "http://localhost:99/";
         //protected string ServerURL = "http://localhost:61943/";
         //protected string ServerURL = "http://ravestudio-001-site1.htempurl.com/";
 
@@ -30,6 +30,23 @@ namespace EIDClient.Core.Repository
             TaskCompletionSource<G> TCS = new TaskCompletionSource<G>();
 
             string url = string.Format("{0}{1}{2}", this.ServerURL, this.apiPath, id);
+
+            this._apiClient.GetData(url).ContinueWith(t =>
+            {
+                string data = t.Result;
+                var value = Windows.Data.Json.JsonValue.Parse(data).GetObject();
+                G entity = this.GetObject(value);
+                TCS.SetResult(entity);
+            });
+
+            return TCS.Task;
+        }
+
+        public virtual Task<G> GetSingle()
+        {
+            TaskCompletionSource<G> TCS = new TaskCompletionSource<G>();
+
+            string url = string.Format("{0}{1}", this.ServerURL, this.apiPath);
 
             this._apiClient.GetData(url).ContinueWith(t =>
             {

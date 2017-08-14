@@ -58,6 +58,7 @@
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\ModeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\MoneyLimitConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PositionConfiguration.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\Mode.cs" />
     <Compile Include="Entities\ModeType.cs" />
     <Compile Include="Entities\MoneyLimit.cs" />
     <Compile Include="Entities\Order.cs" />
@@ -190,6 +192,14 @@
     <Compile Include="Migrations\201708110953273_EmitentModification.Designer.cs">
       <DependentUpon>201708110953273_EmitentModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708140518399_addMode.cs" />
+    <Compile Include="Migrations\201708140518399_addMode.Designer.cs">
+      <DependentUpon>201708140518399_addMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708141013145_AlterPositionSet.cs" />
+    <Compile Include="Migrations\201708141013145_AlterPositionSet.Designer.cs">
+      <DependentUpon>201708141013145_AlterPositionSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -272,6 +282,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708110953273_EmitentModification.resx">
       <DependentUpon>201708110953273_EmitentModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708140518399_addMode.resx">
+      <DependentUpon>201708140518399_addMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708141013145_AlterPositionSet.resx">
+      <DependentUpon>201708141013145_AlterPositionSet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

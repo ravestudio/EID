@@ -23,6 +23,7 @@ namespace EIDClient.Core.DataModel
         private DealRepository _dealRepository = null;
 
         private ITradeMode _mode = null;
+        private Mode _modeProperties = null;
 
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<string, IList<ICandle>>> _candles = null;
@@ -35,7 +36,7 @@ namespace EIDClient.Core.DataModel
             OrderRepository OrderRepository,
             PositionRepository PositionRepository,
             DealRepository DealRepository,
-            ITradeMode mode, object token)
+            ITradeMode mode, Mode modeProperties, object token)
         {
             _token = token;
             _tradeSessionRepository = TradeSessionRepository;
@@ -45,6 +46,7 @@ namespace EIDClient.Core.DataModel
             _dealRepository = DealRepository;
 
             _mode = mode;
+            _modeProperties = modeProperties;
 
             _candles = new Dictionary<string, IDictionary<string, IList<ICandle>>>();
 
@@ -85,7 +87,7 @@ namespace EIDClient.Core.DataModel
 
                     foreach (string sec in msg.securities)
                     {
-                        var tempData = candles.Where(c => c.Code == sec);
+                        var tempData = candles.Where(c => c.Code == sec).OrderBy(c => c.begin);
                         UpdateCadles(sec, tempData, msg.frames);
                     }
 
@@ -124,12 +126,12 @@ namespace EIDClient.Core.DataModel
                 {
                     Code = msg.Code,
                     Operation = msg.Operation,
-                    Account = msg.Account,
+                    Account = _modeProperties.Account,
                     Price = msg.Price,
                     Count = msg.Count,
-                    Class = msg.Class,
-                    Client = msg.Client,
-                    Comment = msg.Comment,
+                    Class = _modeProperties.Class,
+                    Client = _modeProperties.Client,
+                    Comment = _modeProperties.Client,
                     Profit = msg.Profit,
                     StopLoss = msg.StopLoss
                 };
