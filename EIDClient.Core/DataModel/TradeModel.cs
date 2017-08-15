@@ -191,7 +191,7 @@ namespace EIDClient.Core.DataModel
             {
                 res.Add(sec, "free");
 
-                Position pos = positions.SingleOrDefault(p => p.Code == sec);
+                Position pos = positions.SingleOrDefault(p => p.Code == sec && p.Type == "T2");
 
                 if (pos != null)
                 {

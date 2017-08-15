@@ -14,6 +14,8 @@ namespace EIDClient.Core.Robot
         public string Sec { get; set; }
 
         private string _advice = null;
+        private decimal _lastPrice = 0m;
+
         public string Advice
         {
             get
@@ -28,6 +30,23 @@ namespace EIDClient.Core.Robot
                 this.RaisePropertyChanged("ForegroundColor");
             }
         }
+
+        public decimal LastPrice
+        {
+            get
+            {
+                return _lastPrice;
+            }
+
+            set
+            {
+                _lastPrice = value;
+
+                this.RaisePropertyChanged("LastPrice");
+            }
+        }
+            
+
         public Brush ForegroundColor
         {
             get

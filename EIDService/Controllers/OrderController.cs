@@ -51,12 +51,7 @@ namespace EIDService.Controllers
                 }
             });
 
-            actions.Add(ModeType.Work, () =>
-            {
-
-            });
-
-            actions.Add(ModeType.Demo, () =>
+            Action RealTransaction = () =>
             {
                 Transaction trn = new Transaction()
                 {
@@ -75,8 +70,11 @@ namespace EIDService.Controllers
 
                 TransactionModel trsModel = new TransactionModel();
                 trsModel.CreateOrder(order, trn.Id);
+            };
 
-            });
+            actions.Add(ModeType.Work, RealTransaction);
+
+            actions.Add(ModeType.Demo, RealTransaction);
 
             actions[settings.ModeType].Invoke();
         }

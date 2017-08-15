@@ -7,7 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    DataContext="{Binding RobotControlViewModel, Source={StaticResource Locator}}">
+    DataContext="{Binding RobotControlViewModel, Source={StaticResource Locator}}"
+    
+    Name="robotPage">
 
     <Page.Resources>
 
@@ -24,14 +26,21 @@
 
             <PivotItem Header="Advise">
                 <ListView
+                    
+                    ItemContainerStyle="{StaticResource EIDListViewItemStyle}"
                     ItemsSource="{Binding AnalystDataList}"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    >
+
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="{Binding Sec}" Width="100"/>
-                                <TextBlock Text="{Binding Advice}" Foreground="{Binding ForegroundColor}"/>
+                                <TextBlock Text="{Binding Sec}" Width="80"/>
+                                <TextBlock TextAlignment="Right" Text="{Binding LastPrice}" Width="80"/>
+                                <TextBlock Text="{Binding Advice}" Margin="20,0,0,0" Foreground="{Binding ForegroundColor}"/>
+
+                                <Button Content="Buy" Command="{Binding ElementName=robotPage, Path=DataContext.BuyCmd}" CommandParameter="{Binding}" Margin="20,0,0,0" Background="#FF1DA816" Width="100"></Button>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

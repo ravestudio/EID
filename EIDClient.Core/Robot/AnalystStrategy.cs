@@ -35,6 +35,16 @@ namespace EIDClient.Core.Robot
             return dec;
         }
 
+        public decimal GetProfit(decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetStoploss(decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<string> Need()
         {
             IList<string> res = new List<string>();

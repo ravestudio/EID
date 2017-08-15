@@ -30,6 +30,8 @@ namespace EIDClient.Core.ViewModel
 
         public RelayCommand StartRobot { get; set; }
 
+        public RelayCommand<Robot.AnalystData> BuyCmd { get; set; }
+
         private Robot.Robot _robot = null;
 
         private CoreDispatcher dispatcher;
@@ -62,6 +64,27 @@ namespace EIDClient.Core.ViewModel
 
             });
 
+
+            this.BuyCmd = new RelayCommand<Robot.AnalystData>(async d =>
+            {
+                string msg = string.Format("Купить {0} за {1}?", d.Sec, d.LastPrice);
+                var dlg = new Windows.UI.Popups.MessageDialog(msg);
+
+                dlg.Commands.Add(new Windows.UI.Popups.UICommand("Accept"));
+                dlg.Commands.Add(new Windows.UI.Popups.UICommand("Cancel"));
+
+                var dialogResult = await dlg.ShowAsync();
+
+                if (dialogResult.Label == "Accept")
+                {
+                    Messenger.Default.Send<ClientMakeDealMessage>(new ClientMakeDealMessage()
+                    {
+                        Sec = d.Sec,
+                        Operation = "open long"
+                    });
+                }
+            });
+
             Messenger.Default.Register<ShowAnalystDataMessage>(this, (msg) =>
             {
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -78,7 +101,10 @@ namespace EIDClient.Core.ViewModel
                     {
                         foreach (AnalystData data in msg.AnalystDatalist)
                         {
-                            this.AnalystDataList.Single(d => d.Sec == data.Sec).Advice = data.Advice;
+                            var advice = this.AnalystDataList.Single(d => d.Sec == data.Sec);
+
+                            advice.Advice = data.Advice;
+                            advice.LastPrice = data.LastPrice;
                         }
                     }
                 });

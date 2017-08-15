@@ -23,6 +23,8 @@ namespace EIDClient.Core.Robot
         private IDictionary<string, Action<string, StrategyDecision>> actions = null;
         private IList<Security> _securitylist = null;
 
+        private IList<StrategyDecision> _decisionlist = null;
+
         public Robot(IStrategy strategy, IList<Security> securitylist)
         {
             _securitylist = securitylist;
@@ -32,12 +34,14 @@ namespace EIDClient.Core.Robot
 
             actions = new Dictionary<string, Action<string, StrategyDecision>>();
 
+            _decisionlist = new List<StrategyDecision>();
+
             actions.Add("open long", (sec, dec) =>
                 {
                     Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                     {
                         Code = sec,
-                        Count = 10,
+                        Count = 1,
                         Price = dec.Price,
                         Operation = "Купля",
                         Profit = dec.Profit,
@@ -50,7 +54,7 @@ namespace EIDClient.Core.Robot
                 Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                 {
                     Code = sec,
-                    Count = 10,
+                    Count = 1,
                     Price = dec.Price,
                     Operation = "Продажа",
                     Profit = dec.Profit,
@@ -76,15 +80,20 @@ namespace EIDClient.Core.Robot
 
                 IList<AnalystData> analystData = new List<AnalystData>();
 
+                _decisionlist.Clear();
+
                 foreach (string sec in msg.Сandles.Keys)
                 {
                     Security securirty = _securitylist.Single(s => s.Code == sec);
 
                     StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], securirty, msg.DateTime);
 
+                    _decisionlist.Add(dec);
+
                     analystData.Add(new AnalystData()
                     {
                         Sec = sec,
+                        LastPrice = dec.LastPrice,
                         Advice = string.IsNullOrEmpty(dec.Decision) ? "Neutral" : dec.Decision
                     });
 
@@ -100,8 +109,15 @@ namespace EIDClient.Core.Robot
                 });
             });
 
+            Messenger.Default.Register<ClientMakeDealMessage>(this, (msg) =>
+            {
+                var dec = _decisionlist.SingleOrDefault(d => d.Code == msg.Sec);
 
-            _stop = new System.Threading.CancellationTokenSource();
+                actions[msg.Operation].Invoke(msg.Sec, dec);
+            });
+
+
+                _stop = new System.Threading.CancellationTokenSource();
             System.Threading.CancellationToken token = _stop.Token;
 
             Task t = Task.Run(() =>

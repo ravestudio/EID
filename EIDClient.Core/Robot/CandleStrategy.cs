@@ -26,6 +26,9 @@ namespace EIDClient.Core.Robot
             ICandle last = data["5"].Last();
             ICandle prev = data["5"][data["5"].Count - 2];
 
+            dec.Code = name;
+            dec.LastPrice = last.close;
+            dec.Price = last.close;
 
             dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
             dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 2%
@@ -48,6 +51,10 @@ namespace EIDClient.Core.Robot
                 dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
             }
 
+            dec.Profit = Optimize(dec.Profit, security.MinStep);
+            dec.StopLoss = Optimize(dec.StopLoss, security.MinStep);
+            dec.Price = Optimize(dec.Price, security.MinStep);
+
             return dec;
         }
 
@@ -60,5 +67,21 @@ namespace EIDClient.Core.Robot
 
             return res;
         }
+
+        private decimal Optimize(decimal value, decimal step)
+        {
+            decimal mod = value % step;
+            decimal ret = value - mod;
+
+
+            if (value - ret + mod > step)
+            {
+
+                ret = ret + step;
+            }
+
+            return ret;
+        }
+
     }
 }
