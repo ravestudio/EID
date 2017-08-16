@@ -147,7 +147,7 @@ namespace EIDClient.ViewModel
 
             if (settings.Mode == "Work")
             {
-                result = new WorkMode();
+                result = new WorkMode(apiClient);
             }
 
             if (settings.Mode == "Demo")

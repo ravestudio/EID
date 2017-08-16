@@ -41,7 +41,7 @@ namespace EIDService.Models
             tmlBulder.Append("MARKET_STOP_LIMIT = NO");
 
             string transaction = string.Format(tmlBulder.ToString(), TransId, order.Class, order.Code, order.Account, order.Client,
-                order.Operation == "Купля" ? "B" : "S", order.Count, order.Price, order.StopPrice, "0.1", "0.03", order.StopLimitPrice );
+                order.Operation == "Купля" ? "B" : "S", order.Count, order.Price, order.StopPrice, "1.0", "0.03", order.StopLimitPrice );
 
             using (var stream = System.IO.File.AppendText(tri_filePath))
             {

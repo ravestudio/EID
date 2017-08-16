@@ -28,10 +28,10 @@ namespace EIDClient.Core.Robot
 
             dec.Code = name;
             dec.LastPrice = last.close;
-            dec.Price = last.close;
+            dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
 
             dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
-            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 2%
+            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1%
 
             decimal p = last.open * 1.003m;
 
@@ -48,12 +48,13 @@ namespace EIDClient.Core.Robot
             {
                 //покупаем
                 dec.Decision = "open long";
-                dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
             }
 
-            dec.Profit = Optimize(dec.Profit, security.MinStep);
-            dec.StopLoss = Optimize(dec.StopLoss, security.MinStep);
-            dec.Price = Optimize(dec.Price, security.MinStep);
+            MathFunctions func = new MathFunctions();
+
+            dec.Profit = func.Optimize(dec.Profit, security.MinStep);
+            dec.StopLoss = func.Optimize(dec.StopLoss, security.MinStep);
+            dec.Price = func.Optimize(dec.Price, security.MinStep);
 
             return dec;
         }
@@ -66,21 +67,6 @@ namespace EIDClient.Core.Robot
             res.Add("60");
 
             return res;
-        }
-
-        private decimal Optimize(decimal value, decimal step)
-        {
-            decimal mod = value % step;
-            decimal ret = value - mod;
-
-
-            if (value - ret + mod > step)
-            {
-
-                ret = ret + step;
-            }
-
-            return ret;
         }
 
     }

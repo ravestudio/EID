@@ -206,7 +206,7 @@ namespace EIDClient.Core.DataModel
         {
             DateTime dt = candles.First().begin;
 
-            int index = 0;
+            int index = -1;
 
             ICandle candle = _candles[code][frame].FirstOrDefault(c => c.begin >= dt);
 
@@ -217,15 +217,23 @@ namespace EIDClient.Core.DataModel
 
             foreach (ICandle item in candles)
             {
-                if (_candles[code][frame].Count > index)
+                if (index == -1)
+                {
+                    
+                    _candles[code][frame].Add(item);
+                }
+
+                if (index >= 0 && _candles[code][frame].Count >= index)
+                {
+                    _candles[code][frame].Add(item);
+                    index++;
+                }
+
+                if (index >= 0 && _candles[code][frame].Count < index)
                 {
                     _candles[code][frame][index] = item;
                 }
-                else
-                {
-                    _candles[code][frame].Add(item);
-                }
-                index++;
+
             }
         }
 

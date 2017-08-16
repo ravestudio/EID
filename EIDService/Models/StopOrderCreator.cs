@@ -1,4 +1,5 @@
-﻿using EIDService.Common.DataAccess;
+﻿using EID.Library;
+using EIDService.Common.DataAccess;
 using EIDService.Common.Entities;
 using System;
 using System.Collections.Generic;
@@ -38,8 +39,8 @@ namespace EIDService.Models
                 Account = order.Account,
                 OrderType = "Тэйк - профит и стоп - лимит",
                 Count = order.Count,
-                StopPrice = Math.Round(_strategy.GetStopPrice(price, profit),2),
-                StopLimitPrice = Math.Round(_strategy.GetStopLimitPrice(price, limit),2),
+                StopPrice = _strategy.GetStopPrice(price, profit),
+                StopLimitPrice = _strategy.GetStopLimitPrice(price, limit),
                 Price = Math.Round(_strategy.GetPrice(price, limit),2),
 
                 Client = order.Client,
@@ -47,14 +48,12 @@ namespace EIDService.Models
                 State = "Активна"
             };
 
-            if (security.MinStep == 1)
-            {
-                stop.StopPrice = Math.Round(stop.StopPrice);
-                stop.StopLimitPrice = Math.Round(stop.StopLimitPrice);
-                stop.Price = Math.Round(stop.Price);
-            }
+            MathFunctions func = new MathFunctions();
 
-            if (settings.Mode == "Demo")
+            stop.Price = func.Optimize(stop.Price, security.MinStep);
+
+
+            if (settings.Mode == "Demo" || settings.Mode == "Work")
             {
                 Common.Entities.Transaction stop_trn = new Common.Entities.Transaction()
                 {

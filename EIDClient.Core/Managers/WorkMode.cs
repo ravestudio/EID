@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EID.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,13 @@ namespace EIDClient.Core.Managers
     public class WorkMode : ITradeMode
     {
         private IDictionary<string, Action> actions = null;
+        private WebApiClient _apiClient = null;
 
-        public WorkMode()
+        private string ServerURL = "http://localhost:99/";
+
+        public WorkMode(WebApiClient client)
         {
+            this._apiClient = client;
             this.actions = new Dictionary<string, Action>();
         }
 
@@ -39,6 +44,12 @@ namespace EIDClient.Core.Managers
                 {
                     actions["update"].Invoke();
                     actions["sendToRobo"].Invoke();
+
+                    Task.Delay(5 * 1000).Wait();
+
+                    string read_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/ReadTransactionResult")).Result;
+
+                    string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
 
                     Task.Delay(5 * 1000).Wait();
                 }

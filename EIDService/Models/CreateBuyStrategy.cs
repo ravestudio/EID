@@ -20,7 +20,7 @@ namespace EIDService.Models
 
         public decimal GetPrice(decimal currentPrice, decimal limit)
         {
-            return currentPrice + limit * 0.1m;
+            return currentPrice + limit * 1.1m;
         }
 
         public decimal GetStopLimitPrice(decimal currentPrice, decimal limit)
