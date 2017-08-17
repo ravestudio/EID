@@ -31,7 +31,7 @@ namespace EIDClient.Core.Robot
             dec.LongPrice = Math.Round(data["5"].Last().close * 1.005m, 2);
             dec.ShortPrice = Math.Round(data["5"].Last().close * 0.995m, 2);
 
-            dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
+            dec.Profit = Math.Round(last.close * 0.005m, 2);//профит 1,5%
             dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1%
 
             decimal g = last.open * 1.003m;
@@ -48,10 +48,10 @@ namespace EIDClient.Core.Robot
             bool lastdecrease = last.close < prev.close;
 
             //свеча вышла за сколящую среднюю вверх
-            bool crossUp = last.close > ma.Last()*1.01m;
+            bool crossUp = last.close > ma.Last()*1.005m;
 
             //свеча вышла за сколящую среднюю вниз
-            bool crossDown = last.close < ma.Last() * 0.99m;
+            bool crossDown = last.close < ma.Last() * 0.995m;
 
             if ((trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && crossUp && currentPos == "free")
             {

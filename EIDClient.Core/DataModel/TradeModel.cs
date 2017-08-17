@@ -223,13 +223,13 @@ namespace EIDClient.Core.DataModel
                     _candles[code][frame].Add(item);
                 }
 
-                if (index >= 0 && _candles[code][frame].Count >= index)
+                if (index >= 0 && index >= _candles[code][frame].Count)
                 {
                     _candles[code][frame].Add(item);
                     index++;
                 }
 
-                if (index >= 0 && _candles[code][frame].Count < index)
+                if (index >= 0 && index < _candles[code][frame].Count)
                 {
                     _candles[code][frame][index] = item;
                 }
