@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201708141013145_AlterPositionSet.Designer.cs">
       <DependentUpon>201708141013145_AlterPositionSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708170928518_addDealSize.cs" />
+    <Compile Include="Migrations\201708170928518_addDealSize.Designer.cs">
+      <DependentUpon>201708170928518_addDealSize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -288,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708141013145_AlterPositionSet.resx">
       <DependentUpon>201708141013145_AlterPositionSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708170928518_addDealSize.resx">
+      <DependentUpon>201708170928518_addDealSize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

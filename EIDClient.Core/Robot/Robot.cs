@@ -41,8 +41,8 @@ namespace EIDClient.Core.Robot
                     Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                     {
                         Code = sec,
-                        Count = 1,
-                        Price = dec.Price,
+                        Count = dec.Count,
+                        Price = dec.LongPrice,
                         Operation = "Купля",
                         Profit = dec.Profit,
                         StopLoss = dec.StopLoss
@@ -54,8 +54,8 @@ namespace EIDClient.Core.Robot
                 Messenger.Default.Send<CreateOrderMessage>(new CreateOrderMessage()
                 {
                     Code = sec,
-                    Count = 1,
-                    Price = dec.Price,
+                    Count = dec.Count,
+                    Price = dec.ShortPrice,
                     Operation = "Продажа",
                     Profit = dec.Profit,
                     StopLoss = dec.StopLoss
@@ -88,6 +88,8 @@ namespace EIDClient.Core.Robot
 
                     StrategyDecision dec = _strategy.GetDecision(msg.Сandles[sec], sec, msg.Positions[sec], securirty, msg.DateTime);
 
+                    dec.Count = securirty.DealSize;
+
                     _decisionlist.Add(dec);
 
                     analystData.Add(new AnalystData()
@@ -97,10 +99,10 @@ namespace EIDClient.Core.Robot
                         Advice = string.IsNullOrEmpty(dec.Decision) ? "Neutral" : dec.Decision
                     });
 
-                    //if (!string.IsNullOrEmpty(dec.Decision))
-                    //{
-                    //    actions[dec.Decision].Invoke(sec, dec);
-                    //}
+                    if (!string.IsNullOrEmpty(dec.Decision))
+                    {
+                        actions[dec.Decision].Invoke(sec, dec);
+                    }
                 }
 
                 Messenger.Default.Send<ShowAnalystDataMessage>(new ShowAnalystDataMessage()

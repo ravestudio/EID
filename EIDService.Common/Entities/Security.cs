@@ -18,5 +18,7 @@ namespace EIDService.Common.Entities
         public decimal MinStep { get; set; }
         public int LotSize { get; set; }
         public bool AlgoTrade { get; set; }
+
+        public int DealSize { get; set; }
     }
 }

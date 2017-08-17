@@ -30,14 +30,16 @@ namespace EIDService.Models
 
             if (pos == null)
             {
+                Common.Entities.Mode mode = unit.ModeRepository.Query<Common.Entities.Mode>(m => m.Active).Single();
+
                 pos = new Common.Entities.Position()
                 {
-                    Firm = "NC0011100000",
+                    Firm = mode.Firm,
                     SecurityName = sec,
                     Code = sec,
                     Account = account,
                     Client = client,
-                    Type = "Т0"
+                    Type = "T2"
                 };
                 unit.PositionRepository.Create(pos);
             }
@@ -77,7 +79,7 @@ namespace EIDService.Models
 
             unit.DealRepository.Create(deal);
 
-            MoneyLimit money = unit.MoneyLimitRepository.Query<MoneyLimit>(m => m.Type == "T0").Single();
+            MoneyLimit money = unit.MoneyLimitRepository.Query<MoneyLimit>(m => m.Type == "T2").Single();
 
             if (order.Operation == "Купля")
             {

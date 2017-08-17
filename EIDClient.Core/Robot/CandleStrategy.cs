@@ -28,33 +28,49 @@ namespace EIDClient.Core.Robot
 
             dec.Code = name;
             dec.LastPrice = last.close;
-            dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
+            dec.LongPrice = Math.Round(data["5"].Last().close * 1.005m, 2);
+            dec.ShortPrice = Math.Round(data["5"].Last().close * 0.995m, 2);
 
             dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
             dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1%
 
-            decimal p = last.open * 1.003m;
+            decimal g = last.open * 1.003m;
+            decimal r = last.open * 0.997m;
 
             //свеча зеленая
-            bool currentGreen = last.close > p;
+            bool currentGreen = last.close > g;
+            //свеча зеленая
+            bool currentRed = last.close < r;
 
             //выше предыдущей
             bool lastgrow = last.close > prev.close;
+            //ниже предыдущей
+            bool lastdecrease = last.close < prev.close;
 
-            //свеча вышла за сколящую среднюю
-            bool cross = last.close > ma.Last()*1.01m;
+            //свеча вышла за сколящую среднюю вверх
+            bool crossUp = last.close > ma.Last()*1.01m;
 
-            if ((trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && cross && currentPos == "free")
+            //свеча вышла за сколящую среднюю вниз
+            bool crossDown = last.close < ma.Last() * 0.99m;
+
+            if ((trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && crossUp && currentPos == "free")
             {
                 //покупаем
                 dec.Decision = "open long";
+            }
+
+            if ((trend == TRENDResult.Down || trend == TRENDResult.Flat) && currentRed && lastdecrease && crossDown && currentPos == "free")
+            {
+                //продаем
+                dec.Decision = "open short";
             }
 
             MathFunctions func = new MathFunctions();
 
             dec.Profit = func.Optimize(dec.Profit, security.MinStep);
             dec.StopLoss = func.Optimize(dec.StopLoss, security.MinStep);
-            dec.Price = func.Optimize(dec.Price, security.MinStep);
+            dec.LongPrice = func.Optimize(dec.LongPrice, security.MinStep);
+            dec.ShortPrice = func.Optimize(dec.ShortPrice, security.MinStep);
 
             return dec;
         }

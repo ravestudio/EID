@@ -89,7 +89,7 @@ namespace EIDClient.Core.Robot
                 {
                     dec.Decision = "open long";
 
-                    dec.Price = Math.Round(data["5"].Last().close * 1.005m, 2);
+                    dec.LongPrice = Math.Round(data["5"].Last().close * 1.005m, 2);
                 }
             }
 
@@ -107,7 +107,7 @@ namespace EIDClient.Core.Robot
             {
                 dec.Profit = Math.Round(dec.Profit);
                 dec.StopLoss = Math.Round(dec.StopLoss);
-                dec.Price = Math.Round(dec.Price);
+                dec.LongPrice = Math.Round(dec.LongPrice);
             }
 
             //dec.Decision = "open long";
