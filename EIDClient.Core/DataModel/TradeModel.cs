@@ -28,6 +28,7 @@ namespace EIDClient.Core.DataModel
         private IList<TradeSession> _sessions = null;
         private IDictionary<string, IDictionary<string, IList<ICandle>>> _candles = null;
         private IDictionary<string, string> _positions = null;
+        private IEnumerable<Position> _positionlist = null;
 
         private object _token = null;
 
@@ -83,7 +84,7 @@ namespace EIDClient.Core.DataModel
                 {
                     IEnumerable<Candle> candles = _candleRepository.GetAll().Result;
 
-                    IEnumerable<Position> Positions = _positionRepository.GetAll().Result;
+                    _positionlist = _positionRepository.GetAll().Result;
 
                     foreach (string sec in msg.securities)
                     {
@@ -91,7 +92,7 @@ namespace EIDClient.Core.DataModel
                         UpdateCadles(sec, tempData, msg.frames);
                     }
 
-                    this._positions = GetPositions(Positions, msg.securities);
+                    this._positions = GetPositions(_positionlist, msg.securities);
 
                 });
 
@@ -112,7 +113,8 @@ namespace EIDClient.Core.DataModel
                         Messenger.Default.Send<ShowDataMessage>(new ShowDataMessage()
                         {
                             Сandles = CopyCandles(_candles),
-                            Deals = t.Result
+                            Deals = t.Result,
+                            Positions = _positionlist
                         });
                     });
                 });

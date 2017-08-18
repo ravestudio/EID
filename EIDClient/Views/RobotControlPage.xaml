@@ -48,6 +48,23 @@
                 </ListView>
             </PivotItem>
 
+            <PivotItem Header="Positions">
+                <ListView
+                    ItemsSource="{Binding PositionList}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="{Binding Code}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                                <TextBlock Text="{Binding CurrentBalance}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                                <TextBlock Text="{Binding Available}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                                <TextBlock Text="{Binding PurchasePrice}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+
             <PivotItem Header="Deals">
 
                 <ListView

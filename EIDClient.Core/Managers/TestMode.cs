@@ -48,11 +48,11 @@ namespace EIDClient.Core.Managers
 
                 for (int i = 0; i < 550; i++)
                 {
-                    //actions["showData"].Invoke();
-
                     actions["update"].Invoke();
 
                     actions["sendToRobo"].Invoke();
+
+                    actions["showData"].Invoke();
 
                     string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
 

@@ -34,6 +34,7 @@ namespace EIDService.Common.DataAccess
         public DbSet<Settings> Settings { get; set; }
         public DbSet<MoneyLimit> MoneyLimit { get; set; }
         public DbSet<Mode> Modes { get; set; }
+        public DbSet<EIDProcess> EIDprocesses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,6 +52,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.DealConfiguration());
             modelBuilder.Configurations.Add(new Configurations.MoneyLimitConfiguration());
             modelBuilder.Configurations.Add(new Configurations.ModeConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.EIDProcessConfiguration());
         }
     }
 }

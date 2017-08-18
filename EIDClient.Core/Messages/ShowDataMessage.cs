@@ -12,6 +12,7 @@ namespace EIDClient.Core.Messages
     public class ShowDataMessage
     {
         public IEnumerable<Deal> Deals { get; set; }
+        public IEnumerable<Position> Positions { get; set; }
 
         public IDictionary<string, IDictionary<string, IList<ICandle>>> Сandles { get; set; }
 

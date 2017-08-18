@@ -74,7 +74,7 @@ namespace EIDService.Models
 
         }
 
-        public void PreocessResults()
+        public void ProcessResults()
         {
             string mask = @"TRANS_ID=(?<trans>\d+);STATUS=(?<status>\d);.*DESCRIPTION="".*"";( ORDER_NUMBER=(?<order>\d+);)?$";
 

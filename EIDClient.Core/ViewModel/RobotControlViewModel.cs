@@ -26,6 +26,7 @@ namespace EIDClient.Core.ViewModel
         private IChart _chart = null;
 
         public ObservableCollection<Core.Entities.Deal> DealList { get; set; }
+        public ObservableCollection<PositionViewModel> PositionList { get; set; }
         public ObservableCollection<Robot.AnalystData> AnalystDataList { get; set; }
 
         public RelayCommand StartRobot { get; set; }
@@ -46,6 +47,7 @@ namespace EIDClient.Core.ViewModel
 
             this._navigationService = navigationService;
             this.DealList = new ObservableCollection<Entities.Deal>();
+            this.PositionList = new ObservableCollection<PositionViewModel>();
             this.AnalystDataList = new ObservableCollection<Robot.AnalystData>();
 
             this._commandBar = commandBar;
@@ -117,26 +119,25 @@ namespace EIDClient.Core.ViewModel
 
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    //this.DealList.Clear();
-
-                    var candlelist = msg.Сandles["AFLT"]["5"];
-
-                    this._chart.ShowCandles(candlelist);
-
-                    //SimpleMovingAverage smaLong = new SimpleMovingAverage(candlelist, 20);
-                    //this._chart.ShowMA(smaLong, Colors.LemonChiffon);
-
-                    SimpleMovingAverage sma = new SimpleMovingAverage(candlelist, 9);
-                    this._chart.ShowMA(sma, Colors.Yellow);
-
-                    MACD macd = new MACD(candlelist, 12, 26, 9);
-                    this._chart.ShowMACD(macd, Colors.Blue);
-
                     var newdeals = msg.Deals.Where(d => !this.DealList.Select(old => old.Id).Contains(d.Id));
 
                     foreach (Entities.Deal deal in newdeals)
                     {
                         this.DealList.Add(deal);
+                    }
+
+                    var newpos = msg.Positions.Where(p => !this.PositionList.Select(old => old.Code).Contains(p.Code)).ToList();
+
+                    var oldpos = msg.Positions.Where(p => this.PositionList.Select(old => old.Code).Contains(p.Code)).ToList();
+
+                    foreach (Entities.Position pos in newpos)
+                    {
+                        this.PositionList.Add(new PositionViewModel(pos));
+                    }
+
+                    foreach (Entities.Position pos in oldpos)
+                    {
+                        this.PositionList.Single(p => p.Code == pos.Code).Update(pos);
                     }
                 });
 

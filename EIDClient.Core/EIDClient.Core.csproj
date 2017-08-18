@@ -200,6 +200,7 @@
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="ViewModel\Menu.cs" />
     <Compile Include="ViewModel\NavigationService.cs" />
+    <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\RobotControlViewModel.cs" />
     <Compile Include="ViewModel\SecurityDetailsViewModel.cs" />
     <Compile Include="ViewModel\SecurityListViewModel.cs" />

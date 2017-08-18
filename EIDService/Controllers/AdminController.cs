@@ -1,6 +1,7 @@
 ﻿using EID.Library;
 using EID.Library.ISS;
 using EIDService.Common.DataAccess;
+using EIDService.Common.Entities;
 using EIDService.Models;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace EIDService.Controllers
                     key = unit.CandleRepository.All<EIDService.Common.Entities.Candle>(null).Max(c => c.Id);
                 }
 
-                foreach (Candle candle in candles)
+                foreach (ICandle candle in candles)
                 {
                     key++;
                     EIDService.Common.Entities.Candle entity = new Common.Entities.Candle();
@@ -100,6 +101,8 @@ namespace EIDService.Controllers
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
             IDictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>> stop_actions = new Dictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>>();
 
+            IDictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>> process_actions = new Dictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>>();
+
             actions.Add((o) => { return o.Operation == "Продажа"; },
                 (unit, order) =>
                 {
@@ -127,6 +130,12 @@ namespace EIDService.Controllers
                 execute.ApplyStop(unit, order, settings);
             });
 
+            process_actions.Add((p) => { return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.Created; }, (unit, proc) =>
+            {
+                unit.StopOrderRepository.Query<StopOrder>(p => p.Code == "" && p.State == "Активна", null)
+
+            });
+
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
                 settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
@@ -144,6 +153,8 @@ namespace EIDService.Controllers
                 {
                     actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
                 }
+
+                var processes = unit.EIDProcessRepository.Query<Common.Entities.EIDProcess>(p => p.Status != EIDProcessStatus.Completed).ToList();
 
                 unit.Commit();
             }
@@ -200,7 +211,26 @@ namespace EIDService.Controllers
             TransactionModel model = new TransactionModel();
 
             model.ReadResults();
-            model.PreocessResults();
+            model.ProcessResults();
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ClosePosition(string sec)
+        {
+            EIDProcess process = new EIDProcess();
+
+            process.Type =  EIDProcessType.ClosePosition;
+            process.Status = EIDProcessStatus.Created;
+
+            process.Data = string.Format("CODE:{0};",sec);
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                unit.EIDProcessRepository.Create(process);
+
+                unit.Commit();
+            }
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }

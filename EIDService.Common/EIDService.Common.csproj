@@ -56,6 +56,7 @@
     <Compile Include="CandleToISS.cs" />
     <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\EIDProcessConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\ModeConfiguration.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Entities\OrderStateType.cs" />
     <Compile Include="Entities\PeriodType.cs" />
     <Compile Include="Entities\Position.cs" />
+    <Compile Include="Entities\EIDProcess.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\StopOrder.cs" />
@@ -204,6 +206,10 @@
     <Compile Include="Migrations\201708170928518_addDealSize.Designer.cs">
       <DependentUpon>201708170928518_addDealSize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708180845412_addProcess.cs" />
+    <Compile Include="Migrations\201708180845412_addProcess.Designer.cs">
+      <DependentUpon>201708180845412_addProcess.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -295,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708170928518_addDealSize.resx">
       <DependentUpon>201708170928518_addDealSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708180845412_addProcess.resx">
+      <DependentUpon>201708180845412_addProcess.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
