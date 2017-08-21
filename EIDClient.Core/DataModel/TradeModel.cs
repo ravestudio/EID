@@ -234,6 +234,7 @@ namespace EIDClient.Core.DataModel
                 if (index >= 0 && index < _candles[code][frame].Count)
                 {
                     _candles[code][frame][index] = item;
+                    index++;
                 }
 
             }

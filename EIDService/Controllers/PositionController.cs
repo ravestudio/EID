@@ -19,7 +19,7 @@ namespace EIDService.Controllers
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
-                positions = unit.PositionRepository.All<Position>(null).ToList();
+                positions = unit.PositionRepository.Query<Position>(p => p.PosType == PosTypeEnum.T2).ToList();
             }
 
             return positions;

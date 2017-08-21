@@ -99,10 +99,10 @@ namespace EIDClient.Core.Robot
                         Advice = string.IsNullOrEmpty(dec.Decision) ? "Neutral" : dec.Decision
                     });
 
-                    if (!string.IsNullOrEmpty(dec.Decision))
-                    {
-                        actions[dec.Decision].Invoke(sec, dec);
-                    }
+                    //if (!string.IsNullOrEmpty(dec.Decision))
+                    //{
+                    //    actions[dec.Decision].Invoke(sec, dec);
+                    //}
                 }
 
                 Messenger.Default.Send<ShowAnalystDataMessage>(new ShowAnalystDataMessage()

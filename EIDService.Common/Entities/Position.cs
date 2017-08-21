@@ -21,6 +21,8 @@ namespace EIDService.Common.Entities
         public string Client { get; set; }
         public string Type { get; set; }
 
+        public PosTypeEnum PosType { get; set; }
+
         public int IncomingBalance { get; set; }
         public int IncomingLimit { get; set; }
 

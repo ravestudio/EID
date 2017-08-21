@@ -45,6 +45,8 @@ namespace EIDClient.Core.Managers
                     actions["update"].Invoke();
                     actions["sendToRobo"].Invoke();
 
+                    actions["showData"].Invoke();
+
                     Task.Delay(5 * 1000).Wait();
 
                     string read_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/ReadTransactionResult")).Result;

@@ -25,6 +25,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Account).HasColumnName("Account").HasMaxLength(50).HasColumnType("varchar").IsRequired();
                 Property(p => p.Client).HasColumnName("Client").HasMaxLength(20).HasColumnType("varchar").IsRequired();
                 Property(p => p.Type).HasColumnName("Type").HasMaxLength(10).HasColumnType("varchar").IsRequired();
+                Property(p => p.PosType).HasColumnName("PosType").IsRequired();
 
                 Property(p => p.IncomingBalance).HasColumnName("IncomingBalance").IsRequired();
                 Property(p => p.IncomingLimit).HasColumnName("IncomingLimit").IsRequired();

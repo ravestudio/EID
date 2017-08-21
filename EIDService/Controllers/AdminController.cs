@@ -132,7 +132,7 @@ namespace EIDService.Controllers
 
             process_actions.Add((p) => { return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.Created; }, (unit, proc) =>
             {
-                unit.StopOrderRepository.Query<StopOrder>(p => p.Code == "" && p.State == "Активна", null)
+                var orders = unit.StopOrderRepository.Query<StopOrder>(p => p.Code == "" && p.State == "Активна", null).ToList();
 
             });
 

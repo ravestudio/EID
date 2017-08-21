@@ -31,7 +31,7 @@ namespace EIDClient.Core.Robot
             dec.LongPrice = Math.Round(data["5"].Last().close * 1.005m, 2);
             dec.ShortPrice = Math.Round(data["5"].Last().close * 0.995m, 2);
 
-            dec.Profit = Math.Round(last.close * 0.005m, 2);//профит 1,5%
+            dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
             dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1%
 
             decimal g = last.open * 1.003m;

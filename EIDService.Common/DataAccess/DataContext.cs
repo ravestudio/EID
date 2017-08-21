@@ -53,6 +53,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.MoneyLimitConfiguration());
             modelBuilder.Configurations.Add(new Configurations.ModeConfiguration());
             modelBuilder.Configurations.Add(new Configurations.EIDProcessConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.PosTypeConfiguration());
         }
     }
 }
