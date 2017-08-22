@@ -53,6 +53,8 @@ namespace EIDClient.Core.Managers
 
                     string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
 
+                    string proc_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/InvokeProcess")).Result;
+
                     Task.Delay(5 * 1000).Wait();
                 }
             });

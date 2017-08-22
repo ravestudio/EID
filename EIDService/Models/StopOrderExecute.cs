@@ -58,7 +58,7 @@ namespace EIDService.Models
                     Account = order.Account,
                     Price = applyPrice,
                     Count = order.Count,
-                    StateType = Common.Entities.OrderStateType.IsActive,
+                    OrderState = OrderStateEnum.IsActive,
                     Class = order.Class,
                     Client = order.Client,
                     Comment = order.Client

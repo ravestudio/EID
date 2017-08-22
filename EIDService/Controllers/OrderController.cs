@@ -30,7 +30,7 @@ namespace EIDService.Controllers
                 Random rnd = new Random();
 
                 order.Number = rnd.Next(100, 5000);
-                order.StateType = OrderStateType.IsActive;
+                order.OrderState = OrderStateEnum.IsActive;
                 order.Time = settings.TestDateTime.ToString("HH:mm");
 
                 Transaction trn = new Transaction()

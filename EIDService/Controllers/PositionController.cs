@@ -19,7 +19,9 @@ namespace EIDService.Controllers
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
-                positions = unit.PositionRepository.Query<Position>(p => p.PosType == PosTypeEnum.T2).ToList();
+                IList<string> code_list = unit.SecurityRepository.Query<Security>(s => s.AlgoTrade).Select(s => s.Code).ToList();
+
+                positions = unit.PositionRepository.Query<Position>(p => code_list.Contains(p.Code) && p.PosType == PosTypeEnum.T2).ToList();
             }
 
             return positions;

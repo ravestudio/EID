@@ -62,6 +62,8 @@
     <Compile Include="DataAccess\Configurations\ModeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\MoneyLimitConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\OrderOperationConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\OrderStateConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PositionConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PosTypeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\SecurityConfiguration.cs" />
@@ -84,7 +86,8 @@
     <Compile Include="Entities\ModeType.cs" />
     <Compile Include="Entities\MoneyLimit.cs" />
     <Compile Include="Entities\Order.cs" />
-    <Compile Include="Entities\OrderStateType.cs" />
+    <Compile Include="Entities\OrderOperation.cs" />
+    <Compile Include="Entities\OrderState.cs" />
     <Compile Include="Entities\PeriodType.cs" />
     <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\EIDProcess.cs" />
@@ -224,6 +227,18 @@
     <Compile Include="Migrations\201708211031408_addPosTrigger.Designer.cs">
       <DependentUpon>201708211031408_addPosTrigger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708220232093_addOrderType.cs" />
+    <Compile Include="Migrations\201708220232093_addOrderType.Designer.cs">
+      <DependentUpon>201708220232093_addOrderType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708220256361_addOrderOperation.cs" />
+    <Compile Include="Migrations\201708220256361_addOrderOperation.Designer.cs">
+      <DependentUpon>201708220256361_addOrderOperation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708221034351_dropBaseOrder.cs" />
+    <Compile Include="Migrations\201708221034351_dropBaseOrder.Designer.cs">
+      <DependentUpon>201708221034351_dropBaseOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -327,6 +342,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708211031408_addPosTrigger.resx">
       <DependentUpon>201708211031408_addPosTrigger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708220232093_addOrderType.resx">
+      <DependentUpon>201708220232093_addOrderType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708220256361_addOrderOperation.resx">
+      <DependentUpon>201708220256361_addOrderOperation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708221034351_dropBaseOrder.resx">
+      <DependentUpon>201708221034351_dropBaseOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

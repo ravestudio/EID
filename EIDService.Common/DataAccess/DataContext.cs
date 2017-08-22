@@ -54,6 +54,8 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.ModeConfiguration());
             modelBuilder.Configurations.Add(new Configurations.EIDProcessConfiguration());
             modelBuilder.Configurations.Add(new Configurations.PosTypeConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.OrderStateConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.OrderOperationConfiguration());
         }
     }
 }

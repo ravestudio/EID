@@ -215,6 +215,7 @@
     </Compile>
     <Compile Include="Models\BuyStrategy.cs" />
     <Compile Include="Models\CandleRequestModel.cs" />
+    <Compile Include="Models\ClosePositionProcess.cs" />
     <Compile Include="Models\CreateBuyStrategy.cs" />
     <Compile Include="Models\CreateSellStrategy.cs" />
     <Compile Include="Models\ICreateStrategy.cs" />

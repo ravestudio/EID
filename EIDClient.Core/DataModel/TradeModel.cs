@@ -32,11 +32,15 @@ namespace EIDClient.Core.DataModel
 
         private object _token = null;
 
+        private string ServerURL = "http://localhost:99/";
+        private WebApiClient _apiClient = null;
+
         public TradeModel(TradeSessionRepository TradeSessionRepository,
             CandleRepository CandleRepository,
             OrderRepository OrderRepository,
             PositionRepository PositionRepository,
             DealRepository DealRepository,
+            WebApiClient client,
             ITradeMode mode, Mode modeProperties, object token)
         {
             _token = token;
@@ -45,6 +49,7 @@ namespace EIDClient.Core.DataModel
             _orderRepository = OrderRepository;
             _positionRepository = PositionRepository;
             _dealRepository = DealRepository;
+            _apiClient = client;
 
             _mode = mode;
             _modeProperties = modeProperties;
@@ -148,6 +153,11 @@ namespace EIDClient.Core.DataModel
             //        Сandles = _candles
             //    });
             //});
+
+            Messenger.Default.Register<ClosePositionMessage>(this, msg =>
+            {
+                string result = _apiClient.GetData(string.Format("{0}admin/ClosePosition?sec={1}", this.ServerURL, msg.Code)).Result;
+            });
         }
 
         private IDictionary<string, IDictionary<string, IList<ICandle>>> CopyCandles(IDictionary<string, IDictionary<string, IList<ICandle>>> candles)

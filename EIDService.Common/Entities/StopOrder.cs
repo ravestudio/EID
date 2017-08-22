@@ -21,7 +21,7 @@ namespace EIDService.Common.Entities
         /// <summary>
         /// Заявка условя
         /// </summary>
-        public decimal BaseOrder { get; set; }
+        //public decimal BaseOrder { get; set; }
 
         /// <summary>
         /// Номер заявки зарегистрированной по наступлению условия стоп-цены
@@ -43,5 +43,8 @@ namespace EIDService.Common.Entities
         public string Class { get; set; }
         public string State { get; set; }
         public string Result { get; set; }
+
+        public OrderStateEnum OrderState { get; set; }
+        public OrderOperationEnum OrderOperation { get; set; }
     }
 }

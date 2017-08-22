@@ -92,7 +92,7 @@ namespace EIDService.Controllers
         }
 
         [HttpGet]
-        public JsonResult ProcessData()
+        public JsonResult EmulateData()
         {
             Common.Entities.Settings settings = null;
 
@@ -101,16 +101,14 @@ namespace EIDService.Controllers
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order>>();
             IDictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>> stop_actions = new Dictionary<Func<Common.Entities.StopOrder, bool>, Action<UnitOfWork, Common.Entities.StopOrder>>();
 
-            IDictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>> process_actions = new Dictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>>();
-
-            actions.Add((o) => { return o.Operation == "Продажа"; },
+            actions.Add((o) => { return o.OrderOperation == OrderOperationEnum.Sell; },
                 (unit, order) =>
                 {
                     Common.Entities.Position pos = tradeModel.ApplyOrder(unit, order, settings);
                     pos.CurrentBalance -= order.Count;
                 });
 
-            actions.Add((o) => { return o.Operation == "Купля"; },
+            actions.Add((o) => { return o.OrderOperation ==  OrderOperationEnum.Buy; },
                 (unit, order) =>
                 {
 
@@ -118,29 +116,23 @@ namespace EIDService.Controllers
                     pos.CurrentBalance += order.Count;
                 });
 
-            stop_actions.Add((o) => { return o.Operation == "Продажа"; }, (unit, order) =>
+            stop_actions.Add((o) => { return o.OrderOperation == OrderOperationEnum.Sell; }, (unit, order) =>
             {
                 Models.StopOrderExecute execute = new Models.StopOrderExecute(new Models.SellStrategy());
                 execute.ApplyStop(unit, order, settings);
             });
 
-            stop_actions.Add((o) => { return o.Operation == "Купля"; }, (unit, order) =>
+            stop_actions.Add((o) => { return o.OrderOperation == OrderOperationEnum.Buy; }, (unit, order) =>
             {
                 Models.StopOrderExecute execute = new Models.StopOrderExecute(new Models.BuyStrategy());
                 execute.ApplyStop(unit, order, settings);
-            });
-
-            process_actions.Add((p) => { return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.Created; }, (unit, proc) =>
-            {
-                var orders = unit.StopOrderRepository.Query<StopOrder>(p => p.Code == "" && p.State == "Активна", null).ToList();
-
             });
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
                 settings = unit.SettingsRepository.All<Common.Entities.Settings>(null).Single();
 
-                var stop_orders = unit.StopOrderRepository.Query<Common.Entities.StopOrder>(o => o.State == "Активна").ToList();
+                var stop_orders = unit.StopOrderRepository.Query<Common.Entities.StopOrder>(o => o.OrderState == OrderStateEnum.IsActive).ToList();
                 foreach (Common.Entities.StopOrder order in stop_orders)
                 {
                     stop_actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
@@ -148,15 +140,58 @@ namespace EIDService.Controllers
                 unit.Commit();
 
                 var orders_all = unit.OrderRepository.All<Common.Entities.Order>().ToList();
-                var activeOrders = orders_all.Where(o => o.StateType == Common.Entities.OrderStateType.IsActive).ToList();
+                var activeOrders = orders_all.Where(o => o.OrderState == OrderStateEnum.IsActive).ToList();
                 foreach (Common.Entities.Order order in activeOrders)
                 {
                     actions.Single(a => a.Key(order)).Value.Invoke(unit, order);
                 }
 
+                unit.Commit();
+            }
+
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult InvokeProcess()
+        {
+            IDictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>> process_actions = new Dictionary<Func<Common.Entities.EIDProcess, bool>, Action<UnitOfWork, Common.Entities.EIDProcess>>();
+
+            //создан процесс на закрытие позиции
+            process_actions.Add((p) => { return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.Created; }, (unit, proc) =>
+            {
+                ClosePositionProcess closeModel = new ClosePositionProcess();
+                closeModel.CancelStopOrders(unit, proc);
+
+            });
+
+            //процесс переведен на снятие стоп заявок
+            process_actions.Add((p) => { return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.KillStop; }, (unit, proc) =>
+            {
+                ClosePositionProcess closeModel = new ClosePositionProcess();
+
+                if (closeModel.CheckTransaction(unit, proc) == 0 && closeModel.CheckStop(unit, proc) == 0)
+                {
+                    proc.Data = string.Format("CODE:{0};", closeModel.GetCode(proc));
+                    proc.Status = EIDProcessStatus.KillStopCompleted;
+
+                    unit.Commit();
+                }
+            });
+
+            //закрытие позиций
+            process_actions.Add((p) =>{ return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.KillStopCompleted; }, (unit, proc) =>
+            {
+            });
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
                 var processes = unit.EIDProcessRepository.Query<Common.Entities.EIDProcess>(p => p.Status != EIDProcessStatus.Completed).ToList();
 
-                unit.Commit();
+                foreach (Common.Entities.EIDProcess proc in processes)
+                {
+                    process_actions.Single(p => p.Key(proc)).Value.Invoke(unit, proc);
+                }
             }
 
             return Json("ok", JsonRequestBehavior.AllowGet);
@@ -169,14 +204,14 @@ namespace EIDService.Controllers
 
             IDictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>> actions = new Dictionary<Func<Common.Entities.Order, bool>, Action<UnitOfWork, Common.Entities.Order, Common.Entities.Transaction>>();
 
-            actions.Add((o) => { return o.Operation == "Купля"; },
+            actions.Add((o) => { return o.OrderOperation == OrderOperationEnum.Buy; },
                 (unit, order, trn) =>
                 {
                     Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateSellStrategy());
                     creator.Create(unit, order, settings, trn);
                 });
 
-            actions.Add((o) => { return o.Operation == "Продажа"; },
+            actions.Add((o) => { return o.OrderOperation == OrderOperationEnum.Sell; },
                 (unit, order, trn) =>
                 {
                     Models.StopOrderCreator creator = new Models.StopOrderCreator(new Models.CreateBuyStrategy());
@@ -191,7 +226,7 @@ namespace EIDService.Controllers
 
                 foreach(Common.Entities.Transaction transaction in transactions)
                 {
-                    var order = unit.OrderRepository.Query<Common.Entities.Order>(o => o.Number == transaction.OrderNumber && o.State == "Исполнена").SingleOrDefault();
+                    var order = unit.OrderRepository.Query<Common.Entities.Order>(o => o.Number == transaction.OrderNumber && o.OrderState == OrderStateEnum.Executed).SingleOrDefault();
 
                     if (order != null)
                     {

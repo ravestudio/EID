@@ -11,7 +11,7 @@ namespace EIDService.Models
     {
         public Position ApplyOrder(UnitOfWork unit, Order order, Settings settings)
         {
-            order.StateType = Common.Entities.OrderStateType.Executed;
+            order.OrderState = OrderStateEnum.Executed;
 
             Position pos = this.GetPosition(unit, order.Code, order.Account, order.Client);
 

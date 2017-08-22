@@ -51,9 +51,24 @@ namespace EIDService.Models
             return "ok";
         }
 
+        public string KillStopOrder(StopOrder order, int TransId)
+        {
+            StringBuilder tmlBulder = new StringBuilder();
+            tmlBulder.Append("ACTION=KILL_STOP_ORDER; TRANS_ID={0}; STOP_ORDER_KEY={1}; CLASSCODE= {2};");
+
+            string transaction = string.Format(tmlBulder.ToString(), TransId, order.Number.ToString("0"), order.Class);
+
+            using (var stream = System.IO.File.AppendText(tri_filePath))
+            {
+                stream.WriteLine(transaction);
+            }
+
+            return "ok";
+        }
+
         public void ReadResults()
         {
-            IList<string> lines = System.IO.File.ReadAllLines(tro_filePath).ToList();
+            IList<string> lines = System.IO.File.ReadAllLines(tro_filePath, Encoding.GetEncoding("windows-1251")).ToList();
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {

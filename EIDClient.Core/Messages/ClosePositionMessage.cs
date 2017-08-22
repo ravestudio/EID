@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EIDService.Common.Entities
+namespace EIDClient.Core.Messages
 {
-    public enum OrderStateType
+    public class ClosePositionMessage
     {
-        IsActive,
-        Executed,
-        Canceled
+        public string Code { get; set; }
     }
 }

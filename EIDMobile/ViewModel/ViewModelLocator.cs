@@ -51,6 +51,7 @@ namespace EIDMobile.ViewModel
                     ServiceLocator.Current.GetInstance<OrderRepository>(),
                     ServiceLocator.Current.GetInstance<PositionRepository>(),
                     ServiceLocator.Current.GetInstance<DealRepository>(),
+                    ServiceLocator.Current.GetInstance<WebApiClient>(),
                     ServiceLocator.Current.GetInstance<ITradeMode>(),
                     modeProperties,
                     TokenModel.Instance.AnalystToken()

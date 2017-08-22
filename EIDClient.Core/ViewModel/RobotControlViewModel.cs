@@ -32,6 +32,7 @@ namespace EIDClient.Core.ViewModel
         public RelayCommand StartRobot { get; set; }
 
         public RelayCommand<Robot.AnalystData> BuyCmd { get; set; }
+        public RelayCommand<string> ClosePositionCmd { get; set; }
 
         private Robot.Robot _robot = null;
 
@@ -83,6 +84,25 @@ namespace EIDClient.Core.ViewModel
                     {
                         Sec = d.Sec,
                         Operation = "open long"
+                    });
+                }
+            });
+
+            this.ClosePositionCmd = new RelayCommand<string>(async code =>
+            {
+                string msg = string.Format("Закрыть позицию {0}?", code);
+                var dlg = new Windows.UI.Popups.MessageDialog(msg);
+
+                dlg.Commands.Add(new Windows.UI.Popups.UICommand("Accept"));
+                dlg.Commands.Add(new Windows.UI.Popups.UICommand("Cancel"));
+
+                var dialogResult = await dlg.ShowAsync();
+
+                if (dialogResult.Label == "Accept")
+                {
+                    Messenger.Default.Send<ClosePositionMessage>(new ClosePositionMessage()
+                    {
+                        Code = code
                     });
                 }
             });

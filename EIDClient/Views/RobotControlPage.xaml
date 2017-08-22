@@ -59,6 +59,8 @@
                                 <TextBlock Text="{Binding CurrentBalance}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
                                 <TextBlock Text="{Binding Available}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
                                 <TextBlock Text="{Binding PurchasePrice}" Style="{StaticResource rowTextBlockStyle }" Width="100"/>
+
+                                <Button Content="Close" Command="{Binding ElementName=robotPage, Path=DataContext.ClosePositionCmd}" CommandParameter="{Binding Code}" Margin="20,0,0,0" Background="#FFD33D3D" Width="100"></Button>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

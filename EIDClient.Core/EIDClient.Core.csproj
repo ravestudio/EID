@@ -147,6 +147,7 @@
     <Compile Include="Managers\TestMode.cs" />
     <Compile Include="Managers\WorkMode.cs" />
     <Compile Include="Messages\ClientMakeDealMessage.cs" />
+    <Compile Include="Messages\ClosePositionMessage.cs" />
     <Compile Include="Messages\CreateOrderMessage.cs" />
     <Compile Include="Messages\EmitentListLoadedMessage.cs" />
     <Compile Include="Messages\FinancialListLoadedMessage.cs" />
