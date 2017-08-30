@@ -30,6 +30,41 @@ namespace EIDService.Models
             unit.Commit();
         }
 
+        public void ClosePosition(UnitOfWork unit, EIDProcess proc)
+        {
+            string sec = GetCode(proc);
+
+            IDictionary<Func<Position, bool>, Func<UnitOfWork, Position, Order>> actionDic = new Dictionary<Func<Position, bool>, Func<UnitOfWork, Position, Order>>();
+
+            //Если позиция лонг
+            actionDic.Add((p) => { return p.Total > 0; }, (u, p) =>
+            {
+                ClosePosition cp = new Models.ClosePosition(new CloseLongStrategy());
+
+                return cp.CreateOrder(u, p);
+            });
+
+
+            var pos = unit.PositionRepository.Query<Position>(p => p.Code == sec && p.PosType == PosTypeEnum.T2, null).Single();
+
+            Transaction trn = new Transaction()
+            {
+                Name = "Ввод заявки",
+                Status = 0,
+                Processed = true
+            };
+
+            unit.TransactionRepository.Create(trn);
+
+            Order order = actionDic.Single(d => d.Key.Invoke(pos)).Value.Invoke(unit, pos);
+
+            TransactionModel trsModel = new TransactionModel();
+            trsModel.CreateOrder(order, trn.Id);
+
+            proc.Data = string.Format("CODE:{0};TRN({1});", sec, trn.Id);
+            proc.Status = EIDProcessStatus.ClosePosition;
+        }
+
         public int CheckTransaction(UnitOfWork unit, EIDProcess proc)
         {
             int trn_count = 0;

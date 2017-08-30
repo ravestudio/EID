@@ -182,6 +182,7 @@ namespace EIDService.Controllers
             //закрытие позиций
             process_actions.Add((p) =>{ return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.KillStopCompleted; }, (unit, proc) =>
             {
+                ClosePositionProcess closeModel = new ClosePositionProcess();
             });
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))

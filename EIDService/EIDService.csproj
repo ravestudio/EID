@@ -215,9 +215,12 @@
     </Compile>
     <Compile Include="Models\BuyStrategy.cs" />
     <Compile Include="Models\CandleRequestModel.cs" />
+    <Compile Include="Models\CloseLongStrategy.cs" />
+    <Compile Include="Models\ClosePosition.cs" />
     <Compile Include="Models\ClosePositionProcess.cs" />
     <Compile Include="Models\CreateBuyStrategy.cs" />
     <Compile Include="Models\CreateSellStrategy.cs" />
+    <Compile Include="Models\ICloseStrategy.cs" />
     <Compile Include="Models\ICreateStrategy.cs" />
     <Compile Include="Models\IExecuteStrategy.cs" />
     <Compile Include="Models\SellStrategy.cs" />

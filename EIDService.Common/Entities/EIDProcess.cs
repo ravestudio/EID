@@ -24,6 +24,8 @@ namespace EIDService.Common.Entities
         Created,
         KillStop,
         KillStopCompleted,
+        ClosePosition,
+        ClosepositionCompleted,
         Completed
     }
 }
