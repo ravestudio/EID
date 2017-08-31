@@ -16,16 +16,16 @@ namespace EIDService.Common.Entities
 
     public enum EIDProcessType : int
     {
-        ClosePosition
+        ClosePosition = 0
     }
 
     public enum EIDProcessStatus : int
     {
-        Created,
-        KillStop,
-        KillStopCompleted,
-        ClosePosition,
-        ClosepositionCompleted,
-        Completed
+        Created = 0,
+        KillStop = 1,
+        KillStopCompleted = 2,
+        ClosePosition = 3,
+        ClosepositionCompleted = 4,
+        Completed = 5
     }
 }

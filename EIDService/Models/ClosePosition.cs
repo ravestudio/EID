@@ -22,9 +22,14 @@ namespace EIDService.Models
             decimal price = GetPrice(unit, pos.Code);
 
             var security = unit.SecurityRepository.Query<Common.Entities.Security>(s => s.Code == pos.Code).Single();
+            var mode = unit.ModeRepository.Query<Mode>(m => m.Active).Single();
 
             Order order = new Order()
             {
+                Account = mode.Account,
+                Client = mode.Client,
+                Class = mode.Class,
+
                 Code = pos.Code,
                 Operation = _closeStrategy.GetOperation(),
                 Price = Math.Round(_closeStrategy.GetPrice(price), 2),

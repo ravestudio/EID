@@ -30,9 +30,48 @@ namespace EIDService.Models
             unit.Commit();
         }
 
-        public void ClosePosition(UnitOfWork unit, EIDProcess proc)
+        /// <summary>
+        /// Получить позицию
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="proc"></param>
+        /// <returns></returns>
+        public Position GetPosition(UnitOfWork unit, EIDProcess proc)
         {
             string sec = GetCode(proc);
+
+            var pos = unit.PositionRepository.Query<Position>(p => p.Code == sec && p.PosType == PosTypeEnum.T2, null).SingleOrDefault();
+
+            return pos;
+        }
+
+        /// <summary>
+        /// проверить что позиция открыта, и ничего не заблокировано
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public bool CheckPosition(Position pos)
+        {
+            return pos.Total != 0 && pos.Total == pos.Available;
+        }
+
+        /// <summary>
+        /// Проверить что ордер исполнился
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="trn_id"></param>
+        /// <returns></returns>
+        public bool CheckOrder(UnitOfWork unit, int trn_id)
+        {
+            var trn = unit.TransactionRepository.Query<Transaction>(t => t.Id == trn_id).Single();
+
+            var order = unit.OrderRepository.Query<Order>(o => o.Number == trn.OrderNumber).SingleOrDefault();
+
+            return order != null && order.OrderState == OrderStateEnum.Executed;
+        }
+
+        public void ClosePosition(UnitOfWork unit, EIDProcess proc, Position pos)
+        {
 
             IDictionary<Func<Position, bool>, Func<UnitOfWork, Position, Order>> actionDic = new Dictionary<Func<Position, bool>, Func<UnitOfWork, Position, Order>>();
 
@@ -44,9 +83,6 @@ namespace EIDService.Models
                 return cp.CreateOrder(u, p);
             });
 
-
-            var pos = unit.PositionRepository.Query<Position>(p => p.Code == sec && p.PosType == PosTypeEnum.T2, null).Single();
-
             Transaction trn = new Transaction()
             {
                 Name = "Ввод заявки",
@@ -56,19 +92,22 @@ namespace EIDService.Models
 
             unit.TransactionRepository.Create(trn);
 
+            unit.Commit();
+
             Order order = actionDic.Single(d => d.Key.Invoke(pos)).Value.Invoke(unit, pos);
 
             TransactionModel trsModel = new TransactionModel();
             trsModel.CreateOrder(order, trn.Id);
 
-            proc.Data = string.Format("CODE:{0};TRN({1});", sec, trn.Id);
+            proc.Data = string.Format("CODE:{0};TRN({1});", pos.Code, trn.Id);
+
             proc.Status = EIDProcessStatus.ClosePosition;
+
+            unit.Commit();
         }
 
-        public int CheckTransaction(UnitOfWork unit, EIDProcess proc)
+        public IList<int> GetTransactionId(UnitOfWork unit, EIDProcess proc)
         {
-            int trn_count = 0;
-
             string mask = @"TRN\((?<trn>.+)\);";
 
             Regex rgx = new Regex(mask);
@@ -85,10 +124,17 @@ namespace EIDService.Models
 
             IList<int> id_arr = new List<int>();
 
-            foreach(string id in trnArr)
+            foreach (string id in trnArr)
             {
                 id_arr.Add(int.Parse(id));
             }
+
+            return id_arr;
+        }
+
+        public int CheckTransaction(UnitOfWork unit, IList<int> id_arr)
+        {
+            int trn_count = 0;
 
             trn_count = unit.TransactionRepository.Query<Transaction>(t => id_arr.Contains(t.Id) && t.Status != 3, null).Count();
 

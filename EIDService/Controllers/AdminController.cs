@@ -170,7 +170,9 @@ namespace EIDService.Controllers
             {
                 ClosePositionProcess closeModel = new ClosePositionProcess();
 
-                if (closeModel.CheckTransaction(unit, proc) == 0 && closeModel.CheckStop(unit, proc) == 0)
+                var trn_id = closeModel.GetTransactionId(unit, proc);
+
+                if (closeModel.CheckTransaction(unit, trn_id) == 0 && closeModel.CheckStop(unit, proc) == 0)
                 {
                     proc.Data = string.Format("CODE:{0};", closeModel.GetCode(proc));
                     proc.Status = EIDProcessStatus.KillStopCompleted;
@@ -183,6 +185,29 @@ namespace EIDService.Controllers
             process_actions.Add((p) =>{ return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.KillStopCompleted; }, (unit, proc) =>
             {
                 ClosePositionProcess closeModel = new ClosePositionProcess();
+
+                var pos = closeModel.GetPosition(unit, proc);
+
+                if (closeModel.CheckPosition(pos))
+                {
+                    closeModel.ClosePosition(unit, proc, pos);
+                }
+            });
+
+            //проверка закрылась ли позиция
+            process_actions.Add((p) =>{ return p.Type == EIDProcessType.ClosePosition && p.Status == EIDProcessStatus.ClosePosition; }, (unit, proc) =>
+            {
+                ClosePositionProcess closeModel = new ClosePositionProcess();
+
+                var trn_id = closeModel.GetTransactionId(unit, proc);
+                var pos = closeModel.GetPosition(unit, proc);
+
+                if (closeModel.CheckOrder(unit, trn_id.Single()) && pos.Total == 0)
+                {
+                    proc.Status = EIDProcessStatus.Completed;
+                    unit.Commit();
+                }
+
             });
 
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
