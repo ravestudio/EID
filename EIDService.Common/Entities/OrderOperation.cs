@@ -17,9 +17,4 @@ namespace EIDService.Common.Entities
         public string Name { get; set; }
     }
 
-    public enum OrderOperationEnum: byte
-    {
-        Buy = 1,
-        Sell = 2
-    }
 }

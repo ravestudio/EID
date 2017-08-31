@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EID.Library;
 
 namespace EIDService.Models
 {
@@ -47,14 +48,14 @@ namespace EIDService.Models
             if (apply)
             {
                 Random rnd = new Random();
-                order.State = "Исполнена";
+                order.OrderState = OrderStateEnum.Executed;
 
                 Common.Entities.Order new_order = new Common.Entities.Order()
                 {
                     Number = rnd.Next(7000, 900000),
                     Code = order.Code,
                     Time = settings.TestDateTime.ToString("HH:mm"),
-                    Operation = order.Operation,
+                    OrderOperation = order.OrderOperation,
                     Account = order.Account,
                     Price = applyPrice,
                     Count = order.Count,

@@ -25,7 +25,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Number).HasColumnName("Number").IsRequired();
                 Property(p => p.Code).HasColumnName("Code").HasMaxLength(10).HasColumnType("varchar").IsRequired();
                 Property(p => p.Time).HasColumnName("Time").HasMaxLength(10).HasColumnType("varchar").IsRequired();
-                Property(p => p.Operation).HasColumnName("Operation").HasMaxLength(50).HasColumnType("varchar").IsRequired();
+                Property(p => p.Operation).HasColumnName("Operation").HasMaxLength(50).HasColumnType("varchar").IsOptional();
                 Property(p => p.OrderOperation).HasColumnName("OrderOperation").IsRequired();
 
                 Property(p => p.Account).HasColumnName("Account").HasMaxLength(50).HasColumnType("varchar").IsRequired();
@@ -33,7 +33,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Count).HasColumnName("Count").IsRequired();
                 Property(p => p.Volume).HasColumnName("Volume").IsRequired();
 
-                Property(p => p.State).HasColumnName("State").HasMaxLength(50).HasColumnType("varchar").IsRequired();
+                Property(p => p.State).HasColumnName("State").HasMaxLength(50).HasColumnType("varchar").IsOptional();
                 Property(p => p.OrderState).HasColumnName("OrderState").IsRequired();
 
                 Property(p => p.Class).HasColumnName("Class").HasMaxLength(50).HasColumnType("varchar").IsRequired();

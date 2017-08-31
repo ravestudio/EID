@@ -132,7 +132,7 @@ namespace EIDClient.Core.DataModel
                 Order order = new Order()
                 {
                     Code = msg.Code,
-                    Operation = msg.Operation,
+                    OrderOperation = msg.OrderOperation,
                     Account = _modeProperties.Account,
                     Price = msg.Price,
                     Count = msg.Count,

@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EID.Library;
 
 namespace EIDService.Models
 {
     public interface ICreateStrategy
     {
-        string GetOperation();
+        OrderOperationEnum GetOperation();
 
         decimal GetDealPrice(IList<Deal> deals);
 

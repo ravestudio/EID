@@ -17,10 +17,4 @@ namespace EIDService.Common.Entities
         public string Name { get; set; }
     }
 
-    public enum OrderStateEnum : byte
-    {
-        IsActive = 1,
-        Executed = 2,
-        Canceled = 3
-    }
 }

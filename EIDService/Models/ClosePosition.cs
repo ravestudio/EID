@@ -31,7 +31,7 @@ namespace EIDService.Models
                 Class = mode.Class,
 
                 Code = pos.Code,
-                Operation = _closeStrategy.GetOperation(),
+                OrderOperation = _closeStrategy.GetOperation(),
                 Price = Math.Round(_closeStrategy.GetPrice(price), 2),
                 Count = Math.Abs(pos.Total)
             };

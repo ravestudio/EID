@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EID.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +12,18 @@ namespace EIDClient.Core.Entities
         public decimal Number { get; set; }
         public string Code { get; set; }
         public string Time { get; set; }
-        public string Operation { get; set; }
         public string Account { get; set; }
         public decimal Price { get; set; }
         public int Count { get; set; }
         public decimal Volume { get; set; }
-        public string State { get; set; }
         public string Class { get; set; }
         public string Client { get; set; }
         public string Comment { get; set; }
 
         public decimal Profit { get; set; }
         public decimal StopLoss { get; set; }
+
+        public OrderOperationEnum OrderOperation { get; set; }
 
         public List<KeyValuePair<string, string>> ConverToKeyValue()
         {
@@ -31,7 +32,7 @@ namespace EIDClient.Core.Entities
             keyValueData.Add(new KeyValuePair<string, string>("Id", Id.ToString()));
             //keyValueData.Add(new KeyValuePair<string, string>("Number", Number.ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Code", Code));
-            keyValueData.Add(new KeyValuePair<string, string>("Operation", Operation));
+            keyValueData.Add(new KeyValuePair<string, string>("OrderOperation", ((byte)OrderOperation).ToString()));
             keyValueData.Add(new KeyValuePair<string, string>("Account", Account));
             keyValueData.Add(new KeyValuePair<string, string>("Price", Price.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             keyValueData.Add(new KeyValuePair<string, string>("Count", Count.ToString()));

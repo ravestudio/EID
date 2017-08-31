@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EID.Library;
 
 namespace EIDService.Models
 {
@@ -69,7 +70,7 @@ namespace EIDService.Models
                 Code = order.Code,
                 Time = dateTime.ToString("HH:mm"),
                 Date = dateTime.ToString("dd:MM:yyyy"),
-                Operation = order.Operation,
+                Operation = order.OrderOperation.ToString(),
                 Account = order.Account,
                 Price = price,
                 Count = order.Count,
@@ -81,12 +82,12 @@ namespace EIDService.Models
 
             MoneyLimit money = unit.MoneyLimitRepository.Query<MoneyLimit>(m => m.Type == "T2").Single();
 
-            if (order.Operation == "Купля")
+            if (order.OrderOperation == OrderOperationEnum.Buy)
             {
                 money.Available -= order.Count * price;
             }
 
-            if (order.Operation == "Продажа")
+            if (order.OrderOperation ==  OrderOperationEnum.Sell)
             {
                 money.Available += order.Count * price;
             }

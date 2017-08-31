@@ -35,7 +35,7 @@ namespace EIDService.Models
                 Number = rnd.Next(7000, 900000),
                 Code = order.Code,
                 Time = settings.TestDateTime.ToString("HH:mm:00"),
-                Operation = _strategy.GetOperation(),
+                OrderOperation = _strategy.GetOperation(),
                 Account = order.Account,
                 OrderType = "Тэйк - профит и стоп - лимит",
                 Count = order.Count,
@@ -45,7 +45,7 @@ namespace EIDService.Models
 
                 Client = order.Client,
                 Class = order.Class,
-                State = "Активна"
+                OrderState = OrderStateEnum.IsActive
             };
 
             MathFunctions func = new MathFunctions();

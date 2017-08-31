@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EID.Library;
 
 namespace EIDClient.Core.Robot
 {
@@ -43,7 +44,7 @@ namespace EIDClient.Core.Robot
                         Code = sec,
                         Count = dec.Count,
                         Price = dec.LongPrice,
-                        Operation = "Купля",
+                        OrderOperation = OrderOperationEnum.Buy,
                         Profit = dec.Profit,
                         StopLoss = dec.StopLoss
                     });
@@ -56,7 +57,7 @@ namespace EIDClient.Core.Robot
                     Code = sec,
                     Count = dec.Count,
                     Price = dec.ShortPrice,
-                    Operation = "Продажа",
+                    OrderOperation = OrderOperationEnum.Sell,
                     Profit = dec.Profit,
                     StopLoss = dec.StopLoss
                 });
@@ -99,10 +100,10 @@ namespace EIDClient.Core.Robot
                         Advice = string.IsNullOrEmpty(dec.Decision) ? "Neutral" : dec.Decision
                     });
 
-                    //if (!string.IsNullOrEmpty(dec.Decision))
-                    //{
-                    //    actions[dec.Decision].Invoke(sec, dec);
-                    //}
+                    if (!string.IsNullOrEmpty(dec.Decision))
+                    {
+                        actions[dec.Decision].Invoke(sec, dec);
+                    }
                 }
 
                 Messenger.Default.Send<ShowAnalystDataMessage>(new ShowAnalystDataMessage()

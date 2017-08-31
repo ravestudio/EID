@@ -239,6 +239,14 @@
     <Compile Include="Migrations\201708221034351_dropBaseOrder.Designer.cs">
       <DependentUpon>201708221034351_dropBaseOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708310850537_alterTable1.cs" />
+    <Compile Include="Migrations\201708310850537_alterTable1.Designer.cs">
+      <DependentUpon>201708310850537_alterTable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708311016152_editTriggers.cs" />
+    <Compile Include="Migrations\201708311016152_editTriggers.Designer.cs">
+      <DependentUpon>201708311016152_editTriggers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -351,6 +359,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708221034351_dropBaseOrder.resx">
       <DependentUpon>201708221034351_dropBaseOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708310850537_alterTable1.resx">
+      <DependentUpon>201708310850537_alterTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708311016152_editTriggers.resx">
+      <DependentUpon>201708311016152_editTriggers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

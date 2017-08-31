@@ -54,7 +54,7 @@ namespace EIDClient.Core.Managers
 
                     actions["showData"].Invoke();
 
-                    string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/processData")).Result;
+                    string res = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/EmulateData")).Result;
 
                     string create_stop_Result = _apiClient.GetData(string.Format("{0}{1}", this.ServerURL, "admin/CreateStopOrders")).Result;
                 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EID.Library;
 
 namespace EIDService.Models
 {
@@ -13,9 +14,9 @@ namespace EIDService.Models
             return deals.Select(d => d.Price).Min();
         }
 
-        public string GetOperation()
+        public OrderOperationEnum GetOperation()
         {
-            return "Купля";
+            return OrderOperationEnum.Buy;
         }
 
         public decimal GetPrice(decimal currentPrice, decimal limit)
