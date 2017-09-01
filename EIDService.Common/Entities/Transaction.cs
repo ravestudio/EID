@@ -19,6 +19,8 @@ namespace EIDService.Common.Entities
         public int Status { get; set; }
         public decimal OrderNumber { get; set; }
 
+        public string CODE { get; set; }
+
         public bool Processed { get; set; }
 
         public decimal Profit { get; set; }

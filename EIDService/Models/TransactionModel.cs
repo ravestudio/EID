@@ -3,6 +3,7 @@ using EIDService.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,7 +29,7 @@ namespace EIDService.Models
             return "ok";
         }
 
-        public string CreateStopOrder(StopOrder order, int TransId)
+        public string CreateStopOrder(StopOrder order, int TransId, Settings settings)
         {
             StringBuilder tmlBulder = new StringBuilder();
             tmlBulder.Append("ACTION=NEW_STOP_ORDER; TRANS_ID={0}; CLASSCODE= {1};");
@@ -41,7 +42,9 @@ namespace EIDService.Models
             tmlBulder.Append("MARKET_STOP_LIMIT = NO");
 
             string transaction = string.Format(tmlBulder.ToString(), TransId, order.Class, order.Code, order.Account, order.Client,
-                order.Operation == "Купля" ? "B" : "S", order.Count, order.Price, order.StopPrice, "1.0", "0.03", order.StopLimitPrice );
+                order.Operation == "Купля" ? "B" : "S", order.Count, order.Price, order.StopPrice,
+                settings.OFFSET.ToString(CultureInfo.InvariantCulture), settings.SPREAD.ToString(CultureInfo.InvariantCulture),
+                order.StopLimitPrice );
 
             using (var stream = System.IO.File.AppendText(tri_filePath))
             {

@@ -23,6 +23,7 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Status).HasColumnName("Status").IsRequired();
                 Property(p => p.Description).HasColumnName("Description").IsOptional();
                 Property(p => p.OrderNumber).HasColumnName("OrderNumber").IsOptional();
+                Property(p => p.CODE).HasColumnName("CODE").IsOptional();
                 Property(p => p.Processed).HasColumnName("Processed").IsRequired();
 
                 Property(p => p.MaxProfit).HasColumnName("MaxProfit").IsRequired();

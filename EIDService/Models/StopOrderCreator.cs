@@ -66,7 +66,7 @@ namespace EIDService.Models
 
                 Models.TransactionModel model = new TransactionModel();
 
-                model.CreateStopOrder(stop, stop_trn.Id);
+                model.CreateStopOrder(stop, stop_trn.Id, settings);
             }
 
             if (settings.Mode == "Test")

@@ -20,9 +20,14 @@ namespace EIDService.Controllers
 
             Settings settings = null;
 
+            //количество транзакций по инструменту
+            int trn_count = 0;
+
             using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
             {
                 settings = unit.SettingsRepository.All<Settings>(null).Single();
+
+                trn_count = unit.TransactionRepository.Query<Transaction>(t => t.CODE == order.Code && t.Name == "Ввод заявки").Count();
             }
 
             actions.Add(ModeType.Test, () =>
@@ -35,6 +40,7 @@ namespace EIDService.Controllers
 
                 Transaction trn = new Transaction()
                 {
+                    CODE = order.Code,
                     OrderNumber = order.Number,
                     Name = "Ввод заявки",
                     Status = 3,
@@ -55,6 +61,7 @@ namespace EIDService.Controllers
             {
                 Transaction trn = new Transaction()
                 {
+                    CODE = order.Code,
                     Name = "Ввод заявки",
                     Status = 0,
                     Profit = order.Profit,
@@ -76,7 +83,11 @@ namespace EIDService.Controllers
 
             actions.Add(ModeType.Demo, RealTransaction);
 
-            actions[settings.ModeType].Invoke();
+            //если транзакци нет, выполняем
+            if (trn_count == 0)
+            {
+                actions[settings.ModeType].Invoke();
+            }
         }
     }
 }

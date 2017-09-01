@@ -34,8 +34,8 @@ namespace EIDService.Models
             decimal? lossProfit = _strategy.GetLossProfit(transaction, price);
 
 
-            //отступ от max 0,3%
-            if (lossProfit.HasValue && (lossProfit.Value / price)*100 > 0.5m)
+            //отступ от max 1,0%
+            if (lossProfit.HasValue && (lossProfit.Value / price)*100 > settings.OFFSET)
             {
                 apply = true;
             }

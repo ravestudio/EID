@@ -23,6 +23,10 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Mode).IsRequired();
                 Property(p => p.TestDateTime).IsRequired();
 
+                Property(p => p.OFFSET).IsRequired();
+                Property(p => p.SPREAD).IsRequired();
+
+
             }).ToTable("Settings");
         }
     }

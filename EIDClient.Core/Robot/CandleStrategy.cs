@@ -32,7 +32,7 @@ namespace EIDClient.Core.Robot
             dec.ShortPrice = Math.Round(data["5"].Last().close * 0.995m, 2);
 
             dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
-            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1%
+            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1,0%
 
             decimal g = last.open * 1.003m;
             decimal r = last.open * 0.997m;
@@ -53,13 +53,20 @@ namespace EIDClient.Core.Robot
             //свеча вышла за сколящую среднюю вниз
             bool crossDown = last.close < ma.Last() * 0.995m;
 
-            if ((trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && crossUp && currentPos == "free")
+            decimal day_max = Func.Max(data["60"], 20, 1);
+            decimal day_min = Func.Min(data["60"], 20, 1);
+
+            decimal max_offset = last.close / day_max;
+
+            decimal min_offset = day_min / last.close;
+
+            if (max_offset > 1m && (trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && crossUp && currentPos == "free")
             {
                 //покупаем
                 dec.Decision = "open long";
             }
 
-            if ((trend == TRENDResult.Down || trend == TRENDResult.Flat) && currentRed && lastdecrease && crossDown && currentPos == "free")
+            if (min_offset > 1m && (trend == TRENDResult.Down || trend == TRENDResult.Flat) && currentRed && lastdecrease && crossDown && currentPos == "free")
             {
                 //продаем
                 dec.Decision = "open short";

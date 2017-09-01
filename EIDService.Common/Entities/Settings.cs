@@ -11,6 +11,9 @@ namespace EIDService.Common.Entities
         public string Mode { get; set; }
         public DateTime TestDateTime { get; set; }
 
+        public decimal OFFSET { get; set; }
+        public decimal SPREAD { get; set; }
+
         private IDictionary<string, ModeType> _modeTypedic = new Dictionary<string, ModeType>();
 
         public Settings()

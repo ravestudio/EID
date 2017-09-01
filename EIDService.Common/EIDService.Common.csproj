@@ -247,6 +247,14 @@
     <Compile Include="Migrations\201708311016152_editTriggers.Designer.cs">
       <DependentUpon>201708311016152_editTriggers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709010402006_addFields.cs" />
+    <Compile Include="Migrations\201709010402006_addFields.Designer.cs">
+      <DependentUpon>201709010402006_addFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709010410205_alterFields.cs" />
+    <Compile Include="Migrations\201709010410205_alterFields.Designer.cs">
+      <DependentUpon>201709010410205_alterFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -365,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708311016152_editTriggers.resx">
       <DependentUpon>201708311016152_editTriggers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709010402006_addFields.resx">
+      <DependentUpon>201709010402006_addFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709010410205_alterFields.resx">
+      <DependentUpon>201709010410205_alterFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
