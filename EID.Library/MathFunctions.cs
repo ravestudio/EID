@@ -22,5 +22,15 @@ namespace EID.Library
 
             return ret;
         }
+
+        public decimal GetDiff(decimal v1, decimal v2)
+        {
+            if (v1 == 0m) { v1 = 0.01m; }
+
+            decimal diff = v2 - v1;
+            decimal prc = Math.Abs(v1) / 100;
+            decimal d = diff / prc;
+            return d;
+        }
     }
 }

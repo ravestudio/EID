@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EID.Library;
 using EIDClient.Core.Entities;
 using EIDClient.Core.ISS;
+using EIDClient.Core.Robot.Filter;
 
 namespace EIDClient.Core.Robot
 {
@@ -14,59 +15,32 @@ namespace EIDClient.Core.Robot
         public StrategyDecision GetDecision(IDictionary<string, IList<ICandle>> data, string name, string currentPos, Security security, DateTime CurrentDt)
         {
             StrategyDecision dec = new StrategyDecision() { Decision = null };
-            
-            //скользящая средняя для 60ти минуток
-            SimpleMovingAverage hours_ma = new SimpleMovingAverage(data["60"], 30);
-            //скользящая средняя для пятиминуток
-            SimpleMovingAverage ma = new SimpleMovingAverage(data["5"], 30);
 
-            //определяем тренд
-            TRENDResult trend = new TREND(hours_ma, 3).GetResult();
+            FilterResult local_offset = new LocalOffsetFilter(data).Exec();
+            FilterResult trend = new TrendFilter(data).Exec();
+            FilterResult candlePattern = new CandleFilter(data).Exec();
+            FilterResult cross_ma = new CrossMAFilter(data).Exec();
 
-            ICandle last = data["5"].Last();
-            ICandle prev = data["5"][data["5"].Count - 2];
+            ICandle curr = data["5"].Last();
 
             dec.Code = name;
-            dec.LastPrice = last.close;
-            dec.LongPrice = Math.Round(data["5"].Last().close * 1.005m, 2);
-            dec.ShortPrice = Math.Round(data["5"].Last().close * 0.995m, 2);
+            dec.LastPrice = curr.close;
+            dec.LongPrice = Math.Round(curr.close * 1.005m, 2);
+            dec.ShortPrice = Math.Round(curr.close * 0.995m, 2);
 
-            dec.Profit = Math.Round(last.close * 0.015m, 2);//профит 1,5%
-            dec.StopLoss = Math.Round(last.close * 0.01m, 2);//стоп лосс 1,0%
+            dec.Profit = Math.Round(curr.close * 0.015m, 2);//профит 1,5%
+            dec.StopLoss = Math.Round(curr.close * 0.01m, 2);//стоп лосс 1,0%
 
-            decimal g = last.open * 1.003m;
-            decimal r = last.open * 0.997m;
+            IList<FilterResult> filterResult_list = new List<FilterResult>();
 
-            //свеча зеленая
-            bool currentGreen = last.close > g;
-            //свеча зеленая
-            bool currentRed = last.close < r;
 
-            //выше предыдущей
-            bool lastgrow = last.close > prev.close;
-            //ниже предыдущей
-            bool lastdecrease = last.close < prev.close;
-
-            //свеча вышла за сколящую среднюю вверх
-            bool crossUp = last.close > ma.Last()*1.005m;
-
-            //свеча вышла за сколящую среднюю вниз
-            bool crossDown = last.close < ma.Last() * 0.995m;
-
-            decimal day_max = Func.Max(data["60"], 20, 1);
-            decimal day_min = Func.Min(data["60"], 20, 1);
-
-            decimal max_offset = last.close / day_max;
-
-            decimal min_offset = day_min / last.close;
-
-            if (max_offset > 1m && (trend == TRENDResult.Up || trend == TRENDResult.Flat) && currentGreen && lastgrow && crossUp && currentPos == "free")
+            if (local_offset == FilterResult.L && (trend == FilterResult.L || trend == FilterResult.N) && candlePattern == FilterResult.L && cross_ma == FilterResult.L && currentPos == "free")
             {
                 //покупаем
                 dec.Decision = "open long";
             }
 
-            if (min_offset > 1m && (trend == TRENDResult.Down || trend == TRENDResult.Flat) && currentRed && lastdecrease && crossDown && currentPos == "free")
+            if (local_offset == FilterResult.S && (trend == FilterResult.S || trend == FilterResult.N) && candlePattern == FilterResult.S && cross_ma == FilterResult.S && currentPos == "free")
             {
                 //продаем
                 dec.Decision = "open short";

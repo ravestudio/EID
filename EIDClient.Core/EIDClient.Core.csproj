@@ -179,6 +179,12 @@
     <Compile Include="Robot\AnalystData.cs" />
     <Compile Include="Robot\AnalystStrategy.cs" />
     <Compile Include="Robot\DemoStrategy.cs" />
+    <Compile Include="Robot\Filter\CandleFilter.cs" />
+    <Compile Include="Robot\Filter\CrossMAFilter.cs" />
+    <Compile Include="Robot\Filter\FilterResult.cs" />
+    <Compile Include="Robot\Filter\IFilter.cs" />
+    <Compile Include="Robot\Filter\LocalOffsetFilter.cs" />
+    <Compile Include="Robot\Filter\TrendFilter.cs" />
     <Compile Include="Robot\IStrategy.cs" />
     <Compile Include="Robot\Robot.cs" />
     <Compile Include="Robot\Signal.cs" />

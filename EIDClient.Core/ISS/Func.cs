@@ -23,5 +23,26 @@ namespace EIDClient.Core.ISS
             return temp.Select(c => c.close).Min();
         }
 
+        public static bool Green(ICandle candle)
+        {
+            return candle.close > candle.open;
+        }
+
+        public static bool Red(ICandle candle)
+        {
+            return candle.open > candle.close;
+        }
+
+        public static bool Big(ICandle candle)
+        {
+            decimal avg = (candle.open + candle.close) / 2;
+
+            decimal v2 = Math.Abs(candle.open - candle.close);
+
+            decimal p = avg * 0.0015m;
+
+            return v2 > p;
+        }
+
     }
 }
