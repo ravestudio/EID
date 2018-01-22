@@ -108,6 +108,8 @@ namespace EIDClient.Core.Entities
         /// </summary>
         public decimal PriceEarningsRatio { get; set; }
 
+        public decimal ReturnOnEquity { get; set; }
+
 
         public int EmitentId { get; set; }
 
@@ -146,6 +148,7 @@ namespace EIDClient.Core.Entities
             this.EarningsPerShare = (decimal)jsonObj["EarningsPerShare"].GetNumber();
             this.Price = (decimal)jsonObj["Price"].GetNumber();
             this.PriceEarningsRatio = (decimal)jsonObj["PriceEarningsRatio"].GetNumber();
+            this.ReturnOnEquity = (decimal)jsonObj["ReturnOnEquity"].GetNumber();
 
         }
 

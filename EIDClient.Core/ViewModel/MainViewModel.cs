@@ -49,6 +49,16 @@ namespace EIDClient.Core.ViewModel
                 this._navigationServie.NavigateTo("Analysis");
             });
 
+            _menuActions.Add("diary", () =>
+            {
+                this._navigationServie.NavigateTo("Diary");
+            });
+
+            _menuActions.Add("portfolio", () =>
+            {
+                this._navigationServie.NavigateTo("Portfolio");
+            });
+
             this.ClickMenuCmd = new RelayCommand(() =>
             {
                 this._menu.Open();

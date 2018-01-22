@@ -24,9 +24,13 @@ namespace EIDService.Common.DataAccess
         private GenericRepository<Transaction> transactionRepository;
         private GenericRepository<TransactionResult> transactionResultRepository;
         private GenericRepository<Deal> dealRepository;
+        private GenericRepository<DealRAW> dealRAWRepository;
         private GenericRepository<MoneyLimit> moneylimitRepository;
         private GenericRepository<Mode> modeRepository;
         private GenericRepository<EIDProcess> eidProcessRepository;
+        private GenericRepository<DiaryNote> diaryNoteRepository;
+        private GenericRepository<PortfolioItem> portfolioItemRepository;
+        private GenericRepository<Income> incomeRepository;
 
 
         public UnitOfWork(DbContext context)
@@ -130,6 +134,14 @@ namespace EIDService.Common.DataAccess
             }
         }
 
+        public GenericRepository<DealRAW> DealRAWRepository
+        {
+            get
+            {
+                return this.dealRAWRepository ?? new GenericRepository<DealRAW>(_context);
+            }
+        }
+
         public GenericRepository<MoneyLimit> MoneyLimitRepository
         {
             get
@@ -151,6 +163,30 @@ namespace EIDService.Common.DataAccess
             get
             {
                 return this.eidProcessRepository ?? new GenericRepository<EIDProcess>(_context);
+            }
+        }
+
+        public GenericRepository<DiaryNote> DiaryNoteRepository
+        {
+            get
+            {
+                return this.diaryNoteRepository ?? new GenericRepository<DiaryNote>(_context);
+            }
+        }
+
+        public GenericRepository<PortfolioItem> PorfolioItemRepository
+        {
+            get
+            {
+                return this.portfolioItemRepository ?? new GenericRepository<PortfolioItem>(_context);
+            }
+        }
+
+        public GenericRepository<Income> IncomeRepository
+        {
+            get
+            {
+                return this.incomeRepository ?? new GenericRepository<Income>(_context);
             }
         }
 

@@ -44,6 +44,7 @@
     <Compile Include="ISS\MarketData.cs" />
     <Compile Include="ISS\MicexISSClient.cs" />
     <Compile Include="MathFunctions.cs" />
+    <Compile Include="NoteType.cs" />
     <Compile Include="OrderOperationEnum.cs" />
     <Compile Include="OrderStateEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

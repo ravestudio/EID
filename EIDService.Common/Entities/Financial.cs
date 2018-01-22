@@ -138,6 +138,11 @@ namespace EIDService.Common.Entities
             get { return Math.Round(Price / EarningsPerShare, 2); }
         }
 
+        public decimal ReturnOnEquity
+        {
+            get { return Math.Round(this.NetIncome / this.Equity * 100, 2); }
+        }
+
 
         public virtual Emitent Emitent { get; set; }
     }

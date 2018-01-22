@@ -38,6 +38,7 @@
                 <TextBlock Text="{Binding DividendsPaid}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding EarningsPerShare}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding PriceEarningsRatio}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding ReturnOnEquity}" HorizontalAlignment="Right"></TextBlock>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -111,6 +112,7 @@
                         <TextBlock Text="Дивиденды, выплаченные по акциям"></TextBlock>
                         <TextBlock Text="Прибыль на акцию"></TextBlock>
                         <TextBlock Text="P/E Ratio"></TextBlock>
+                        <TextBlock Text="ROE"></TextBlock>
                     </StackPanel>
 
                     <ItemsControl Grid.Column="1" ItemsSource="{Binding FinancialList}" ItemTemplate="{StaticResource financialItemTemplate}">

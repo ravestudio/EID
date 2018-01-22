@@ -37,6 +37,9 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<OrderRepository>();
             SimpleIoc.Default.Register<PositionRepository>();
             SimpleIoc.Default.Register<DealRepository>();
+            SimpleIoc.Default.Register<DiaryNoteRepository>();
+            SimpleIoc.Default.Register<PortfolioItemRepository>();
+            SimpleIoc.Default.Register<IncomeRepository>();
 
             SimpleIoc.Default.Register<IMenu, Menu>();
             SimpleIoc.Default.Register<IChart, Chart>();
@@ -52,9 +55,13 @@ namespace EIDClient.ViewModel
             SimpleIoc.Default.Register<SecurityDetailsViewModel>();
             SimpleIoc.Default.Register<FinancialEditViewModel>();
             SimpleIoc.Default.Register<RobotControlViewModel>();
+            SimpleIoc.Default.Register<DiaryViewModel>();
+            SimpleIoc.Default.Register<PortfolioViewModel>();
 
             SimpleIoc.Default.Register<EmitentModel>(true);
             SimpleIoc.Default.Register<SecurityModel>(true);
+            SimpleIoc.Default.Register<DiaryModel>(true);
+            SimpleIoc.Default.Register<PortfolioModel>(true);
 
             SimpleIoc.Default.Register<TradeModel>(() =>
             {
@@ -130,6 +137,22 @@ namespace EIDClient.ViewModel
             }
         }
 
+        public DiaryViewModel DiaryViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DiaryViewModel>();
+            }
+        }
+
+        public PortfolioViewModel PortfolioViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PortfolioViewModel>();
+            }
+        }
+
         private static ITradeMode GetTradeMode()
         {
             ITradeMode result = null;
@@ -170,6 +193,8 @@ namespace EIDClient.ViewModel
             navigationService.Configure("SecurityDetails", typeof(Views.SecurityDetailsPage));
             navigationService.Configure("FinancialEdit", typeof(Views.FinancialEditPage));
             navigationService.Configure("Robot", typeof(Views.RobotControlPage));
+            navigationService.Configure("Diary", typeof(Views.DiaryPage));
+            navigationService.Configure("Portfolio", typeof(Views.PortfolioPage));
             navigationService.Configure("Main", typeof(Views.MainPage));
 
             return navigationService;

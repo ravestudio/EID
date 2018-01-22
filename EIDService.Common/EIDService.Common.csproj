@@ -56,14 +56,19 @@
     <Compile Include="CandleToISS.cs" />
     <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\DealRAWConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\DiaryNoteConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EIDProcessConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\FinancialConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\IncomeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\ModeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\MoneyLimitConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\NotePositionConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderOperationConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\OrderStateConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\PortfolioItemConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PositionConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\PosTypeConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\SecurityConfiguration.cs" />
@@ -79,16 +84,21 @@
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="Entities\Candle.cs" />
     <Compile Include="Entities\Deal.cs" />
+    <Compile Include="Entities\DealRAW.cs" />
+    <Compile Include="Entities\DiaryNote.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\Income.cs" />
     <Compile Include="Entities\Mode.cs" />
     <Compile Include="Entities\ModeType.cs" />
     <Compile Include="Entities\MoneyLimit.cs" />
+    <Compile Include="Entities\NotePosition.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderOperation.cs" />
     <Compile Include="Entities\OrderState.cs" />
     <Compile Include="Entities\PeriodType.cs" />
+    <Compile Include="Entities\PortfolioItem.cs" />
     <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\EIDProcess.cs" />
     <Compile Include="Entities\PosType.cs" />
@@ -255,6 +265,50 @@
     <Compile Include="Migrations\201709010410205_alterFields.Designer.cs">
       <DependentUpon>201709010410205_alterFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709140641025_addDiaryNote.cs" />
+    <Compile Include="Migrations\201709140641025_addDiaryNote.Designer.cs">
+      <DependentUpon>201709140641025_addDiaryNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709220903167_alterDeals.cs" />
+    <Compile Include="Migrations\201709220903167_alterDeals.Designer.cs">
+      <DependentUpon>201709220903167_alterDeals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709220932564_alterDeal.cs" />
+    <Compile Include="Migrations\201709220932564_alterDeal.Designer.cs">
+      <DependentUpon>201709220932564_alterDeal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709250952171_alterNote.cs" />
+    <Compile Include="Migrations\201709250952171_alterNote.Designer.cs">
+      <DependentUpon>201709250952171_alterNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709260349112_alterNote1.cs" />
+    <Compile Include="Migrations\201709260349112_alterNote1.Designer.cs">
+      <DependentUpon>201709260349112_alterNote1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709260525065_addNotePosition.cs" />
+    <Compile Include="Migrations\201709260525065_addNotePosition.Designer.cs">
+      <DependentUpon>201709260525065_addNotePosition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709281026313_addPortfolio.cs" />
+    <Compile Include="Migrations\201709281026313_addPortfolio.Designer.cs">
+      <DependentUpon>201709281026313_addPortfolio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709290752453_addIncome.cs" />
+    <Compile Include="Migrations\201709290752453_addIncome.Designer.cs">
+      <DependentUpon>201709290752453_addIncome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709301706127_alterPortfolio.cs" />
+    <Compile Include="Migrations\201709301706127_alterPortfolio.Designer.cs">
+      <DependentUpon>201709301706127_alterPortfolio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709301710374_alterPortfolio1.cs" />
+    <Compile Include="Migrations\201709301710374_alterPortfolio1.Designer.cs">
+      <DependentUpon>201709301710374_alterPortfolio1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710250949165_addDealRAW.cs" />
+    <Compile Include="Migrations\201710250949165_addDealRAW.Designer.cs">
+      <DependentUpon>201710250949165_addDealRAW.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -379,6 +433,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709010410205_alterFields.resx">
       <DependentUpon>201709010410205_alterFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140641025_addDiaryNote.resx">
+      <DependentUpon>201709140641025_addDiaryNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220903167_alterDeals.resx">
+      <DependentUpon>201709220903167_alterDeals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220932564_alterDeal.resx">
+      <DependentUpon>201709220932564_alterDeal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709250952171_alterNote.resx">
+      <DependentUpon>201709250952171_alterNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260349112_alterNote1.resx">
+      <DependentUpon>201709260349112_alterNote1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260525065_addNotePosition.resx">
+      <DependentUpon>201709260525065_addNotePosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709281026313_addPortfolio.resx">
+      <DependentUpon>201709281026313_addPortfolio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709290752453_addIncome.resx">
+      <DependentUpon>201709290752453_addIncome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709301706127_alterPortfolio.resx">
+      <DependentUpon>201709301706127_alterPortfolio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709301710374_alterPortfolio1.resx">
+      <DependentUpon>201709301710374_alterPortfolio1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710250949165_addDealRAW.resx">
+      <DependentUpon>201710250949165_addDealRAW.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

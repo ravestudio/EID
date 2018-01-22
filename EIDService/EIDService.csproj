@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Diary\" />
     <Folder Include="Views\Robot\" />
   </ItemGroup>
   <ItemGroup>
@@ -199,11 +200,15 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CandleController.cs" />
     <Compile Include="Controllers\DealController.cs" />
+    <Compile Include="Controllers\DiaryController.cs" />
+    <Compile Include="Controllers\DiaryNoteController.cs" />
     <Compile Include="Controllers\EmitentController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncomeController.cs" />
     <Compile Include="Controllers\ModeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PortfolioItemController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\SecurityDataController.cs" />

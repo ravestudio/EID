@@ -110,19 +110,25 @@
     <Compile Include="Controls\ChartControl.xaml.cs">
       <DependentUpon>ChartControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateFormatConverter.cs" />
+    <Compile Include="DataModel\DiaryModel.cs" />
     <Compile Include="DataModel\EmitentModel.cs" />
+    <Compile Include="DataModel\PortfolioModel.cs" />
     <Compile Include="DataModel\TokenModel.cs" />
     <Compile Include="DataModel\TradeModel.cs" />
     <Compile Include="DataModel\SecurityModel.cs" />
     <Compile Include="DDE\MyDDEServer.cs" />
     <Compile Include="Entities\Candle.cs" />
     <Compile Include="Entities\Deal.cs" />
+    <Compile Include="Entities\DiaryNote.cs" />
     <Compile Include="Entities\Emitent.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Financial.cs" />
+    <Compile Include="Entities\Income.cs" />
     <Compile Include="Entities\MarketData.cs" />
     <Compile Include="Entities\Mode.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\PortfolioItem.cs" />
     <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\SecurityData.cs" />
@@ -150,15 +156,19 @@
     <Compile Include="Messages\ClientMakeDealMessage.cs" />
     <Compile Include="Messages\ClosePositionMessage.cs" />
     <Compile Include="Messages\CreateOrderMessage.cs" />
+    <Compile Include="Messages\DiaryLoadedMessage.cs" />
     <Compile Include="Messages\EmitentListLoadedMessage.cs" />
     <Compile Include="Messages\FinancialListLoadedMessage.cs" />
     <Compile Include="Messages\GetCandlesMessage.cs" />
     <Compile Include="Messages\GetCandlesResponseMessage.cs" />
     <Compile Include="Messages\IISGetSecurityInfo.cs" />
     <Compile Include="Messages\InitTradeModelMessage.cs" />
+    <Compile Include="Messages\LoadDiaryMessage.cs" />
     <Compile Include="Messages\LoadEmitentListMessage.cs" />
+    <Compile Include="Messages\LoadPortfolioMessage.cs" />
     <Compile Include="Messages\LoadSecurityListMessage.cs" />
     <Compile Include="Messages\LoadSecurityMessage.cs" />
+    <Compile Include="Messages\PortfolioLoadedMessage.cs" />
     <Compile Include="Messages\SaveEmitentMessage.cs" />
     <Compile Include="Messages\SaveFinancialMessage.cs" />
     <Compile Include="Messages\SaveFinancialResultMeassage.cs" />
@@ -168,8 +178,11 @@
     <Compile Include="Messages\ShowDataMessage.cs" />
     <Compile Include="Repository\CandleRepository.cs" />
     <Compile Include="Repository\DealRepository.cs" />
+    <Compile Include="Repository\DiaryNoteRepository.cs" />
+    <Compile Include="Repository\IncomeRepository.cs" />
     <Compile Include="Repository\ModeRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
+    <Compile Include="Repository\PortfolioItemRepository.cs" />
     <Compile Include="Repository\PositionRepository.cs" />
     <Compile Include="Repository\SecurityDataRepository.cs" />
     <Compile Include="Repository\SecurityRepository.cs" />
@@ -193,6 +206,7 @@
     <Compile Include="Robot\StrategyDecision.cs" />
     <Compile Include="ViewModel\AnalysisDetailsViewModel.cs" />
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
+    <Compile Include="ViewModel\DiaryViewModel.cs" />
     <Compile Include="ViewModel\EmitentDetailsViewModel.cs" />
     <Compile Include="ViewModel\EmitentListViewModel.cs" />
     <Compile Include="ViewModel\FinancialEditViewModel.cs" />
@@ -208,6 +222,7 @@
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="ViewModel\Menu.cs" />
     <Compile Include="ViewModel\NavigationService.cs" />
+    <Compile Include="ViewModel\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\RobotControlViewModel.cs" />
     <Compile Include="ViewModel\SecurityDetailsViewModel.cs" />

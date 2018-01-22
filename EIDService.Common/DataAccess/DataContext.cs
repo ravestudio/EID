@@ -35,6 +35,9 @@ namespace EIDService.Common.DataAccess
         public DbSet<MoneyLimit> MoneyLimit { get; set; }
         public DbSet<Mode> Modes { get; set; }
         public DbSet<EIDProcess> EIDprocesses { get; set; }
+        public DbSet<DiaryNote> DiaryNotes { get; set; }
+        public DbSet<PortfolioItem> PortfolioItems { get; set; }
+        public DbSet<Income> Incomes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,12 +53,16 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.TransactionConfiguration());
             modelBuilder.Configurations.Add(new Configurations.TransactionResultConfiguration());
             modelBuilder.Configurations.Add(new Configurations.DealConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.DealRAWConfiguration());
             modelBuilder.Configurations.Add(new Configurations.MoneyLimitConfiguration());
             modelBuilder.Configurations.Add(new Configurations.ModeConfiguration());
             modelBuilder.Configurations.Add(new Configurations.EIDProcessConfiguration());
             modelBuilder.Configurations.Add(new Configurations.PosTypeConfiguration());
             modelBuilder.Configurations.Add(new Configurations.OrderStateConfiguration());
             modelBuilder.Configurations.Add(new Configurations.OrderOperationConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.DiaryNoteConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.PortfolioItemConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.IncomeConfiguration());
         }
     }
 }
