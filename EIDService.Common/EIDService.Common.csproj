@@ -57,6 +57,7 @@
     <Compile Include="DataAccess\Configurations\CandleConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DealConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DealRAWConfiguration.cs" />
+    <Compile Include="DataAccess\Configurations\DealGlobalConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\DiaryNoteConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EIDProcessConfiguration.cs" />
     <Compile Include="DataAccess\Configurations\EmitentConfiguration.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="Entities\Candle.cs" />
     <Compile Include="Entities\Deal.cs" />
+    <Compile Include="Entities\DealGlobal.cs" />
     <Compile Include="Entities\DealRAW.cs" />
     <Compile Include="Entities\DiaryNote.cs" />
     <Compile Include="Entities\Emitent.cs" />
@@ -309,6 +311,10 @@
     <Compile Include="Migrations\201710250949165_addDealRAW.Designer.cs">
       <DependentUpon>201710250949165_addDealRAW.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806080335018_addDealGlobal.cs" />
+    <Compile Include="Migrations\201806080335018_addDealGlobal.Designer.cs">
+      <DependentUpon>201806080335018_addDealGlobal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -466,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710250949165_addDealRAW.resx">
       <DependentUpon>201710250949165_addDealRAW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806080335018_addDealGlobal.resx">
+      <DependentUpon>201806080335018_addDealGlobal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
