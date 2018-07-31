@@ -64,6 +64,7 @@ namespace EIDService.Common.DataAccess
             modelBuilder.Configurations.Add(new Configurations.PortfolioItemConfiguration());
             modelBuilder.Configurations.Add(new Configurations.IncomeConfiguration());
             modelBuilder.Configurations.Add(new Configurations.DealGlobalConfiguration());
+            modelBuilder.Configurations.Add(new Configurations.DealGlobalRAWConfiguration());
         }
     }
 }

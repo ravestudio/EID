@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace EIDService.Common.DataAccess.Configurations
 {
-    public class DealGlobalConfiguration : EntityTypeConfiguration<DealGlobal>
+    public class DealGlobalRAWConfiguration : EntityTypeConfiguration<DealGlobalRAW>
     {
-        public DealGlobalConfiguration()
+        public DealGlobalRAWConfiguration()
         {
             Map(m =>
             {
@@ -24,15 +24,14 @@ namespace EIDService.Common.DataAccess.Configurations
                 Property(p => p.Time).HasColumnName("Time").HasMaxLength(10).HasColumnType("varchar").IsRequired();
 
                 Property(p => p.Date).HasColumnName("Date").HasMaxLength(10).HasColumnType("varchar").IsRequired();
-                Property(p => p.DateTime).IsRequired();
                 Property(p => p.Operation).HasColumnName("Operation").HasMaxLength(50).HasColumnType("varchar").IsRequired();
-                Property(p => p.OrderOperation).HasColumnName("OrderOperation").IsRequired();
 
                 Property(p => p.Price).HasColumnName("Price").IsRequired();
                 Property(p => p.Count).HasColumnName("Count").IsRequired();
                 Property(p => p.Volume).HasColumnName("Volume").IsRequired();
 
-            }).ToTable("DealGlobalSet");
+            }).ToTable("DealGlobalRAWSet");
         }
+
     }
 }
