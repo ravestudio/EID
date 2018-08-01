@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -200,6 +201,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CandleController.cs" />
     <Compile Include="Controllers\DealController.cs" />
+    <Compile Include="Controllers\DealGlobalController.cs" />
     <Compile Include="Controllers\DiaryController.cs" />
     <Compile Include="Controllers\DiaryNoteController.cs" />
     <Compile Include="Controllers\EmitentController.cs" />
@@ -225,6 +227,8 @@
     <Compile Include="Models\ClosePositionProcess.cs" />
     <Compile Include="Models\CreateBuyStrategy.cs" />
     <Compile Include="Models\CreateSellStrategy.cs" />
+    <Compile Include="Models\DealGlobalGroup.cs" />
+    <Compile Include="Models\DealGlobalRequestModel.cs" />
     <Compile Include="Models\ICloseStrategy.cs" />
     <Compile Include="Models\ICreateStrategy.cs" />
     <Compile Include="Models\IExecuteStrategy.cs" />

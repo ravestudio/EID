@@ -31,6 +31,7 @@ namespace EIDService.Common.DataAccess
         private GenericRepository<DiaryNote> diaryNoteRepository;
         private GenericRepository<PortfolioItem> portfolioItemRepository;
         private GenericRepository<Income> incomeRepository;
+        private GenericRepository<DealGlobal> dealGlobalRepository;
 
 
         public UnitOfWork(DbContext context)
@@ -187,6 +188,14 @@ namespace EIDService.Common.DataAccess
             get
             {
                 return this.incomeRepository ?? new GenericRepository<Income>(_context);
+            }
+        }
+
+        public GenericRepository<DealGlobal> DealGlobalRepository
+        {
+            get
+            {
+                return this.dealGlobalRepository ?? new GenericRepository<DealGlobal>(_context);
             }
         }
 

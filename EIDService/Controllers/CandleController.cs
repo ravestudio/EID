@@ -19,11 +19,11 @@ namespace EIDService.Controllers
     {
 
         // GET api/candle
-        public IEnumerable<ICandle> Get([FromUri] CandleRequestModel request)
+        public IEnumerable<ICandle> Get([FromUri] RequestModel request)
         {
             Logger.InitLogger();
 
-            IDictionary<Func<CandleRequestModel, bool>, Action> actions = new Dictionary<Func<CandleRequestModel, bool>, Action>();
+            IDictionary<Func<RequestModel, bool>, Action> actions = new Dictionary<Func<RequestModel, bool>, Action>();
 
             IEnumerable<ICandle> candles = null;
 
@@ -66,7 +66,7 @@ namespace EIDService.Controllers
                     till = settings.TestDateTime;
                 }
 
-                IDictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>> interval_actions = new Dictionary<string, Func<CandleRequestModel, IList<EID.Library.ICandle>>>();
+                IDictionary<string, Func<RequestModel, IList<EID.Library.ICandle>>> interval_actions = new Dictionary<string, Func<RequestModel, IList<EID.Library.ICandle>>>();
 
                 interval_actions.Add("1", (req) =>
                 {
