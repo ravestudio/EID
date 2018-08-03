@@ -12,5 +12,7 @@ namespace EIDService.Models
         public DateTime? till { get; set; }
         public string interval { get; set; }
         public string operation { get; set; }
+
+        public decimal? ValueFilter { get; set; }
     }
 }

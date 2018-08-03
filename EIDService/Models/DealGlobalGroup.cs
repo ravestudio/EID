@@ -7,10 +7,9 @@ namespace EIDService.Models
 {
     public class DealGlobalGroup
     {
-        public string Code { get; set; }
 
-        public decimal Volume { get; set; }
+        public DateTime dateTime { get; set; }
+        public decimal volume { get; set; }
 
-        public string Operation { get; set; }
     }
 }

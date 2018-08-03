@@ -200,6 +200,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CandleController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DealController.cs" />
     <Compile Include="Controllers\DealGlobalController.cs" />
     <Compile Include="Controllers\DiaryController.cs" />
@@ -246,6 +247,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\app\EIDAPP.js" />
+    <Content Include="Scripts\app\Modules\Chart\chartModule.js" />
+    <Content Include="Scripts\app\Modules\Chart\controllers.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -274,6 +279,9 @@
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Properties\PublishProfiles\smartasp.net-FTP.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\canvasjs\canvasjs.min.js" />
+    <Content Include="Scripts\canvasjs\canvasjs.react.js" />
+    <Content Include="Scripts\canvasjs\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -295,6 +303,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EID.Library\EID.Library.csproj">

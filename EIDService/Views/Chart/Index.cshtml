@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Chart Page";
+}
+
+
+<div ng-controller="ChartController" class="row">
+    <div class="col-xs-3">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Menu 1</a></li>
+            <li><a href="#">Menu 2</a></li>
+            <li><a href="#">Menu 3</a></li>
+        </ul>
+    </div>
+
+
+    <div class="col-xs-9 border-left">
+
+        <div class="row">
+
+            <div class="form-group">
+                <label for="security">Security</label>
+                <select name="security" class="form-control" ng-model="security" ng-options="security.id as security.desc for security in securities">
+                    <option value="">Please select a security</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Data_from">Data from</label>
+                <input type="date" class="form-control" name="Data_from" ng-model="from" placeholder="yyyy-MM-dd" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Data_till">Data till</label>
+                <input type="date" class="form-control" name="Data_till" ng-model="till" placeholder="yyyy-MM-dd" required />
+            </div>
+
+            <div class="form-group">
+                <label for="frame">Frame</label>
+                <select name="frame" class="form-control" ng-model="frame" ng-options="frame.id as frame.desc for frame in frames">
+                    <option value="">Please select a frame</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="valueFilter">Value Filter</label>
+                <select name="valueFilter" class="form-control" ng-model="valueFilter" ng-options="valueFilter.id as valueFilter.desc for valueFilter in valueFilters">
+                    <option value="">Please select a Value Filter</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+
+        <div id="chartContainer" style="height: 370px; width: 100%;" class="row">
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        var purchases_dps = [];
+        var sales_dps = [];
+
+        var chart = null;
+
+        window.onload = function () {
+
+            chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "GMKN Chart"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM",
+                    crosshair: {
+                        enabled: true,
+                        snapToDataPoint: true
+                    }
+                },
+                axisY: {
+                    includeZero: false
+                },
+                legend: {
+                    cursor: "pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: true
+                },
+                data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "Sales",
+                    xValueFormatString: "DD MMM, YYYY",
+                    color: "#F08080",
+                    dataPoints: sales_dps
+                },
+                    {
+                        type: "line",
+                        showInLegend: true,
+                        name: "Sales",
+                        dataPoints: purchases_dps
+                    }]
+            });
+            chart.render();
+        }
+    </script>
+
+    <script src="~/Scripts/app/Modules/Chart/chartModule.js"></script>
+    <script src="~/Scripts/app/Modules/Chart/controllers.js"></script>
+    <script src="~/Scripts/canvasjs/canvasjs.min.js"></script>
+}

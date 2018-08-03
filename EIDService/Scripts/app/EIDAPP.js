@@ -1,0 +1,1 @@
+﻿angular.module('eidApp', ['eidApp.ChartModule']);
