@@ -12,6 +12,18 @@ namespace EIDService.Controllers
 {
     public class EmitentController : ApiController
     {
+        public Emitent Get(int Id)
+        {
+            Emitent emitent = null;
+
+            using (UnitOfWork unit = new UnitOfWork((DbContext)new DataContext()))
+            {
+                emitent = unit.EmitentRepository.Query<Emitent>(m => m.Id == Id, null).Single();
+            }
+
+            return emitent;
+        }
+
         // GET api/emitent
         public IEnumerable<Emitent> Get()
         {

@@ -2,13 +2,21 @@
 <html lang="en" ng-app="eidApp">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <base href="/">
+    @*<meta name="viewport" content="width=device-width" />*@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
     <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/angular/angular-resource.min.js"></script>
     <script src="~/scripts/app/EIDAPP.js"></script>
+    <script src="~/Scripts/app/Modules/Emitents/emitentModule.js"></script>
+    <script src="~/Scripts/app/Modules/Emitents/controllers.js"></script>
+    <script src="~/Scripts/app/Modules/Emitents/services.js"></script>
+    <script src="~/Scripts/app/Modules/Chart/chartModule.js"></script>
+    <script src="~/Scripts/app/Modules/Chart/controllers.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,6 +33,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Charts", "Index", "Chart", new { area = "" }, null)</li>
                 </ul>
             </div>
         </div>

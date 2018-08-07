@@ -1,0 +1,20 @@
+﻿<div class="row">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Company name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="emitent in emitents track by $index">
+                <td>{{emitent.Name}}</td>
+                <td><a ui-sref="singleEmitent({id:emitent.Id})">View</a></td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
