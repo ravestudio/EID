@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201807221700087_addDealGlobal.Designer.cs">
       <DependentUpon>201807221700087_addDealGlobal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809100425248_addFCF.cs" />
+    <Compile Include="Migrations\201809100425248_addFCF.Designer.cs">
+      <DependentUpon>201809100425248_addFCF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -477,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807221700087_addDealGlobal.resx">
       <DependentUpon>201807221700087_addDealGlobal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809100425248_addFCF.resx">
+      <DependentUpon>201809100425248_addFCF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

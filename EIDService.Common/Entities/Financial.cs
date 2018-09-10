@@ -89,22 +89,38 @@ namespace EIDService.Common.Entities
         public decimal FlowOperatingActivities { get; set; }
 
         /// <summary>
-        /// Изменения в активах
+        /// depreciation and amortization
+        /// </summary>
+        public decimal Amortization { get; set; }
+
+        /// <summary>
+        /// Изменения в активах (NWC, Net working capital change)
         /// </summary>
         public decimal ChangesInAssets { get; set; }
-		
+
+        /// <summary>
+        /// капитальные затраты 
+        /// </summary>
+        public decimal Capex { get; set; }
+
         /// <summary>
         /// Налог на прибыль уплаченный
         /// </summary>
-		public decimal FlowOperatingTaxesPaid { get; set; }
+        public decimal FlowOperatingTaxesPaid { get; set; }
+
+
+        public decimal EBITDA
+        {
+            get { return this.OperatingIncome + this.Amortization; }
+        }
 
         /// <summary>
-        /// Чистые денежные средства, полученные от операционной деятельности 
+        /// Free Cash Flow
         /// </summary>
-        public decimal NetFlowOperatingActivities
-		{
-			get { return this.FlowOperatingActivities + this.ChangesInAssets - this.FlowOperatingTaxesPaid; }
-		}
+        public decimal FCF
+        {
+            get { return this.EBITDA - this.FlowOperatingTaxesPaid - this.Capex + this.ChangesInAssets; }
+        }
 
         public decimal FlowInvestingActivities { get; set; }
 

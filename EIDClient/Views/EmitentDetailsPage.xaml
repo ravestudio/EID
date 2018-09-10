@@ -30,12 +30,13 @@
                 <TextBlock Text="{Binding FlowOperatingActivities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding ChangesInAssets}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding FlowOperatingTaxesPaid}" HorizontalAlignment="Right"></TextBlock>
-                <TextBlock Text="{Binding NetFlowOperatingActivities}" HorizontalAlignment="Right"></TextBlock>
-                
+
                 <TextBlock Text="{Binding FlowInvestingActivities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding FlowFinancingActivities}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding StockIssuance}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding DividendsPaid}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding EBITDA}" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding FCF}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding EarningsPerShare}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding PriceEarningsRatio}" HorizontalAlignment="Right"></TextBlock>
                 <TextBlock Text="{Binding ReturnOnEquity}" HorizontalAlignment="Right"></TextBlock>
@@ -104,12 +105,14 @@
                         <TextBlock Text="Операционная деятельность"></TextBlock>
                         <TextBlock Text="Изменения в активах"></TextBlock>
                         <TextBlock Text="Налог на прибыль уплаченный"></TextBlock>
-                        <TextBlock Text="Операционная деятельность, нетто"></TextBlock>
-                        
+
                         <TextBlock Text="Инвестиционная деятельность"></TextBlock>
                         <TextBlock Text="Финансовая деятельность"></TextBlock>
                         <TextBlock Text="Продажа (выкуп) собственых акций"></TextBlock>
                         <TextBlock Text="Дивиденды, выплаченные по акциям"></TextBlock>
+
+                        <TextBlock Text="EBITDA"></TextBlock>
+                        <TextBlock Text="FCF"></TextBlock>
                         <TextBlock Text="Прибыль на акцию"></TextBlock>
                         <TextBlock Text="P/E Ratio"></TextBlock>
                         <TextBlock Text="ROE"></TextBlock>

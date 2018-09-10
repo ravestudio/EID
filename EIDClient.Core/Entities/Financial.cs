@@ -75,9 +75,11 @@ namespace EIDClient.Core.Entities
 
         public decimal ChangesInAssets { get; set; }
 
-        public decimal FlowOperatingTaxesPaid { get; set; }
+        public decimal Capex { get; set; }
 
-        public decimal NetFlowOperatingActivities { get; set; }
+        public decimal Amortization { get; set; }
+
+        public decimal FlowOperatingTaxesPaid { get; set; }
 
         public decimal FlowInvestingActivities { get; set; }
 
@@ -102,6 +104,9 @@ namespace EIDClient.Core.Entities
         /// Цена за акцию
         /// </summary>
         public decimal Price { get; set; }
+
+        public decimal EBITDA { get; set; }
+        public decimal FCF { get; set; }
 
         /// <summary>
         /// P/E Ratio 
@@ -136,8 +141,9 @@ namespace EIDClient.Core.Entities
 
             this.FlowOperatingActivities = (decimal)jsonObj["FlowOperatingActivities"].GetNumber();
             this.ChangesInAssets = (decimal)jsonObj["ChangesInAssets"].GetNumber();
+            this.Amortization = (decimal)jsonObj["Amortization"].GetNumber();
+            this.Capex = (decimal)jsonObj["Capex"].GetNumber();
             this.FlowOperatingTaxesPaid = (decimal)jsonObj["FlowOperatingTaxesPaid"].GetNumber();
-            this.NetFlowOperatingActivities = (decimal)jsonObj["NetFlowOperatingActivities"].GetNumber();
 
             this.FlowInvestingActivities = (decimal)jsonObj["FlowInvestingActivities"].GetNumber();
             this.FlowFinancingActivities = (decimal)jsonObj["FlowFinancingActivities"].GetNumber();
@@ -147,6 +153,10 @@ namespace EIDClient.Core.Entities
 
             this.EarningsPerShare = (decimal)jsonObj["EarningsPerShare"].GetNumber();
             this.Price = (decimal)jsonObj["Price"].GetNumber();
+
+            this.EBITDA = (decimal)jsonObj["EBITDA"].GetNumber();
+            this.FCF = (decimal)jsonObj["FCF"].GetNumber();
+
             this.PriceEarningsRatio = (decimal)jsonObj["PriceEarningsRatio"].GetNumber();
             this.ReturnOnEquity = (decimal)jsonObj["ReturnOnEquity"].GetNumber();
 
@@ -176,6 +186,8 @@ namespace EIDClient.Core.Entities
 
             keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingActivities", GetString(FlowOperatingActivities)));
             keyValueData.Add(new KeyValuePair<string, string>("ChangesInAssets", GetString(ChangesInAssets)));
+            keyValueData.Add(new KeyValuePair<string, string>("Capex", GetString(Capex)));
+            keyValueData.Add(new KeyValuePair<string, string>("Amortization", GetString(Amortization)));
             keyValueData.Add(new KeyValuePair<string, string>("FlowOperatingTaxesPaid", GetString(FlowOperatingTaxesPaid)));
 
             keyValueData.Add(new KeyValuePair<string, string>("FlowInvestingActivities", GetString(FlowInvestingActivities)));
